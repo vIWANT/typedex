@@ -1,5 +1,5 @@
 {
-  "revision": 36,
+  "revision": 37,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -213,6 +213,11 @@
       "fields": {
         "species": "Étourvol"
       }
+    },
+    {
+      "id": "badge-plume-alizee-2026-10-15",
+      "type": "badge",
+      "stepId": "badge-plume"
     }
   ],
   "example_not_published": {
