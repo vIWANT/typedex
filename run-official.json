@@ -1,5 +1,5 @@
 {
-  "revision": 43,
+  "revision": 44,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -347,6 +347,20 @@
         "species": "Nidoran♂",
         "nick": "IMPÔT FONCIER",
         "place": "Parc Safari",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "capture-decret-49-3-exagide-nenucrique-2026-10-15",
+      "type": "capture",
+      "pokemon": {
+        "id": "decret493",
+        "species": "Exagide",
+        "nick": "DÉCRET 49.3",
+        "place": "Nénucrique",
         "status": "alive",
         "talent": "À confirmer",
         "nature": "À confirmer",
