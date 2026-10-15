@@ -1,5 +1,5 @@
 {
-  "revision": 37,
+  "revision": 38,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -218,6 +218,20 @@
       "id": "badge-plume-alizee-2026-10-15",
       "type": "badge",
       "stepId": "badge-plume"
+    },
+    {
+      "id": "capture-huissier-3000-lucario-route-108-2026-10-15",
+      "type": "capture",
+      "pokemon": {
+        "id": "huissier3000",
+        "species": "Lucario",
+        "nick": "HUISSIER 3000",
+        "place": "Route 108",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
     }
   ],
   "example_not_published": {
