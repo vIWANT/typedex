@@ -1,5 +1,5 @@
 {
-  "revision": 23,
+  "revision": 24,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -43,6 +43,20 @@
       "species": "Octillery",
       "place": "Grotte Oubliée",
       "reason": "Mis K.O. avant capture"
+    },
+    {
+      "id": "capture-ryanair-ptera-route-113-2026-10-15",
+      "type": "capture",
+      "pokemon": {
+        "id": "ryanair",
+        "species": "Ptéra",
+        "nick": "RYANAIR",
+        "place": "Route 113",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
     }
   ],
   "example_not_published": {
