@@ -1,5 +1,5 @@
 {
-  "revision": 27,
+  "revision": 28,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -90,6 +90,29 @@
         "nature": "À confirmer",
         "level": null
       }
+    },
+    {
+      "id": "evolution-colissimo-foretress-2026-10-15",
+      "type": "pokemon",
+      "pokemonId": "colissimo",
+      "fields": {
+        "species": "Foretress"
+      }
+    },
+    {
+      "id": "badge-chaleur-adriane-2026-10-15",
+      "type": "badge",
+      "stepId": "badge-chaleur"
+    },
+    {
+      "id": "death-flanby-cocotine-2026-10-15",
+      "type": "death",
+      "pokemonId": "flanby"
+    },
+    {
+      "id": "death-jambon5g-groret-2026-10-15",
+      "type": "death",
+      "pokemonId": "jambon5g"
     }
   ],
   "example_not_published": {
