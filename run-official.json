@@ -1,5 +1,5 @@
 {
-  "revision": 24,
+  "revision": 25,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -52,6 +52,20 @@
         "species": "Ptéra",
         "nick": "RYANAIR",
         "place": "Route 113",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "capture-papa-nowel-cadoizo-site-meteore-2026-10-15",
+      "type": "capture",
+      "pokemon": {
+        "id": "papanowel",
+        "species": "Cadoizo",
+        "nick": "PAPA NOWEL",
+        "place": "Site Météore",
         "status": "alive",
         "talent": "À confirmer",
         "nature": "À confirmer",
