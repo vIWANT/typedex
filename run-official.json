@@ -1,5 +1,5 @@
 {
-  "revision": 28,
+  "revision": 29,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -113,6 +113,21 @@
       "id": "death-jambon5g-groret-2026-10-15",
       "type": "death",
       "pokemonId": "jambon5g"
+    },
+    {
+      "id": "badge-dynamo-voltere-confirmed-by-norman-2026-10-15",
+      "type": "badge",
+      "stepId": "badge-dynamo"
+    },
+    {
+      "id": "badge-balancier-norman-2026-10-15",
+      "type": "badge",
+      "stepId": "badge-balancier"
+    },
+    {
+      "id": "death-colissimo-foretress-2026-10-15",
+      "type": "death",
+      "pokemonId": "colissimo"
     }
   ],
   "example_not_published": {
