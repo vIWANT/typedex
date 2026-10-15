@@ -1,5 +1,5 @@
 {
-  "revision": 31,
+  "revision": 32,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -149,6 +149,19 @@
       "pokemonId": "poleemploi",
       "fields": {
         "nick": "MARCO POLO"
+      }
+    },
+    {
+      "id": "cs-only-hypotrempe-surf-route-118-2026-10-15",
+      "type": "hm-only",
+      "pokemon": {
+        "id": "hm-hypotrempe-118",
+        "species": "Hypotrempe",
+        "nick": "Hypotrempe",
+        "place": "Route 118",
+        "move": "Surf",
+        "status": "cs-only",
+        "combatAllowed": false
       }
     }
   ],
