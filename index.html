@@ -274,7 +274,7 @@
 </style>
 <style>
 .td-death-label{display:inline-flex;align-items:center;gap:7px;cursor:pointer;border:1px solid #7a464c;border-radius:9px;padding:7px 10px;background:#321f27;color:#ffc8c8;font-size:.83rem;font-weight:700;white-space:nowrap;user-select:none}
-.td-death-label:hover{background:#49262f;border-color:#cc7d89}
+.team-death-action{display:flex;justify-content:flex-start;margin:9px 0 13px}.team-death-action .td-death-label{width:fit-content}.td-death-label:hover{background:#49262f;border-color:#cc7d89}
 .td-death-label input{accent-color:#f77d8b;width:16px;height:16px;margin:0;cursor:pointer}
 .td-death-label:focus-within{outline:2px solid #fcb5c0;outline-offset:2px}
 </style>
@@ -917,7 +917,7 @@
       byId('party-counter').textContent=`${tracker.party.filter(Boolean).length} / 6 places`;
       byId('box-counter').textContent=`${boxed.length} en boîte`;
       byId('builder-slots').innerHTML=tracker.party.map((id,i)=>{
-        const x=tracker.entries.find(x=>x.id===id);return `<div class="team-slot ${x?'filled':''}"><label for="party-slot-${i}">EMPLACEMENT ${i+1}</label><select id="party-slot-${i}" data-slot="${i}">${optionsFor(i)}</select>${x?`<div class="team-name">${h(x.nick)}</div><div class="team-minor">${h(x.species)}${x.level?' · niv. '+x.level:''}</div><div>${miniTypes(x.species)}</div><div class="team-minor">${miniStats(x.species)}</div>${loadoutEditor(x)}${personalStatsEditor(x)}<div class="mini-actions"><button type="button" data-edit="${h(x.id)}">✏️ Modifier</button><label class="td-death-label"><input type="checkbox" data-dead="${h(x.id)}" aria-label="Déclarer ${h(x.nick)} mort"/> 💀 Mort</label></div>`:'<div class="team-minor">Choisis un Pokémon vivant dans la liste.</div>'}</div>`;
+        const x=tracker.entries.find(x=>x.id===id);return `<div class="team-slot ${x?'filled':''}"><label for="party-slot-${i}">EMPLACEMENT ${i+1}</label><select id="party-slot-${i}" data-slot="${i}">${optionsFor(i)}</select>${x?`<div class="team-name">${h(x.nick)}</div><div class="team-minor">${h(x.species)}${x.level?' · niv. '+x.level:''}</div><div class="team-death-action"><label class="td-death-label"><input type="checkbox" data-dead="${h(x.id)}" aria-label="Déclarer ${h(x.nick)} mort"/> 💀 Mort</label></div><div>${miniTypes(x.species)}</div><div class="team-minor">${miniStats(x.species)}</div>${loadoutEditor(x)}${personalStatsEditor(x)}<div class="mini-actions"><button type="button" data-edit="${h(x.id)}">✏️ Modifier</button></div>`:'<div class="team-minor">Choisis un Pokémon vivant dans la liste.</div>'}</div>`;
       }).join('');
       byId('box-cards').innerHTML=boxed.length?boxed.map(x=>`<div class="box-mon"><div class="box-title"><span>📦 ${h(x.nick)}</span><span>${x.level?'Niv. '+x.level:''}</span></div><div class="box-desc">${h(x.species)} · ${h(x.place)} · ${h(x.talent)}</div><div>${miniTypes(x.species)}</div><div class="stat-caption">${miniStats(x.species)}</div>${loadoutEditor(x)}${personalStatsEditor(x)}<div class="mini-actions"><button data-place="${h(x.id)}">➕ Équipe</button><button data-edit="${h(x.id)}">✏ Modifier</button><label class="td-death-label"><input type="checkbox" data-dead="${h(x.id)}" aria-label="Déclarer ${h(x.nick)} mort"/> 💀 Mort</label></div></div>`).join(''):'<p class="dex-info">Ta Boîte est vide : tous tes Pokémon vivants sont actuellement dans l’équipe.</p>';
       const team=tracker.party.map(id=>tracker.entries.find(x=>x.id===id)).filter(Boolean);
