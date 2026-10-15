@@ -1,5 +1,5 @@
 {
-  "revision": 21,
+  "revision": 22,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -15,6 +15,27 @@
         "nature": "À confirmer",
         "level": null
       }
+    },
+    {
+      "id": "capture-facture-edf-lumivole-route-112-2026-10-15",
+      "type": "capture",
+      "pokemon": {
+        "id": "factureedf",
+        "species": "Lumivole",
+        "nick": "FACTURE EDF",
+        "place": "Route 112",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "miss-crabaraque-route-111-2026-10-15",
+      "type": "miss",
+      "species": "Crabaraque",
+      "place": "Route 111",
+      "reason": "Mis K.O. avant capture"
     }
   ],
   "example_not_published": {
