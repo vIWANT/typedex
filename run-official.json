@@ -1,5 +1,5 @@
 {
-  "revision": 38,
+  "revision": 39,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -227,6 +227,20 @@
         "species": "Lucario",
         "nick": "HUISSIER 3000",
         "place": "Route 108",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "capture-friezer-mewtwo-route-121-2026-10-15",
+      "type": "capture",
+      "pokemon": {
+        "id": "friezer",
+        "species": "Mewtwo",
+        "nick": "FRIEZER",
+        "place": "Route 121",
         "status": "alive",
         "talent": "À confirmer",
         "nature": "À confirmer",
