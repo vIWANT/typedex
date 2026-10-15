@@ -826,23 +826,6 @@
         ],notes:'Si le talent caché Sans Limite est confirmé, les attaques avec effet secondaire profitent de son bonus. Nidoking peut aussi se jouer physique avec Séisme (CT26), Direct Toxik (CT84), Lame de Roc (CT71) et Poing Glace (maître des capacités). Les CT sont des objectifs à débloquer et non les attaques de la capture. Une nature favorisant le physique peut changer la recommandation.'},
         caution:'À l’état Nidoran♂ / Nidorino : faiblesses Sol et Psy ×2. Nidoking Poison / Sol : faiblesses Eau, Glace, Sol et Psy ×2 ; immunité Électrik. L’évolution et le talent Sans Limite ne sont pas acquis par défaut. Réévaluer le set et la couverture défensive après chaque évolution.'
       }
-      ,{
-        nick:'DÉCRET 49.3',species:'Exagide',emoji:'⚔️',type1:'Acier',type2:'Spectre',talent:'À confirmer',nature:'À confirmer',place:'Nénucrique',item:'Baie Sitrus → Restes',
-        intro:'Exagide est une des meilleures captures pour une Nuzlocke de Rubis Oméga, grâce aux immunités Normal, Combat et Poison et à de nombreuses résistances. En génération 6, sa forme Parade peut monter à 150 en Défense et Déf. Spé., sa forme Assaut à 150 en Attaque et Atq. Spé. Son talent normal Déclic Tactique est ESSENTIEL au passage entre les deux formes : vérifie impérativement son talent si ton randomizer modifie les talents.',
-        early:{title:'Aventure • Bouclier Royal + priorité',moves:[
-          ['Bouclier Royal','Acier','Rappel niveau 1 à Autéquia • protège des attaques offensives et peut revenir en forme Parade avec Déclic Tactique'],
-          ['Ombre Portée','Spectre','Rappel niveau 1 • STAB physique prioritaire, achève sans prendre de coup'],
-          ['Tête de Fer','Acier','Rappel niveau 1 • STAB physique fiable, 80 puissance'],
-          ['Lame Sainte','Combat','Rappel niveau 1 • couverture Roche, Normal, Acier et Ténèbres ; ignore les boosts de Défense']
-        ],notes:'Ce set utilise quatre capacités disponibles au niveau 1 via le Maître des Capacités à Autéquia (Écaille Cœur) en ROSA. Elles ne sont pas forcément présentes sur l’Exagide sauvage que tu viens de capturer. Bouclier Royal ne protège pas des attaques de statut ciblant Exagide : ne l’utilise pas comme un Abri universel. Attention à sa Vitesse faible.'},
-        final:{title:'Objectif Ligue • physique prudent',moves:[
-          ['Bouclier Royal','Acier','Alterner défense/attaque avec Déclic Tactique si le talent est présent'],
-          ['Ombre Portée','Spectre','STAB et priorité pour compenser sa faible Vitesse'],
-          ['Tête de Fer','Acier','STAB physique principal contre Fée, Glace et Roche'],
-          ['Lame Sainte','Combat','Couverture Ténèbres et Acier ; ignore les changements de Défense']
-        ],notes:'Version offensive : remplacer Tête de Fer ou Lame Sainte par Danse-Lames (rappel niveau 1 ou CT75), mais uniquement lorsque l’adversaire est incapable de menacer Exagide. Variante spéciale si nature adaptée : Ball’Ombre (CT30), Luminocanon (CT91), Bouclier Royal et une quatrième couverture. Si Déclic Tactique manque dans ce randomizer, revoir intégralement le set et ne pas compter sur le changement de forme.'},
-        caution:'Faiblesses Feu, Sol, Spectre et Ténèbres ×2. En forme Assaut, les énormes défenses de Parade sont échangées contre les statistiques offensives : ne reste pas exposé après avoir attaqué. Bouclier Royal répété successivement peut échouer ; pas de placement téméraire en Nuzlocke.'
-      }
     ];
     function renderRoster(){
       const summary=byId('roster-summary');
@@ -1453,6 +1436,18 @@ renderGuide();
       tracker.misses??=[];
       if(!tracker.misses.some(x=>id(x.place)===id(ev.place)))tracker.misses.push({species:ev.species||'?',place:ev.place,reason:ev.reason||'Capture ratée'});
       tracker.zoneChecks??={};tracker.zoneChecks[id(ev.place)]=true;
+    }else if(ev.type==='undo-capture'&&ev.pokemonId){
+      // Une capture non sauvegardée n'est ni un vivant ni un mort.
+      // Supprimer également d'un ancien localStorage déjà synchronisé.
+      tracker.entries=tracker.entries.filter(x=>x.id!==ev.pokemonId);
+      tracker.party=tracker.party.map(x=>x===ev.pokemonId?null:x);
+      // Une route redevient disponible sauf si un autre événement l'a consommée.
+      if(ev.place){
+        tracker.zoneChecks??={};
+        const occupied=tracker.entries.some(x=>id(x.place)===id(ev.place)) ||
+          (tracker.misses||[]).some(x=>id(x.place)===id(ev.place));
+        tracker.zoneChecks[id(ev.place)]=occupied;
+      }
     }else if(ev.type==='death'&&ev.pokemonId){
       const mon=tracker.entries.find(x=>x.id===ev.pokemonId);
       if(mon){mon.status='dead';tracker.party=tracker.party.map(x=>x===mon.id?null:x);}
@@ -1465,6 +1460,7 @@ renderGuide();
       if(mon){for(const k of ['species','nick','place','talent','nature','status','level'])if(Object.hasOwn(ev.fields,k))mon[k]=ev.fields[k];}
     }
   }
+  const idOnline=x=>String(x||'').toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
   let loading=false;
   async function syncOfficial(){
     if(loading)return;
@@ -1484,6 +1480,15 @@ renderGuide();
           const missing=!Array.isArray(tracker.hmHelpers)||!tracker.hmHelpers.some(x=>x.id===ev.pokemon?.id);
           mergeEvent(ev);seen.add(ev.id);
           if(missing)applied++;
+          continue;
+        }
+        // Rejouer les annulations même si une ancienne version les a marquées
+        // comme traitées sans les comprendre (indispensable après un rollback).
+        if(ev.type==='undo-capture'){
+          const stillHere=tracker.entries.some(x=>x.id===ev.pokemonId);
+          const zoneWasChecked=!!tracker.zoneChecks?.[idOnline(ev.place)];
+          mergeEvent(ev);seen.add(ev.id);
+          if(stillHere || (zoneWasChecked && !tracker.zoneChecks?.[idOnline(ev.place)]))applied++;
           continue;
         }
         if(seen.has(ev.id))continue;
