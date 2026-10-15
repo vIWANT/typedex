@@ -1,5 +1,5 @@
 {
-  "revision": 41,
+  "revision": 42,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -274,6 +274,70 @@
         "nature": "À confirmer",
         "level": null
       }
+    },
+    {
+      "id": "badge-roche-source-officielle-2026-10-15",
+      "type": "badge",
+      "stepId": "badge-roche"
+    },
+    {
+      "id": "badge-poing-source-officielle-2026-10-15",
+      "type": "badge",
+      "stepId": "badge-poing"
+    },
+    {
+      "id": "story-marco-confirmed-through-badge-plume-2026-10-15",
+      "type": "story",
+      "stepId": "marco",
+      "done": true
+    },
+    {
+      "id": "story-bateau-confirmed-through-badge-plume-2026-10-15",
+      "type": "story",
+      "stepId": "bateau",
+      "done": true
+    },
+    {
+      "id": "story-chantier-confirmed-through-badge-plume-2026-10-15",
+      "type": "story",
+      "stepId": "chantier",
+      "done": true
+    },
+    {
+      "id": "story-musee-confirmed-through-badge-plume-2026-10-15",
+      "type": "story",
+      "stepId": "musee",
+      "done": true
+    },
+    {
+      "id": "story-route110-confirmed-through-badge-plume-2026-10-15",
+      "type": "story",
+      "stepId": "route110",
+      "done": true
+    },
+    {
+      "id": "story-route111-confirmed-through-badge-plume-2026-10-15",
+      "type": "story",
+      "stepId": "route111",
+      "done": true
+    },
+    {
+      "id": "story-meteore-confirmed-through-badge-plume-2026-10-15",
+      "type": "story",
+      "stepId": "meteore",
+      "done": true
+    },
+    {
+      "id": "story-chimme-confirmed-through-badge-plume-2026-10-15",
+      "type": "story",
+      "stepId": "chimme",
+      "done": true
+    },
+    {
+      "id": "story-meteo-confirmed-through-badge-plume-2026-10-15",
+      "type": "story",
+      "stepId": "meteo",
+      "done": true
     }
   ],
   "example_not_published": {
