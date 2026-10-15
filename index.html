@@ -343,11 +343,11 @@
 <p class="section-note">🎯 Le taux de capture est une valeur interne du jeu (de 3 à 255 pour la plupart), <strong>pas un pourcentage de réussite garanti</strong>. La Poké Ball utilisée, les PV et le statut modifient la probabilité. Pour les formes Méga et alternatives, le taux de base de l’espèce est montré : leurs règles de capture peuvent être différentes. Les talents cachés ne sont pas forcément obtenables normalement dans chaque zone.</p>
 </section><section aria-labelledby="roster-title" class="panel roster-wrap td-foldable" data-fold-name="Sets">
 <div class="roster-top td-fold-heading">
-<div><h2 id="roster-title">03 / Sets conseillés</h2><p>Fiches des captures confirmées avec leurs meilleurs sets pour Rubis Oméga. Une nouvelle capture recevra ses attaques conseillées lors de la prochaine mise à jour.</p></div>
-<span class="meta accent">8 vivants · 1 mort · 4 ratées</span>
+<div><h2 id="roster-title">03 / Sets conseillés</h2><p>Builds Nuzlocke Rubis Oméga / Saphir Alpha (6G), mis à jour pour les survivants. Les fiches des morts sont masquées automatiquement.</p></div>
+<span class="meta accent" id="roster-summary">Actualisation de la run…</span>
 </div>
 <div class="roster-grid" id="roster-cards"></div>
-<p class="section-note">🎯 Les sets sont pensés pour <strong>Pokémon Rubis Oméga, génération VI, Nuzlocke</strong>. Ils indiquent des objectifs à atteindre, pas forcément les quatre attaques déjà disponibles. Les attaques « actuelles » viennent des captures de tes écrans ; les autres sont des objectifs. Les capacités de niveau 1 peuvent être rappelées avec une Écaille Cœur à Autéquia. Pour récupérer certaines attaques de niveau 1, utilise le <strong>Maître des Capacités d'Autéquia</strong> contre une Écaille Cœur. Les recommandations peuvent être adaptées au talent, à la nature et au niveau réel de chaque Pokémon.</p>
+<p class="section-note">🎯 Les sets sont pensés pour <strong>Pokémon Rubis Oméga, génération VI, Nuzlocke</strong>. Ils indiquent des objectifs à atteindre, pas forcément les quatre attaques déjà disponibles. Les attaques « actuelles » viennent des captures de tes écrans ; les autres sont des objectifs. Les capacités de niveau 1 peuvent être rappelées avec une Écaille Cœur à Autéquia. Pour récupérer certaines attaques de niveau 1, utilise le <strong>Maître des Capacités d'Autéquia</strong> contre une Écaille Cœur. Les recommandations restent des objectifs : confirme ton talent, ta nature, ton niveau et la disponibilité de tes CT. Elles ne supposent pas que les attaques sont déjà apprises.</p>
 </section><section aria-labelledby="builder-title" class="panel builder-panel scroll-anchor td-foldable" data-fold-name="Team" id="team-builder">
 <div class="roster-top td-fold-heading"><div><h2 id="builder-title">04 / Team Builder ⚔️</h2><p>Compose tes six places à partir de tes Pokémon vivants. Choisis leurs talents possibles et leur objet tenu directement ici, sans passer par « Modifier ». Les autres passent dans la Boîte.</p></div><span class="meta accent" id="party-counter">0 / 6 places</span></div>
 <div class="manager-grid" id="builder-slots"></div>
@@ -511,7 +511,7 @@
         final:{title:'Objectif Ligue',moves:[
           ['Feu Sacré','Feu','Physique • rappel niveau 1 avec Écaille Cœur'],['Piétisol','Sol','CT78 • couverture Roche et Feu'],['Morsure','Ténèbres','Physique • couverture Psy / Spectre'],['Feu Follet','Feu','CT61 • affaiblir les attaquants physiques']
         ],notes:'Variante offensive : Lame de Roc (CT71) ou Retour à la place de Feu Follet. Set cible adaptable à tes CT et à tes besoins ; évite les risques inutiles en Nuzlocke.'},
-        caution:'Pression use les PP des attaques qui ciblent Richard, pas les dégâts. Niveau 8 connu ; PV dernièrement observés 13/37 : soigne-le avant les combats.'
+        caution:'Pression use les PP des attaques qui ciblent Richard, pas les dégâts. Niveau et PV de départ désormais obsolètes : consulte ses statistiques actuelles avant un combat important.'
       },
       {
         nick:'Flanby',species:'Cocotine',emoji:'🍮',type1:'Fée',type2:null,talent:'Cœur Soin',nature:'Inconnue',place:'Route 102 · ♂ · niv. 3 (dernière fiche)',item:'Baie Sitrus → Restes',
@@ -524,16 +524,23 @@
         ],notes:'Variante : Vampibaiser (niveau 21) pour récupérer des PV à la place d’Aromathérapi. Vérifie la nature plus tard pour affiner le set.'},
         caution:'Vitesse naturellement basse : ne lui fais pas encaisser une grosse attaque Acier ou Poison en espérant agir le premier.'
       },
+
       {
-        nick:'Colissimo',species:'Pomdepik → Foretress',emoji:'📦',type1:'Insecte',type2:null,talent:'Fermeté',nature:'Inconnue',place:'Route 104 · évolution niv. 31',item:'Baie Sitrus → Restes ou Casque Brut',
-        intro:'Excellent futur mur physique. Fermeté évite un K.O. par attaque directe à PV max ; maintiens-le soigné au maximum. À l’évolution, Foretress devient Insecte / Acier avec une faiblesse Feu ×4.',
-        early:{title:'Progression sûre',moves:[
-          ['Abri','Normal','Niv. 1 • observer une attaque adverse'],['Piqûre','Insecte','Niv. 9 • STAB physique'],['Tour Rapide','Normal','Niv. 17 • retire les pièges de terrain'],['Picots','Sol','Niv. 28 • dégâts sur les changements ennemis']
-        ],notes:'Ce sont des objectifs progressifs : garde Charge en attendant Piqûre si nécessaire. N’utilise jamais Destruction (niveau 6) ni Explosion : ces attaques mettent Colissimo K.O. !'},
-        final:{title:'Objectif Ligue • Foretress',moves:[
-          ['Gyroballe','Acier','CT74 ou niveau 50 • profite de sa lenteur'],['Picots','Sol','Niv. 28 • usure des équipes adverses'],['Change Éclair','Électrik','CT72 • pivot, malgré une Atq. Spé. modeste'],['Abri','Normal','Niv. 1 / rappel • anticiper les attaques']
-        ],notes:'Alternatives : Piétisol (CT78) ou Représailles (niveau 36 après évolution). En combat solo, Picots est moins décisif si les adversaires changent rarement ; adapte le slot.'},
-        caution:'Fermeté ne protège pas d’un second coup d’une capacité multi-coups ni des dégâts de poison/brûlure après le coup. Sur Foretress, surtout ne jamais rester face au Feu ×4.'
+        nick:'Colissimo',species:'Foretress',emoji:'📦',type1:'Insecte',type2:'Acier',talent:'Fermeté',nature:'À confirmer',place:'Route 104 · évolué',item:'Baie Sitrus → Restes / Casque Brut',
+        intro:'COLISSIMO est désormais Foretress : Défense physique énorme et nombreuses résistances. Fermeté fonctionne seulement à PV max. Faiblesse Feu ×4 : à ne JAMAIS laisser devant une menace Feu.',
+        early:{title:'Aventure • Foretress',moves:[
+          ['Piqûre','Insecte','STAB physique • appris comme Pomdepik niv. 9'],
+          ['Tour Rapide','Normal','Niv. 17 • enlève les pièges'],
+          ['Picots','Sol','Niv. 28 • usure si le rival change'],
+          ['Abri','Normal','Rappel niv. 1 ou CT17 • scout des capacités']
+        ],notes:'Conserve les attaques apprises avant évolution ou récupère-les chez le Maître des Capacités si possible. Ne joue JAMAIS Destruction ou Explosion : elles mettent ton propre Pokémon K.O. !'},
+        final:{title:'Objectif Ligue',moves:[
+          ['Gyroballe','Acier','CT74 / niv. 50 • STAB basé sur sa faible Vitesse'],
+          ['Piqûre','Insecte','STAB stable • alternative Change Éclair (CT72) pour pivoter'],
+          ['Piège de Roc','Roche','Maître des Capacités ROSA • usure sur changement'],
+          ['Abri','Normal','CT17 ou rappel • reconnaître les risques']
+        ],notes:'Les pièges sont moins rentables face aux dresseurs qui ne changent jamais. Remplace Picots / Piège de Roc par Piétisol (CT78), Mur Lumière (CT16) ou Tour Rapide selon ton besoin.'},
+        caution:'Feu ×4. Fermeté ne protège pas des multi-coups ou des dégâts résiduels. Interdiction absolue de Destruction / Explosion en Nuzlocke.'
       }
       ,{
         nick:'KFCORPORATE',species:'Braségali',emoji:'🍗',type1:'Feu',type2:'Combat',talent:'Brasier (confirmé)',nature:'À confirmer',place:'Bois Clémenti',item:'Baie Sitrus → Charbon ou Restes',
@@ -597,8 +604,83 @@
         ],notes:'Selon son talent, Abri peut être remplacé par une couverture comme Pouvoir Antique. N’engage pas un adversaire Roche sans certitude : Yanmega prend ×4.'},
         caution:'Talent réel et niveau inconnus : sélectionne sa capacité dans la liste déroulante du Team Builder. Roches ×4, Électrik/Glace/Feu/Vol ×2.'
       }
+      ,{
+        nick:'FEU VERT',species:'Feunard',emoji:'🦊',type1:'Feu',type2:null,talent:'À confirmer',nature:'À confirmer',place:'Route 110',item:'Baie Sitrus → Charbon / Restes',
+        intro:'Feunard est un rapide attaquant spécial et soutien Feu. Son talent exact reste inconnu : ne pars pas du principe qu’il possède Sécheresse. Il partage ses faiblesses Eau/Sol avec Richard et KFCORPORATE.',
+        early:{title:'Aventure • rappels / CT',moves:[
+          ['Lance-Flammes','Feu','Rappel niv. 1 ou CT35 • STAB fiable'],
+          ['Feu Follet','Feu','CT61 • brûler les adversaires physiques'],
+          ['Onde Folie','Spectre','Rappel niv. 1 • contrôle situationnel'],
+          ['Machination','Ténèbres','Rappel niv. 1 • +2 en Attaque Spéciale']
+        ],notes:'Chez le Maître des Capacités à Autéquia, vérifie ses attaques de niveau 1. Elles ne sont pas forcément présentes sur la capture ; conserve une attaque Feu fiable si tu ne possèdes pas la CT35.'},
+        final:{title:'Objectif Ligue • spécial',moves:[
+          ['Lance-Flammes','Feu','CT35 / rappel • STAB précis'],
+          ['Éco-Sphère','Plante','CT53 • couvre Eau, Sol et Roche'],
+          ['Machination','Ténèbres','Rappel niv. 1 • +2 Attaque Spéciale'],
+          ['Feu Follet','Feu','CT61 • réduit la menace physique']
+        ],notes:'Plénitude (CT04) est une alternative à Machination. Évite Déflagration si le risque d’échec peut condamner un Pokémon. Plusieurs types Feu dans l’équipe : réfléchis aux changements.'},
+        caution:'Eau, Sol, Roche ×2. Talent et nature à confirmer. Aucun set n’est garanti disponible tant que les attaques n’ont pas été vérifiées.'
+      }
+      ,{
+        nick:'FACTURE EDF',species:'Lumivole',emoji:'💡',type1:'Insecte',type2:null,talent:'À confirmer',nature:'À confirmer',place:'Route 112',item:'Baie Sitrus → Restes',
+        intro:'Lumivole joue le soutien : baisse des statistiques, soins et contrôle. Talent à confirmer : Farceur donne la priorité aux attaques de statut ; Lentiteintée aide les attaques résistées.',
+        early:{title:'Aventure • soutien',moves:[
+          ['Survinsecte','Insecte','Niv. 15 ou CT76 • STAB et baisse Atq. Spé.'],
+          ['Charme','Fée','Niv. 9 • baisse fortement l’Attaque'],
+          ['Rayon Lune','Fée','Niv. 19 • soins directs sensibles à la météo'],
+          ['Vœu','Normal','Niv. 22 • soins différés utilisables après switch']
+        ],notes:'Encore (niv. 26) est une excellente alternative. Pour encaisser pendant un Nuzlocke, Survinsecte et Charme sont plus utiles que d’attaquer sans couverture.'},
+        final:{title:'Objectif Ligue • contrôle',moves:[
+          ['Bourdon','Insecte','Niv. 40 • STAB spécial de bonne puissance'],
+          ['Rayon Lune','Fée','Niv. 19 • récupération immédiate'],
+          ['Encore','Normal','Niv. 26 • bloque une action adverse'],
+          ['Éclat Magique','Fée','CT99 • couverture Dragon, Combat, Ténèbres']
+        ],notes:'Variantes : Cage Éclair (CT73), Tonnerre (CT24), Vœu (niv. 22) ou Demi-Tour (CT89). Ne suppose pas qu’elle possède Bourdon avant le niveau 40.'},
+        caution:'Faiblesses Feu, Roche et Vol ×2. Talent et nature inconnus : vérifie si elle bénéficie vraiment de Farceur.'
+      }
+      ,{
+        nick:'PAPA NOWEL',species:'Cadoizo',emoji:'🎅',type1:'Glace',type2:'Vol',talent:'À confirmer',nature:'À confirmer',place:'Site Météore',item:'Baie Sitrus → Ceinture Force',
+        intro:'Cadoizo est extrêmement fragile et faible à la Roche ×4. En Rubis Oméga, il n’apprend que Cadeau en montant de niveau ; Cadeau peut même SOIGNER la cible. Ses attaques jouables viennent des CT/maîtres.',
+        early:{title:'Aventure • si CT disponibles',moves:[
+          ['Aéropique','Vol','CT40 • STAB sans échec de précision'],
+          ['Abri','Normal','CT17 • scout'],
+          ['Casse-Brique','Combat','CT31 • couvre Roche et Acier'],
+          ['Laser Glace','Glace','CT13 • STAB spécial précis']
+        ],notes:'Ce sont des objectifs de CT, pas des attaques supposées présentes ! Tant que tu ne disposes que de Cadeau, mieux vaut conserver PAPA NOWEL dans la Boîte.'},
+        final:{title:'Objectif Ligue • CT',moves:[
+          ['Laser Glace','Glace','CT13 • STAB spécial'],
+          ['Aéropique','Vol','CT40 • STAB précis'],
+          ['Casse-Brique','Combat','CT31 • couverture Roche / Acier'],
+          ['Abri','Normal','CT17 • éviter un mauvais tour']
+        ],notes:'Vent Glace, Poing-Glace et Vibraqua sont disponibles auprès de maîtres des capacités dans ROSA. Vol (CS02) est pratique en dehors des combats, mais donne un tour de préparation.'},
+        caution:'Roche ×4 ; Électrik, Feu, Acier ×2. Avec Agitation, les attaques physiques deviennent moins précises. Évite Cadeau en combat dangereux.'
+      }
+      ,{
+        nick:'VPN GRATUIT',species:'Kecleon',emoji:'🦎',type1:'Normal',type2:null,talent:'À confirmer',nature:'À confirmer',place:'Sentier Sinuroc',item:'Baie Sitrus → Restes',
+        intro:'Kecleon encaisse bien sur le spécial (Déf. Spé. base 120) et frappe mieux en physique (Attaque base 90), mais reste très lent. Si son talent est Protéen, il change de type avant chaque attaque.',
+        early:{title:'Aventure • priorité',moves:[
+          ['Tranche','Normal','Niv. 25 • STAB physique fiable'],
+          ['Ombre Portée','Spectre','Niv. 7 / rappel • priorité +1'],
+          ['Griffe Ombre','Spectre','Niv. 33 • couverture physique'],
+          ['Cage Éclair','Électrik','CT73 • neutralise la Vitesse adverse']
+        ],notes:'Feinte (niv. 16) remplace Griffe Ombre avant le niveau 33. Les attaques de priorité sont très utiles avec sa Vitesse basse. Attention : Protéen change ses faiblesses en temps réel.'},
+        final:{title:'Objectif Ligue • physique',moves:[
+          ['Retour','Normal','CT27 • STAB lié à l’amitié'],
+          ['Griffe Ombre','Spectre','Niv. 33 • couverture'],
+          ['Coup Bas','Ténèbres','Niv. 46 • priorité si cible attaque'],
+          ['Éboulement','Roche','CT80 • couvre les types Vol et Feu']
+        ],notes:'Poing-Glace, Poing-Éclair et Poing de Feu sont accessibles par maîtres des capacités. Ombre Portée est plus facile à anticiper que Coup Bas, qui échoue si l’ennemi ne lance pas d’attaque.'},
+        caution:'Faiblesse Combat si Kecleon reste Normal. Avec Protéen, le type change ! Défense physique moyenne et Vitesse faible : évite les attaques Combat puissantes.'
+      }
     ];
     function renderRoster(){
+      const summary=byId('roster-summary');
+      if(summary){
+        const living=tracker.entries.filter(x=>x.status==='alive').length;
+        const deaths=tracker.entries.filter(x=>x.status==='dead').length;
+        const supported=roster.filter(x=>tracker.entries.some(p=>p.nick===x.nick&&p.status==='alive')).length;
+        summary.textContent=living+' vivants · '+deaths+' morts · '+tracker.misses.length+' ratées · '+supported+' sets';
+      }
       const html=roster.map((mon,index)=>{
         if (typeof tracker !== 'undefined' && tracker.entries.some(x=>x.nick===mon.nick && x.status==='dead')) return '';
         const mode=window.__modes?.[index]||'early';
@@ -615,7 +697,7 @@
       }).join('');
       byId('roster-cards').innerHTML=html;
     }
-    window.__modes={0:'early',1:'early',2:'early',3:'early',4:'early',5:'early'};
+    window.__modes={};
     byId('roster-cards').addEventListener('click',e=>{
       const set=e.target.closest('[data-roster-set]');
       if(set){const [i,mode]=set.dataset.rosterSet.split(':');window.__modes[Number(i)]=mode;renderRoster();return;}
