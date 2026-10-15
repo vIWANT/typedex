@@ -1,5 +1,5 @@
 {
-  "revision": 35,
+  "revision": 36,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -204,6 +204,14 @@
         "talent": "À confirmer",
         "nature": "À confirmer",
         "level": null
+      }
+    },
+    {
+      "id": "evolution-air-france-etourvol-2026-10-15",
+      "type": "pokemon",
+      "pokemonId": "airfrance",
+      "fields": {
+        "species": "Étourvol"
       }
     }
   ],
