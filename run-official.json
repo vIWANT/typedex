@@ -1,5 +1,5 @@
 {
-  "revision": 39,
+  "revision": 40,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -241,6 +241,20 @@
         "species": "Mewtwo",
         "nick": "FRIEZER",
         "place": "Route 121",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "capture-carte-vitale-gardevoir-route-122-2026-10-15",
+      "type": "capture",
+      "pokemon": {
+        "id": "cartevitale",
+        "species": "Gardevoir",
+        "nick": "CARTE VITALE",
+        "place": "Route 122",
         "status": "alive",
         "talent": "À confirmer",
         "nature": "À confirmer",
