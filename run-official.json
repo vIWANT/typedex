@@ -1,5 +1,5 @@
 {
-  "revision": 30,
+  "revision": 31,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -141,6 +141,14 @@
         "talent": "À confirmer",
         "nature": "À confirmer",
         "level": null
+      }
+    },
+    {
+      "id": "rename-pole-emploi-marco-polo-2026-10-15",
+      "type": "pokemon",
+      "pokemonId": "poleemploi",
+      "fields": {
+        "nick": "MARCO POLO"
       }
     }
   ],
