@@ -362,6 +362,7 @@
 </section><section aria-labelledby="box-title" class="panel box-panel scroll-anchor td-foldable" data-fold-name="Boîte" id="pokemon-box">
 <div class="roster-top td-fold-heading"><div><h2 id="box-title">05 / Boîte Pokémon 📦</h2><p>Pokémon capturés, disponibles pour compléter l'équipe. Les morts et rencontres ratées ne sont pas sélectionnables.</p></div><span class="meta accent" id="box-counter">0 en boîte</span></div>
 <div class="box-cards" id="box-cards"></div>
+<div id="hm-helper-box" aria-live="polite"></div>
 <details open=""><summary>➕ Enregistrer une nouvelle capture dans la Boîte</summary>
 <p class="helper">Après ton récap, tu peux aussi ajouter une capture toi-même. Elle sera disponible pour le Team Builder, mais ne change pas automatiquement l'historique des zones.</p>
 <form class="form-grid" id="new-pokemon-form" style="margin-top:14px">
@@ -1013,6 +1014,11 @@
       // Nettoyage si une importation contient des emplacements en double ou des Pokémon morts.
       const seen=new Set(); tracker.party=tracker.party.slice(0,6).map(id=>{const x=tracker.entries.find(x=>x.id===id&&x.status==='alive');if(!x||seen.has(id))return null;seen.add(id);return id;});while(tracker.party.length<6)tracker.party.push(null);
       const alive=live(), boxed=alive.filter(x=>!inTeam(x));
+      const hmHelpers=Array.isArray(tracker.hmHelpers)?tracker.hmHelpers:[];
+      byId('hm-helper-box').innerHTML=hmHelpers.length?
+        '<div class="box-mon" style="margin-top:14px;border:1px solid #6a5e9f;background:#242334"><div class="box-title"><span>🌊 Exception CS • hors Nuzlocke</span><span>Interdit de combat</span></div>'+
+        hmHelpers.map(x=>'<div class="box-desc" style="padding:8px 0"><strong>'+h(x.nick||x.species)+' ('+h(x.species)+')</strong> · '+h(x.place)+' · <strong>CS '+h(x.move||'Surf')+'</strong><div class="team-minor">⚠️ Usage hors combat uniquement. Ne rejoint jamais les 6 Pokémon combattants ; ne compte ni comme vivant, ni comme capture valide et ne consomme pas une deuxième zone.</div></div>').join('')+
+        '</div>':'';
       byId('party-counter').textContent=`${tracker.party.filter(Boolean).length} / 6 places`;
       byId('box-counter').textContent=`${boxed.length} en boîte`;
       byId('builder-slots').innerHTML=tracker.party.map((id,i)=>{
@@ -1025,7 +1031,8 @@
       const dead=tracker.entries.filter(x=>x.status==='dead');
       byId('history-box').innerHTML=[...dead.map(x=>`<div class="journal-line"><span>${h(x.place)}</span><strong>${h(x.nick)} (${h(x.species)})</strong><span class="status dead">💀 Mort</span></div>`),...tracker.misses.map(x=>`<div class="journal-line"><span>${h(x.place)}</span><strong>${h(x.species)}</strong><span class="status missed">✕ ${h(x.reason)}</span></div>`)].join('');
       const stats=byId('journal-title').closest('.journal').querySelectorAll('.stats b');if(stats.length===3){stats[0].textContent=alive.length;stats[1].textContent=dead.length;stats[2].textContent=tracker.misses.length;}
-      byId('journal-title').closest('.journal').querySelector('.journal-grid').innerHTML=tracker.entries.map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.nick)} (${h(x.species)})${x.level?' · niv. '+x.level:''}</strong><span class="status ${x.status==='alive'?'alive':'dead'}">${x.status==='alive'?'♥ Vivant':'✝ Mort'}</span></div>`).join('')+tracker.misses.map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.species)}</strong><span class="status missed">✕ Raté</span></div>`).join('');
+      byId('journal-title').closest('.journal').querySelector('.journal-grid').innerHTML=tracker.entries.map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.nick)} (${h(x.species)})${x.level?' · niv. '+x.level:''}</strong><span class="status ${x.status==='alive'?'alive':'dead'}">${x.status==='alive'?'♥ Vivant':'✝ Mort'}</span></div>`).join('')+tracker.misses.map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.species)}</strong><span class="status missed">✕ Raté</span></div>`).join('')
+      +hmHelpers.map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.nick||x.species)} (${h(x.species)})</strong><span class="status">🌊 CS ${h(x.move||'Surf')} · hors combat</span></div>`).join('');
       const setStatus=byId('roster-title').closest('section').querySelector('.roster-top .meta');if(setStatus)setStatus.textContent=`${alive.length} vivants · ${dead.length} mort(s) · ${tracker.misses.length} ratée(s)`;
       // Raccourcis à jour : uniquement les Pokémon vivants
       const activePresets=alive.map(x=>{const p=findSpecies(x.species);return p?[x.nick+' ('+x.species+')',p.types[0],p.types[1]||null]:null}).filter(Boolean);
@@ -1281,6 +1288,13 @@ renderGuide();
       if(mon.status!=='alive'){tracker.party=tracker.party.map(x=>x===mon.id?null:x);}
       if(mon.place){tracker.zoneChecks??={};tracker.zoneChecks[id(mon.place)]=true;}
       // Pas de remplacement automatique d'une equipe deja complete.
+    }else if(ev.type==='hm-only'&&ev.pokemon&&typeof ev.pokemon.id==='string'){
+      // Exception CS : jamais dans tracker.entries ni dans tracker.party.
+      // La zone reste attribuée à la première rencontre légale.
+      tracker.hmHelpers??=[];
+      const p=ev.pokemon;
+      if(!tracker.hmHelpers.some(x=>x.id===p.id))
+        tracker.hmHelpers.push({id:p.id,species:p.species||'?',nick:p.nick||p.species||'?',place:p.place||'?',move:p.move||'Surf'});
     }else if(ev.type==='miss'&&ev.place){
       tracker.misses??=[];
       if(!tracker.misses.some(x=>id(x.place)===id(ev.place)))tracker.misses.push({species:ev.species||'?',place:ev.place,reason:ev.reason||'Capture ratée'});
@@ -1309,7 +1323,16 @@ renderGuide();
       const seen=new Set(Array.isArray(tracker.appliedOnlineEvents)?tracker.appliedOnlineEvents:[]);
       let applied=0;
       for(const ev of doc.events){
-        if(!ev||typeof ev.id!=='string'||seen.has(ev.id))continue;
+        if(!ev||typeof ev.id!=='string')continue;
+        // Rejouer les exceptions CS si une ancienne version du site a déjà vu
+        // l'événement sans connaître ce type : pas de perte lors de la mise à jour.
+        if(ev.type==='hm-only'){
+          const missing=!Array.isArray(tracker.hmHelpers)||!tracker.hmHelpers.some(x=>x.id===ev.pokemon?.id);
+          mergeEvent(ev);seen.add(ev.id);
+          if(missing)applied++;
+          continue;
+        }
+        if(seen.has(ev.id))continue;
         mergeEvent(ev);seen.add(ev.id);applied++;
       }
       tracker.appliedOnlineEvents=[...seen];
