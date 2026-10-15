@@ -1,5 +1,5 @@
 {
-  "revision": 40,
+  "revision": 41,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -255,6 +255,20 @@
         "species": "Gardevoir",
         "nick": "CARTE VITALE",
         "place": "Route 122",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "capture-uber-boat-demanta-mont-memoria-2026-10-15",
+      "type": "capture",
+      "pokemon": {
+        "id": "uberboat",
+        "species": "Démanta",
+        "nick": "UBER BOAT",
+        "place": "Mont Mémoria",
         "status": "alive",
         "talent": "À confirmer",
         "nature": "À confirmer",
