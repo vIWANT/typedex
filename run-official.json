@@ -1,5 +1,5 @@
 {
-  "revision": 22,
+  "revision": 23,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -35,6 +35,13 @@
       "type": "miss",
       "species": "Crabaraque",
       "place": "Route 111",
+      "reason": "Mis K.O. avant capture"
+    },
+    {
+      "id": "miss-octillery-grotte-oubliee-2026-10-15",
+      "type": "miss",
+      "species": "Octillery",
+      "place": "Grotte Oubliée",
       "reason": "Mis K.O. avant capture"
     }
   ],
