@@ -1,5 +1,5 @@
 {
-  "revision": 26,
+  "revision": 27,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -76,6 +76,20 @@
       "id": "death-ryanair-ptera-2026-10-15",
       "type": "death",
       "pokemonId": "ryanair"
+    },
+    {
+      "id": "capture-vpn-gratuit-kecleon-sentier-sinuroc-2026-10-15",
+      "type": "capture",
+      "pokemon": {
+        "id": "vpngratuit",
+        "species": "Kecleon",
+        "nick": "VPN GRATUIT",
+        "place": "Sentier Sinuroc",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
     }
   ],
   "example_not_published": {
