@@ -1,5 +1,5 @@
 {
-  "revision": 32,
+  "revision": 33,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -162,6 +162,20 @@
         "move": "Surf",
         "status": "cs-only",
         "combatAllowed": false
+      }
+    },
+    {
+      "id": "gift-btp-express-donphan-ile-du-sud-2026-10-15",
+      "type": "capture",
+      "pokemon": {
+        "id": "btpexpress",
+        "species": "Donphan",
+        "nick": "BTP EXPRESS",
+        "place": "Île du Sud",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
       }
     }
   ],
