@@ -1,5 +1,5 @@
 {
-  "revision": 46,
+  "revision": 47,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -382,6 +382,20 @@
         "species": "Couverdure",
         "nick": "CERFA 404",
         "place": "Nénucrique",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "capture-mesmerella-planque-magma-2026-10-15",
+      "type": "capture",
+      "pokemon": {
+        "id": "mesmerella-magma",
+        "species": "Mesmérella",
+        "nick": "Mesmérella",
+        "place": "Planque Magma",
         "status": "alive",
         "talent": "À confirmer",
         "nature": "À confirmer",
