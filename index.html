@@ -843,6 +843,24 @@
         ],notes:'Option offensive : Danse-Lames (niveau 46 de Manternel ou CT75) à la place de Griffe Ombre, seulement avec une fenêtre de placement vraiment sûre. Alternative de couverture Direct Toxik (CT84) pour les types Fée. Les attaques sont des objectifs compatibles ROSA, pas celles vérifiées sur le Couverdure capturé.'},
         caution:'Double faiblesse Feu ×4 ET Vol ×4. Faiblesses supplémentaires Insecte, Glace, Poison et Roche ×2 : il peut tomber sur une couverture imprévue. Manternel reste beaucoup moins sûr que ton Celebi face aux menaces ordinaires ; privilégier la boîte si le niveau est trop bas.'
       }
+      ,{
+        nick:'Mesmérella',species:'Mesmérella',emoji:'🔮',type1:'Psy',type2:null,talent:'À confirmer',nature:'À confirmer',place:'Planque Magma',item:'Baie Sitrus → Restes / Cuillère Tordue',
+        intro:'Capturée dans la Planque Magma. Mesmérella est un Pokémon Psy pur, davantage orienté défense spéciale que puissance brute. Elle évolue en Sidérella au niveau 41. Elle reste en boîte tant que la composition de l’équipe n’est pas volontairement modifiée. Surnom, talent, niveau et nature à confirmer.',
+        early:{title:'Aventure • attaquant spécial prudent',moves:[
+          ['Choc Psy','Psy','Niveau 25 / CT03 • attaque spéciale qui cible la Défense adverse'],
+          ['Rafale Psy','Psy','Niveau 16 • STAB fiable en attendant Psyko'],
+          ['Ball’Ombre','Spectre','CT30 • couverture des types Psy et Spectre'],
+          ['Cage-Éclair','Électrik','CT73 • contrôler la Vitesse adverse']
+        ],notes:'Psyko est appris au niveau 39 ou via CT29 : il remplace Rafale Psy dès qu’il est accessible. Ne présume pas que les CT ou les attaques de cette liste sont déjà sur le Pokémon capturé. Abri (CT17) est une autre option de prudence.'},
+        final:{title:'Objectif Ligue • Sidérella spécial utilitaire',moves:[
+          ['Psyko','Psy','Niveau 39 chez Mesmérella / CT29 • puissant STAB spécial'],
+          ['Ball’Ombre','Spectre','CT30 • couverture des types Psy et Spectre'],
+          ['Tonnerre','Électrik','CT24 • couverture Eau et Vol'],
+          ['Plénitude','Psy','CT04 • renforcer Attaque Spéciale et Défense Spéciale']
+        ],notes:'Plénitude se place seulement face à un adversaire incapable de représenter une menace immédiate. Variante sécurisée : Abri (CT17) à la place de Plénitude, ou Cage-Éclair (CT73) pour ralentir des ennemis dangereux. Objets et attaques proposés, à obtenir selon la progression de la run.'},
+        caution:'Faiblesses Insecte, Spectre et Ténèbres ×2. Résistances Combat et Psy ×0,5. Malgré sa bonne Défense Spéciale, elle est assez lente et peut être dépassée par des attaquants physiques. Attention à Sabotage et Coup Bas.'
+      }
+
     ];
     function renderRoster(){
       const summary=byId('roster-summary');
@@ -1019,6 +1037,12 @@
       upgradeConfirmedLocations(tracker);
     }
     catch(e){tracker=structuredClone(initialRun);}
+    // Capture confirmée v47 : conservée même si le site est consulté sans connexion.
+    if(!tracker.entries.some(x=>x.id==='mesmerella-magma'||(x.species==='Mesmérella'&&normalizeSearch(x.place)==='planque magma'))){
+      tracker.entries.push({id:'mesmerella-magma',species:'Mesmérella',nick:'Mesmérella',place:'Planque Magma',talent:'À confirmer',nature:'À confirmer',level:null,status:'alive'});
+    }
+    tracker.zoneChecks??={};
+    tracker.zoneChecks[normalizeSearch('Planque Magma')]=true;
     function validState(s){return !!s && Array.isArray(s.entries) && Array.isArray(s.party) && Array.isArray(s.misses) && s.party.length===6 && s.entries.every(x=>x&&typeof x.id==='string'&&typeof x.species==='string');}
     function h(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
     function findSpecies(name){return allSpecies.find(p=>normalizeSearch(p.name)===normalizeSearch(name));}
