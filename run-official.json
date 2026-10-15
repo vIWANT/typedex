@@ -1,5 +1,5 @@
 {
-  "revision": 44,
+  "revision": 45,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -366,6 +366,13 @@
         "nature": "À confirmer",
         "level": null
       }
+    },
+    {
+      "id": "undo-decret-49-3-unsaved-2026-10-15",
+      "type": "undo-capture",
+      "pokemonId": "decret493",
+      "place": "Nénucrique",
+      "reason": "Jeu fermé sans sauvegarder, capture annulée"
     }
   ],
   "example_not_published": {
