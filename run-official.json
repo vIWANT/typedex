@@ -1,5 +1,5 @@
 {
-  "revision": 33,
+  "revision": 34,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -172,6 +172,20 @@
         "species": "Donphan",
         "nick": "BTP EXPRESS",
         "place": "Île du Sud",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "capture-air-france-etourmi-route-119-2026-10-15",
+      "type": "capture",
+      "pokemon": {
+        "id": "airfrance",
+        "species": "Étourmi",
+        "nick": "AIR FRANCE",
+        "place": "Route 119",
         "status": "alive",
         "talent": "À confirmer",
         "nature": "À confirmer",
