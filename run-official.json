@@ -1,5 +1,5 @@
 {
-  "revision": 45,
+  "revision": 46,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -373,6 +373,20 @@
       "pokemonId": "decret493",
       "place": "Nénucrique",
       "reason": "Jeu fermé sans sauvegarder, capture annulée"
+    },
+    {
+      "id": "capture-cerfa-404-couverdure-nenucrique-2026-10-15",
+      "type": "capture",
+      "pokemon": {
+        "id": "cerfa404",
+        "species": "Couverdure",
+        "nick": "CERFA 404",
+        "place": "Nénucrique",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
     }
   ],
   "example_not_published": {
