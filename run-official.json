@@ -1,0 +1,12 @@
+{
+  "revision": 20,
+  "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
+  "events": [],
+  "example_not_published": {
+    "id": "exemple-unique-021",
+    "type": "miss",
+    "species": "Écrapince",
+    "place": "Route 109",
+    "reason": "Mis K.O. avant capture"
+  }
+}
