@@ -1292,6 +1292,21 @@
     tracker.zoneChecks[normalizeSearch('Route 130')]=true;
     tracker.zoneChecks[normalizeSearch('Route 131')]=true;
 
+
+    // V57 : trois captures confirmées, sans teambuilding ni modification des six places.
+    const capturesV57=[
+      {id:'corayon-route-132',species:'Corayon',nick:'Corayon',place:'Route 132',status:'alive',talent:'À confirmer',nature:'À confirmer',level:null},
+      {id:'furaiglon-pacifiville',species:'Furaiglon',nick:'Furaiglon',place:'Pacifiville',status:'alive',talent:'À confirmer',nature:'À confirmer',level:null},
+      {id:'venalgue-route-134',species:'Venalgue',nick:'Venalgue',place:'Route 134',status:'alive',talent:'À confirmer',nature:'À confirmer',level:null}
+    ];
+    tracker.zoneChecks??={};
+    for(const pokemon of capturesV57){
+      if(!tracker.entries.some(x=>x.id===pokemon.id||normalizeSearch(x.place)===normalizeSearch(pokemon.place)&&normalizeSearch(x.species)===normalizeSearch(pokemon.species))){
+        tracker.entries.push({...pokemon});
+      }
+      tracker.zoneChecks[normalizeSearch(pokemon.place)]=true;
+    }
+
     function validState(s){return !!s && Array.isArray(s.entries) && Array.isArray(s.party) && Array.isArray(s.misses) && s.party.length===6 && s.entries.every(x=>x&&typeof x.id==='string'&&typeof x.species==='string');}
     function h(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
     function findSpecies(name){return allSpecies.find(p=>normalizeSearch(p.name)===normalizeSearch(name));}
