@@ -1,5 +1,5 @@
 {
-  "revision": 53,
+  "revision": 54,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -503,6 +503,20 @@
         "species": "Wattouat",
         "nick": "Wattouat",
         "place": "Route 128",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "capture-porygon-eternara-2026-10-16",
+      "type": "capture",
+      "pokemon": {
+        "id": "porygon-eternara",
+        "species": "Porygon",
+        "nick": "Porygon",
+        "place": "Éternara",
         "status": "alive",
         "talent": "À confirmer",
         "nature": "À confirmer",
