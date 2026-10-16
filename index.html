@@ -1108,6 +1108,26 @@
       tracker.party=tracker.party.map(id=>id===uberBoat.id?null:id);
     }
 
+    // v50 : UBER BOAT reste physiquement à la sixième place pour les CS.
+    // Démanta est TOUJOURS mort : jamais disponible comme combattant.
+    let uberBoatCS=tracker.entries.find(x=>x.id==='uberboat'||(normalizeSearch(x.species)==='demanta'&&normalizeSearch(x.place)==='mont memoria'));
+    if(!uberBoatCS){
+      uberBoatCS={id:'uberboat',species:'Démanta',nick:'UBER BOAT',place:'Mont Mémoria',talent:'À confirmer',nature:'À confirmer',level:null,status:'dead'};
+      tracker.entries.push(uberBoatCS);
+    }
+    uberBoatCS.status='dead';
+    tracker.hmPartyId=uberBoatCS.id;
+    tracker.hmPartyMoves=['Surf','Plongée'];
+    if(!Array.isArray(tracker.party))tracker.party=[];
+    tracker.party=tracker.party.slice(0,6);
+    while(tracker.party.length<6)tracker.party.push(null);
+    // La place physique n°6 devient réservée aux CS ; son occupant vivant
+    // précédent, s'il existe, n'est pas supprimé et reste disponible en Boîte.
+    for(let i=0;i<5;i++)if(tracker.party[i]===uberBoatCS.id)tracker.party[i]=null;
+    tracker.party[5]=uberBoatCS.id;
+    tracker.zoneChecks??={};
+    tracker.zoneChecks[normalizeSearch(uberBoatCS.place)]=true;
+
     function validState(s){return !!s && Array.isArray(s.entries) && Array.isArray(s.party) && Array.isArray(s.misses) && s.party.length===6 && s.entries.every(x=>x&&typeof x.id==='string'&&typeof x.species==='string');}
     function h(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
     function findSpecies(name){return allSpecies.find(p=>normalizeSearch(p.name)===normalizeSearch(name));}
@@ -1253,27 +1273,48 @@
 
     function optionsFor(slot){const active=tracker.party[slot];return `<option value="">Emplacement libre / Boîte</option>`+live().filter(x=>!tracker.party.includes(x.id)||x.id===active).map(x=>`<option value="${h(x.id)}" ${x.id===active?'selected':''}>${h(x.nick)} (${h(x.species)})</option>`).join('');}
     function renderTracker(){
-      // Nettoyage si une importation contient des emplacements en double ou des Pokémon morts.
-      const seen=new Set(); tracker.party=tracker.party.slice(0,6).map(id=>{const x=tracker.entries.find(x=>x.id===id&&x.status==='alive');if(!x||seen.has(id))return null;seen.add(id);return id;});while(tracker.party.length<6)tracker.party.push(null);
+      // Contrôle des doublons : seuls les vivants combattent.
+      // UBER BOAT, mort, est l'unique exception CS au sixième emplacement.
+      const seen=new Set();
+      tracker.party=tracker.party.slice(0,6).map((id,i)=>{
+        if(i===5 && tracker.hmPartyId==='uberboat')return 'uberboat';
+        const x=tracker.entries.find(x=>x.id===id&&x.status==='alive');
+        if(!x||seen.has(id))return null;
+        seen.add(id);return id;
+      });
+      while(tracker.party.length<6)tracker.party.push(null);
+      if(tracker.hmPartyId==='uberboat')tracker.party[5]='uberboat';
       const alive=live(), boxed=alive.filter(x=>!inTeam(x));
       const hmHelpers=Array.isArray(tracker.hmHelpers)?tracker.hmHelpers:[];
       byId('hm-helper-box').innerHTML=hmHelpers.length?
         '<div class="box-mon" style="margin-top:14px;border:1px solid #6a5e9f;background:#242334"><div class="box-title"><span>🌊 Exception CS • hors Nuzlocke</span><span>Interdit de combat</span></div>'+
         hmHelpers.map(x=>'<div class="box-desc" style="padding:8px 0"><strong>'+h(x.nick||x.species)+' ('+h(x.species)+')</strong> · '+h(x.place)+' · <strong>CS '+h(x.move||'Surf')+'</strong><div class="team-minor">⚠️ Usage hors combat uniquement. Ne rejoint jamais les 6 Pokémon combattants ; ne compte ni comme vivant, ni comme capture valide et ne consomme pas une deuxième zone.</div></div>').join('')+
         '</div>':'';
-      byId('party-counter').textContent=`${tracker.party.filter(Boolean).length} / 6 places`;
+      const fighterCount=tracker.party.filter(id=>tracker.entries.some(x=>x.id===id&&x.status==='alive')).length;
+      const csCount=tracker.party.filter(id=>id==='uberboat'&&tracker.hmPartyId==='uberboat').length;
+      byId('party-counter').textContent=`${tracker.party.filter(Boolean).length} / 6 places · ${fighterCount} combattant(s) + ${csCount} CS hors combat`;
       byId('box-counter').textContent=`${boxed.length} en boîte`;
       byId('builder-slots').innerHTML=tracker.party.map((id,i)=>{
-        const x=tracker.entries.find(x=>x.id===id);return `<div class="team-slot ${x?'filled':''}"><label for="party-slot-${i}">EMPLACEMENT ${i+1}</label><select id="party-slot-${i}" data-slot="${i}">${optionsFor(i)}</select>${x?`<div class="team-name">${h(x.nick)}</div><div class="team-minor">${h(x.species)}${x.level?' · niv. '+x.level:''}</div><div class="team-death-action"><label class="td-death-label"><input type="checkbox" data-dead="${h(x.id)}" aria-label="Déclarer ${h(x.nick)} mort"/> 💀 Mort</label></div><div>${miniTypes(x.species)}</div><div class="team-minor">${miniStats(x.species)}</div>${loadoutEditor(x)}${personalStatsEditor(x)}<div class="mini-actions"><button type="button" data-edit="${h(x.id)}">✏️ Modifier</button></div>`:'<div class="team-minor">Choisis un Pokémon vivant dans la liste.</div>'}</div>`;
+        const x=tracker.entries.find(x=>x.id===id);
+        if(x&&x.id==='uberboat'&&tracker.hmPartyId==='uberboat'&&x.status==='dead'){
+          return `<div class="team-slot filled" style="border:2px solid #8276c9;background:#28243a">
+          <label>EMPLACEMENT ${i+1} • UTILITAIRE CS</label>
+          <div class="team-name">🌊💀 ${h(x.nick)} (${h(x.species)})</div>
+          <div class="team-minor"><strong>Surf (CS03) · Plongée (CS07)</strong> · pour les déplacements</div>
+          <div class="team-minor" style="color:#ffb5b5">💀 Mort définitive : interdit de combat, absent des calculs de l’équipe combattante.</div>
+          <div class="team-minor">Place physique réservée. Les Pokémon vivants non sélectionnés restent dans la Boîte.</div>
+          </div>`;
+        }
+        return `<div class="team-slot ${x?'filled':''}"><label for="party-slot-${i}">EMPLACEMENT ${i+1}</label><select id="party-slot-${i}" data-slot="${i}">${optionsFor(i)}</select>${x?`<div class="team-name">${h(x.nick)}</div><div class="team-minor">${h(x.species)}${x.level?' · niv. '+x.level:''}</div><div class="team-death-action"><label class="td-death-label"><input type="checkbox" data-dead="${h(x.id)}" aria-label="Déclarer ${h(x.nick)} mort"/> 💀 Mort</label></div><div>${miniTypes(x.species)}</div><div class="team-minor">${miniStats(x.species)}</div>${loadoutEditor(x)}${personalStatsEditor(x)}<div class="mini-actions"><button type="button" data-edit="${h(x.id)}">✏️ Modifier</button></div>`:'<div class="team-minor">Choisis un Pokémon vivant dans la liste.</div>'}</div>`;
       }).join('');
       byId('box-cards').innerHTML=boxed.length?boxed.map(x=>`<div class="box-mon"><div class="box-title"><span>📦 ${h(x.nick)}</span><span>${x.level?'Niv. '+x.level:''}</span></div><div class="box-desc">${h(x.species)} · ${h(x.place)} · ${h(x.talent)}</div><div>${miniTypes(x.species)}</div><div class="stat-caption">${miniStats(x.species)}</div>${loadoutEditor(x)}${personalStatsEditor(x)}<div class="mini-actions"><button data-place="${h(x.id)}">➕ Équipe</button><button data-edit="${h(x.id)}">✏ Modifier</button><label class="td-death-label"><input type="checkbox" data-dead="${h(x.id)}" aria-label="Déclarer ${h(x.nick)} mort"/> 💀 Mort</label></div></div>`).join(''):'<p class="dex-info">Ta Boîte est vide : tous tes Pokémon vivants sont actuellement dans l’équipe.</p>';
-      const team=tracker.party.map(id=>tracker.entries.find(x=>x.id===id)).filter(Boolean);
+      const team=tracker.party.map(id=>tracker.entries.find(x=>x.id===id)).filter(x=>x&&x.status==='alive');
       const risk=names.map(type=>({type, targets:team.filter(x=>{const p=findSpecies(x.species);if(!p)return false;return calculate(...p.types)[type]>=2;}).map(x=>x.nick),quad:team.filter(x=>{const p=findSpecies(x.species);return p && calculate(...p.types)[type]===4;}).map(x=>x.nick)})).filter(x=>x.targets.length).sort((a,b)=>b.targets.length-a.targets.length||a.type.localeCompare(b.type,'fr'));
-      byId('team-weakness').innerHTML=risk.length?risk.map(x=>`<div class="weak-tile"><div>${badge(x.type)}<span class="count">${x.targets.length}/6</span></div><span>${h(x.targets.join(', '))}${x.quad.length?' · ×4 : '+h(x.quad.join(', ')):''}</span></div>`).join(''):'<p class="dex-info">Aucune faiblesse identifiée pour la composition actuelle.</p>';
+      byId('team-weakness').innerHTML=risk.length?risk.map(x=>`<div class="weak-tile"><div>${badge(x.type)}<span class="count">${x.targets.length}/${team.length}</span></div><span>${h(x.targets.join(', '))}${x.quad.length?' · ×4 : '+h(x.quad.join(', ')):''}</span></div>`).join(''):'<p class="dex-info">Aucune faiblesse identifiée pour la composition actuelle.</p>';
       const dead=tracker.entries.filter(x=>x.status==='dead');
-      byId('history-box').innerHTML=[...dead.map(x=>`<div class="journal-line"><span>${h(x.place)}</span><strong>${h(x.nick)} (${h(x.species)})</strong><span class="status dead">💀 Mort</span></div>`),...tracker.misses.map(x=>`<div class="journal-line"><span>${h(x.place)}</span><strong>${h(x.species)}</strong><span class="status missed">✕ ${h(x.reason)}</span></div>`)].join('');
+      byId('history-box').innerHTML=[...dead.map(x=>`<div class="journal-line"><span>${h(x.place)}</span><strong>${h(x.nick)} (${h(x.species)})</strong><span class="status dead">💀 Mort${x.id===tracker.hmPartyId?' · 🌊 CS hors combat':''}</span></div>`),...tracker.misses.map(x=>`<div class="journal-line"><span>${h(x.place)}</span><strong>${h(x.species)}</strong><span class="status missed">✕ ${h(x.reason)}</span></div>`)].join('');
       const stats=byId('journal-title').closest('.journal').querySelectorAll('.stats b');if(stats.length===3){stats[0].textContent=alive.length;stats[1].textContent=dead.length;stats[2].textContent=tracker.misses.length;}
-      byId('journal-title').closest('.journal').querySelector('.journal-grid').innerHTML=tracker.entries.map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.nick)} (${h(x.species)})${x.level?' · niv. '+x.level:''}</strong><span class="status ${x.status==='alive'?'alive':'dead'}">${x.status==='alive'?'♥ Vivant':'✝ Mort'}</span></div>`).join('')+tracker.misses.map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.species)}</strong><span class="status missed">✕ Raté</span></div>`).join('')
+      byId('journal-title').closest('.journal').querySelector('.journal-grid').innerHTML=tracker.entries.map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.nick)} (${h(x.species)})${x.level?' · niv. '+x.level:''}</strong><span class="status ${x.status==='alive'?'alive':'dead'}">${x.status==='alive'?'♥ Vivant':(x.id===tracker.hmPartyId?'✝ Mort · 🌊 Surf / Plongée hors combat':'✝ Mort')}</span></div>`).join('')+tracker.misses.map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.species)}</strong><span class="status missed">✕ Raté</span></div>`).join('')
       +hmHelpers.map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.nick||x.species)} (${h(x.species)})</strong><span class="status">🌊 CS ${h(x.move||'Surf')} · hors combat</span></div>`).join('');
       const setStatus=byId('roster-title').closest('section').querySelector('.roster-top .meta');if(setStatus)setStatus.textContent=`${alive.length} vivants · ${dead.length} mort(s) · ${tracker.misses.length} ratée(s)`;
       // Raccourcis à jour : uniquement les Pokémon vivants
@@ -1538,6 +1579,17 @@ renderGuide();
       const p=ev.pokemon;
       if(!tracker.hmHelpers.some(x=>x.id===p.id))
         tracker.hmHelpers.push({id:p.id,species:p.species||'?',nick:p.nick||p.species||'?',place:p.place||'?',move:p.move||'Surf'});
+    }else if(ev.type==='hm-party'&&ev.pokemonId==='uberboat'){
+      const mon=tracker.entries.find(x=>x.id===ev.pokemonId);
+      if(mon){
+        mon.status='dead';
+        tracker.hmPartyId=mon.id;
+        tracker.hmPartyMoves=['Surf','Plongée'];
+        tracker.party=Array.isArray(tracker.party)?tracker.party.slice(0,6):[];
+        while(tracker.party.length<6)tracker.party.push(null);
+        for(let i=0;i<5;i++)if(tracker.party[i]===mon.id)tracker.party[i]=null;
+        tracker.party[5]=mon.id;
+      }
     }else if(ev.type==='miss'&&ev.place){
       tracker.misses??=[];
       if(!tracker.misses.some(x=>id(x.place)===id(ev.place)))tracker.misses.push({species:ev.species||'?',place:ev.place,reason:ev.reason||'Capture ratée'});
