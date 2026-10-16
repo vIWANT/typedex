@@ -1153,6 +1153,15 @@
     tracker.zoneChecks??={};
     tracker.zoneChecks[normalizeSearch('Grotte Tréfonds')]=true;
 
+    // V52 : première rencontre Route 125, Noctunoir mis K.O. avant capture.
+    // Une rencontre ratée consomme la route mais n'ajoute aucun Pokémon au cimetière.
+    tracker.misses??=[];
+    if(!tracker.misses.some(x=>normalizeSearch(x.place)==='route 125')){
+      tracker.misses.push({species:'Noctunoir',place:'Route 125',reason:'Mis K.O. avant capture'});
+    }
+    tracker.zoneChecks??={};
+    tracker.zoneChecks[normalizeSearch('Route 125')]=true;
+
     function validState(s){return !!s && Array.isArray(s.entries) && Array.isArray(s.party) && Array.isArray(s.misses) && s.party.length===6 && s.entries.every(x=>x&&typeof x.id==='string'&&typeof x.species==='string');}
     function h(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
     function findSpecies(name){return allSpecies.find(p=>normalizeSearch(p.name)===normalizeSearch(name));}
