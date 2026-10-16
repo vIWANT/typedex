@@ -971,6 +971,42 @@
         caution:'En Torterra : faiblesse Glace ×4 et faiblesses Feu, Vol et Insecte ×2, immunité Électrik. Évite les Pokémon Eau avec Laser Glace et les combattants rapides disposant de couverture Glace. En combat Duo, Séisme touche aussi le partenaire.'
       }
 
+
+      ,{
+        nick:'Monaflèmit',species:'Monaflèmit',emoji:'🦍',type1:'Normal',type2:null,talent:'Absentéisme',nature:'À confirmer',place:'Route 130',item:'Baie Sitrus → Restes / Mouchoir Soie',
+        intro:'Capture Route 130, surnom provisoire. Le joueur veut intégrer Monaflèmit à son équipe : place de combat en attente de confirmation du Pokémon remplacé, UBER BOAT garde le sixième emplacement comme utilitaire CS. Attaque de base 160, PV 150 et Vitesse 100, mais Absentéisme impose une action perdue un tour sur deux. Préférer frapper très fort puis changer au tour inactif.',
+        early:{title:'Aventure • très grosses attaques physiques',moves:[
+          ['Retour','Normal','CT27 Pacifiville, cadeau avec amitié élevée • puissant STAB physique'],
+          ['Piétisol','Sol','CT78, boutique Pokémon de Lavandia • couverture Roche et Acier'],
+          ['Griffe Ombre','Spectre','CT65 Grotte Granite • permet de toucher les Spectre'],
+          ['Bâillement','Normal','Rappel niveau 1 au Maître des Capacités d’Autéquia • sommeil différé']
+        ],notes:'Si Retour n’est pas encore disponible, Force (CS04) est un STAB physique 80 utilisable temporairement. Bâillement peut aussi préparer une capture future. L’effet d’Absentéisme ne doit jamais être ignoré.'},
+        final:{title:'Objectif Ligue • briseur de murs',moves:[
+          ['Retour','Normal','CT27 Pacifiville • jusqu’à 102 de puissance avec l’amitié maximale'],
+          ['Séisme','Sol','CT26 Caverne Fondmer Route 128 • couverture physique 100 de puissance'],
+          ['Griffe Ombre','Spectre','CT65 Grotte Granite • contre Spectre'],
+          ['Bâillement','Normal','Autéquia avec Écaille Cœur • forcer un changement / aider à capturer']
+        ],notes:'Autre option : Casse-Brique CT31 à Atalanopolis après Groudon. Giga Impact CT68 est vendu pour 50 000 ₽ au Centre Commercial de Nénucrique : sa recharge coïncide avec Absentéisme, MAIS empêche de changer de Pokémon pendant la recharge, ce qui est très risqué en Nuzlocke.'},
+        caution:'Faiblesse Combat ×2, immunité Spectre. À cause d’Absentéisme, ne pas rester exposé après un coup puissant. Les capacités de recharge comme Giga Impact empêchent également le remplacement au tour concerné.'
+      },
+      {
+        nick:'Sorbouboul',species:'Sorbouboul',emoji:'🍦',type1:'Glace',type2:null,talent:'À confirmer',nature:'À confirmer',place:'Route 131',item:'Baie Sitrus → Restes / Glace Éternelle',
+        intro:'Sorbouboul capturé Route 131, surnom provisoire. Pokémon Glace déjà au stade final, Attaque Spéciale de base 110. Lyophilisation frappe les Pokémon Eau super efficacement et complète les capacités de FRIEZER. En boîte, ne remplace aucun combattant.',
+        early:{title:'Aventure • attaquant spécial Glace',moves:[
+          ['Lyophilisation','Glace','Rappel niveau 1 à Autéquia • super efficace contre Eau'],
+          ['Laser Glace','Glace','Niveau 36 ou CT13 Lavandia Sea (Plongée) • STAB spécial 90'],
+          ['Acidarmure','Poison','Niveau 31 / rappel à Autéquia • renforce la Défense'],
+          ['Miroi-Tir','Acier','Niveau 26 / rappel à Autéquia • couverture spéciale temporaire']
+        ],notes:'Lyophilisation (Freeze-Dry) a 70 de puissance et touche le type Eau super efficacement. Miroi-Tir peut rater (précision 85). Ne joue pas Explosion en Nuzlocke.'},
+        final:{title:'Objectif Ligue • couverture Eau et Glace',moves:[
+          ['Lyophilisation','Glace','Rappel niveau 1 à Autéquia • pour les types Eau'],
+          ['Laser Glace','Glace','Niveau 36 ou CT13 Lavandia Sea • STAB fiable'],
+          ['Luminocanon','Acier','CT91 sur une Île Mirage nord-est de la Route 125 (Grand Envol, apparition variable)'],
+          ['Acidarmure','Poison','Niveau 31 ou rappel • protection physique']
+        ],notes:'En attendant Luminocanon, utiliser Miroi-Tir. Voile Miroir au niveau 50 est une option risquée en Nuzlocke : elle nécessite de subir une attaque spéciale. Éviter Glaciation, qui ne possède que 30 % de précision.'},
+        caution:'Faiblesses Feu, Combat, Roche et Acier ×2. Seule résistance : Glace. Sa couverture anti-Eau est bonne mais sa longévité dépend fortement des affrontements.'
+      }
+
     ];
     function renderRoster(){
       const summary=byId('roster-summary');
@@ -1244,6 +1280,17 @@
     }
     tracker.zoneChecks??={};
     tracker.zoneChecks[normalizeSearch('Route 123')]=true;
+
+    // V56 : captures Routes 130 et 131.
+    if(!tracker.entries.some(x=>x.id==='monaflemit-route-130')){
+      tracker.entries.push({id:'monaflemit-route-130',species:'Monaflèmit',nick:'Monaflèmit',place:'Route 130',status:'alive',talent:'Absentéisme',nature:'À confirmer',level:null});
+    }
+    if(!tracker.entries.some(x=>x.id==='sorbouboul-route-131')){
+      tracker.entries.push({id:'sorbouboul-route-131',species:'Sorbouboul',nick:'Sorbouboul',place:'Route 131',status:'alive',talent:'À confirmer',nature:'À confirmer',level:null});
+    }
+    tracker.zoneChecks??={};
+    tracker.zoneChecks[normalizeSearch('Route 130')]=true;
+    tracker.zoneChecks[normalizeSearch('Route 131')]=true;
 
     function validState(s){return !!s && Array.isArray(s.entries) && Array.isArray(s.party) && Array.isArray(s.misses) && s.party.length===6 && s.entries.every(x=>x&&typeof x.id==='string'&&typeof x.species==='string');}
     function h(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
