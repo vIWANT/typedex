@@ -896,6 +896,24 @@
         caution:'Faiblesses Électrik, Glace et Roche ×2. Immunités Sol et Spectre par les types Vol / Normal, résistances Plante et Insecte. Attention à l’effet de recul de Rapace et aux Pokémon Roche ou Acier face auxquels ses STAB sont moins efficaces.'
       }
 
+      ,{
+        nick:'WU KONG',species:'Chimpenfeu',emoji:'🐒',type1:'Feu',type2:'Combat',talent:'À confirmer',nature:'À confirmer',place:'Grotte Tréfonds',item:'Baie Sitrus → Restes / Charbon',
+        intro:'WU KONG, Chimpenfeu capturé dans la Grotte Tréfonds, rejoint les survivants de la run #2. Type Feu / Combat, évolution en Simiabraz au niveau 36. Simiabraz possède 108 de Vitesse de base et d’excellentes capacités offensives, mais ses défenses restent relativement faibles. Talent, nature, niveau et attaques effectivement connues de WU KONG encore à confirmer. Placé en boîte sans remplacer les combattants actuels ni la sixième place utilitaire d’UBER BOAT.',
+        early:{title:'Aventure • Chimpenfeu fiable',moves:[
+          ['Mach Punch','Combat','Niv. 14 chez Chimpenfeu • priorité +1 ; achève un adversaire affaibli'],
+          ['Roue de Feu','Feu','Niv. 19 chez Chimpenfeu • STAB physique précis, sans recul'],
+          ['Close Combat','Combat','Niv. 36 chez Chimpenfeu • énorme STAB mais baisse Déf. et Déf. Spé.'],
+          ['Abri','Normal','CT17 • repérer les attaques inconnues']
+        ],notes:'Vérifie les capacités effectivement présentes avant de jouer ce set. Chimpenfeu évolue en Simiabraz au niveau 36 ; le Rappel de Capacités peut aider si une attaque du niveau de capture a été manquée. Privilégie l’expérience partagée si le niveau est très inférieur à ton équipe.'},
+        final:{title:'Objectif Ligue • Simiabraz mixte sécurisé',moves:[
+          ['Close Combat','Combat','Niv. 36 • puissant STAB physique, attention aux baisses défensives'],
+          ['Lance-Flammes','Feu','CT35 • STAB spécial 90 de puissance, fiable et sans recul'],
+          ['Mach Punch','Combat','Niv. 14 / rappel • priorité physique'],
+          ['Nœud Herbe','Plante','CT86 • couverture des Pokémon Eau, Sol et Roche lourds']
+        ],notes:'Poing de Feu (Maître des Capacités ROSA) permet une variante plus physique ; Demi-Tour (CT89) offre un pivot. Boutefeu (niveau 68) fait énormément de dégâts mais inflige du recul, à éviter si possible en Nuzlocke. Les CT listées sont des objectifs à obtenir, pas un inventaire actuel.'},
+        caution:'Faiblesses Eau, Sol, Vol et Psy ×2. Résistances Feu, Plante, Glace, Ténèbres et Acier ×0,5, et Insecte ×0,25. Surveille les attaques surprises Eau/Sol et ne reste pas en jeu après une baisse de défenses si une riposte est possible.'
+      }
+
     ];
     function renderRoster(){
       const summary=byId('roster-summary');
@@ -1127,6 +1145,13 @@
     tracker.party[5]=uberBoatCS.id;
     tracker.zoneChecks??={};
     tracker.zoneChecks[normalizeSearch(uberBoatCS.place)]=true;
+
+    // Publication V51 : WU KONG capturé en Grotte Tréfonds.
+    if(!tracker.entries.some(x=>x.id==='wu-kong-chimpenfeu'||(normalizeSearch(x.species)==='chimpenfeu'&&normalizeSearch(x.place)==='grotte trefonds'))){
+      tracker.entries.push({id:'wu-kong-chimpenfeu',species:'Chimpenfeu',nick:'WU KONG',place:'Grotte Tréfonds',talent:'À confirmer',nature:'À confirmer',level:null,status:'alive'});
+    }
+    tracker.zoneChecks??={};
+    tracker.zoneChecks[normalizeSearch('Grotte Tréfonds')]=true;
 
     function validState(s){return !!s && Array.isArray(s.entries) && Array.isArray(s.party) && Array.isArray(s.misses) && s.party.length===6 && s.entries.every(x=>x&&typeof x.id==='string'&&typeof x.species==='string');}
     function h(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
