@@ -1,5 +1,5 @@
 {
-  "revision": 54,
+  "revision": 55,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -517,6 +517,20 @@
         "species": "Porygon",
         "nick": "Porygon",
         "place": "Éternara",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "capture-tortipouss-route-123-2026-10-16",
+      "type": "capture",
+      "pokemon": {
+        "id": "tortipouss-route-123",
+        "species": "Tortipouss",
+        "nick": "Tortipouss",
+        "place": "Route 123",
         "status": "alive",
         "talent": "À confirmer",
         "nature": "À confirmer",
