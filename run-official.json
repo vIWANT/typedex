@@ -1,5 +1,5 @@
 {
-  "revision": 49,
+  "revision": 50,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -454,6 +454,18 @@
       "type": "death",
       "pokemonId": "uberboat",
       "reason": "K.O. définitif confirmé après le combat de l’Arène d’Algatia"
+    },
+    {
+      "id": "cs-party-uberboat-surf-plongee-2026-10-16",
+      "type": "hm-party",
+      "pokemonId": "uberboat",
+      "slot": 6,
+      "moves": [
+        "Surf",
+        "Plongée"
+      ],
+      "status": "dead",
+      "restrictions": "Déplacements hors combat uniquement. Reste mort et n'est jamais compté parmi les combattants vivants."
     }
   ],
   "example_not_published": {
