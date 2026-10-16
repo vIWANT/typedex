@@ -1,5 +1,5 @@
 {
-  "revision": 52,
+  "revision": 53,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -487,6 +487,27 @@
       "species": "Noctunoir",
       "place": "Route 125",
       "reason": "Mis K.O. avant capture"
+    },
+    {
+      "id": "miss-crefollet-route-127-fuite-2026-10-16",
+      "type": "miss",
+      "species": "Créfollet",
+      "place": "Route 127",
+      "reason": "Combat fui après tentative de capture (PV rouges, 25 Hyper Balls, pas de statut)"
+    },
+    {
+      "id": "capture-wattouat-route-128-2026-10-16",
+      "type": "capture",
+      "pokemon": {
+        "id": "wattouat-route-128",
+        "species": "Wattouat",
+        "nick": "Wattouat",
+        "place": "Route 128",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
     }
   ],
   "example_not_published": {
