@@ -1,5 +1,5 @@
 {
-  "revision": 55,
+  "revision": 56,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -531,6 +531,35 @@
         "species": "Tortipouss",
         "nick": "Tortipouss",
         "place": "Route 123",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "capture-monaflemit-route-130-2026-10-16",
+      "type": "capture",
+      "pokemon": {
+        "id": "monaflemit-route-130",
+        "species": "Monaflèmit",
+        "nick": "Monaflèmit",
+        "place": "Route 130",
+        "status": "alive",
+        "talent": "Absentéisme",
+        "nature": "À confirmer",
+        "level": null
+      },
+      "teamIntent": "Souhaité dans l'équipe de combat ; remplacement à confirmer."
+    },
+    {
+      "id": "capture-sorbouboul-route-131-2026-10-16",
+      "type": "capture",
+      "pokemon": {
+        "id": "sorbouboul-route-131",
+        "species": "Sorbouboul",
+        "nick": "Sorbouboul",
+        "place": "Route 131",
         "status": "alive",
         "talent": "À confirmer",
         "nature": "À confirmer",
