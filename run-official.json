@@ -1,5 +1,5 @@
 {
-  "revision": 58,
+  "revision": 59,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -621,6 +621,26 @@
         "nature": "À confirmer",
         "level": null
       }
+    },
+    {
+      "id": "capture-rattatac-route-117-2026-10-16",
+      "type": "capture",
+      "pokemon": {
+        "id": "rattatac-route-117",
+        "species": "Rattatac",
+        "nick": "Rattatac",
+        "place": "Route 117",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "death-huissier3000-entei-accident-2026-10-16",
+      "type": "death",
+      "pokemonId": "huissier3000",
+      "reason": "Mis K.O. accidentellement en un coup par Richard (Entei), attaque alliée."
     }
   ],
   "example_not_published": {
