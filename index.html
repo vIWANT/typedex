@@ -1314,6 +1314,18 @@
     tracker.zoneChecks??={};
     tracker.zoneChecks[normalizeSearch('Route 105')]=true;
 
+    // V59 : Rattatac capturé Route 117, HUISSIER 3000 mort par erreur de tir allié.
+    if(!tracker.entries.some(x=>x.id==='rattatac-route-117'||(normalizeSearch(x.place)==='route 117'&&normalizeSearch(x.species)==='rattatac'))){
+      tracker.entries.push({id:'rattatac-route-117',species:'Rattatac',nick:'Rattatac',place:'Route 117',status:'alive',talent:'À confirmer',nature:'À confirmer',level:null});
+    }
+    tracker.zoneChecks??={};
+    tracker.zoneChecks[normalizeSearch('Route 117')]=true;
+    const huissierV59=tracker.entries.find(x=>x.id==='huissier3000');
+    if(huissierV59){
+      huissierV59.status='dead';
+      tracker.party=tracker.party.map(x=>x==='huissier3000'?null:x);
+    }
+
     function validState(s){return !!s && Array.isArray(s.entries) && Array.isArray(s.party) && Array.isArray(s.misses) && s.party.length===6 && s.entries.every(x=>x&&typeof x.id==='string'&&typeof x.species==='string');}
     function h(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
     function findSpecies(name){return allSpecies.find(p=>normalizeSearch(p.name)===normalizeSearch(name));}
