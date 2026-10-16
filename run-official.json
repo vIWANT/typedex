@@ -1,5 +1,5 @@
 {
-  "revision": 56,
+  "revision": 57,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -560,6 +560,48 @@
         "species": "Sorbouboul",
         "nick": "Sorbouboul",
         "place": "Route 131",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "capture-corayon-route-132-2026-10-16",
+      "type": "capture",
+      "pokemon": {
+        "id": "corayon-route-132",
+        "species": "Corayon",
+        "nick": "Corayon",
+        "place": "Route 132",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "capture-furaiglon-pacifiville-2026-10-16",
+      "type": "capture",
+      "pokemon": {
+        "id": "furaiglon-pacifiville",
+        "species": "Furaiglon",
+        "nick": "Furaiglon",
+        "place": "Pacifiville",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "capture-venalgue-route-134-2026-10-16",
+      "type": "capture",
+      "pokemon": {
+        "id": "venalgue-route-134",
+        "species": "Venalgue",
+        "nick": "Venalgue",
+        "place": "Route 134",
         "status": "alive",
         "talent": "À confirmer",
         "nature": "À confirmer",
