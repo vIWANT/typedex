@@ -952,6 +952,25 @@
         caution:'Seule faiblesse Combat ×2, immunité Spectre. Défenses relativement modestes au premier stade ; vérifie le talent et la nature avant de l’envoyer au combat. Ne pas compter sur Porygon2 ou Porygon-Z pour la Ligue sans accès aux échanges et objets spéciaux.'
       }
 
+
+      ,{
+        nick:'Tortipouss',species:'Tortipouss',emoji:'🌱🐢',type1:'Plante',type2:null,talent:'À confirmer',nature:'À confirmer',place:'Route 123',item:'Baie Sitrus → Restes / Graine Miracle',
+        intro:'Tortipouss capturé Route 123. Surnom provisoire, talent/nature/niveau à confirmer. Évolue en Boskara au niveau 18, puis en Torterra au niveau 32 et devient Plante / Sol. Excellente Attaque et Défense une fois évolué, mais Vitesse faible et faiblesse Glace ×4. En boîte : aucun changement à l’équipe active ni à la place utilitaire de Démanta.',
+        early:{title:'Progression • croissance défensive',moves:[
+          ['Tranch’Herbe','Plante','Appris en progressant • STAB physique sans recul'],
+          ['Vampigraine','Plante','Appris par montée de niveau • récupération continue sur les cibles non Plante'],
+          ['Mâchouille','Ténèbres','Attaque de couverture apprise par montée de niveau, vérifier la forme et le niveau'],
+          ['Synthèse','Plante','Soin appris par montée de niveau • efficacité variable selon la météo']
+        ],notes:'Tortipouss évolue en Boskara niveau 18 puis Torterra niveau 32. Une capture à niveau élevé peut nécessiter de réapprendre les anciennes capacités auprès du Maître des Capacités à Autéquia (Écaille Cœur). Vérifier les attaques actuellement possédées et celles accessibles à son niveau.'},
+        final:{title:'Objectif Ligue • Torterra physique résistant',moves:[
+          ['Séisme','Sol','Appris en évoluant en Torterra au niveau 32 • STAB puissant ; attention aux alliés en Duo'],
+          ['Tranch’Herbe','Plante','STAB physique sûr à puissance modérée, en attendant une option plus forte'],
+          ['Mâchouille','Ténèbres','Couverture Psy et Spectre par montée de niveau'],
+          ['Synthèse','Plante','Récupération de PV ; remplacer par Vampigraine si nécessaire']
+        ],notes:'Séisme est la grande récompense de l’évolution au niveau 32. Martobois offre un STAB Plante physique très fort à haut niveau, mais inflige du recul : à éviter quand la survie prime en Nuzlocke. Les niveaux exacts des autres attaques changent selon Tortipouss, Boskara et Torterra ; vérifier avant d’utiliser une Écaille Cœur.'},
+        caution:'En Torterra : faiblesse Glace ×4 et faiblesses Feu, Vol et Insecte ×2, immunité Électrik. Évite les Pokémon Eau avec Laser Glace et les combattants rapides disposant de couverture Glace. En combat Duo, Séisme touche aussi le partenaire.'
+      }
+
     ];
     function renderRoster(){
       const summary=byId('roster-summary');
@@ -1218,6 +1237,13 @@
     }
     tracker.zoneChecks??={};
     tracker.zoneChecks[normalizeSearch('Éternara')]=true;
+
+    // V55 : Tortipouss capturé Route 123, surnom à confirmer.
+    if(!tracker.entries.some(x=>x.id==='tortipouss-route-123'||(normalizeSearch(x.place)==='route 123'&&normalizeSearch(x.species)==='tortipouss'))){
+      tracker.entries.push({id:'tortipouss-route-123',species:'Tortipouss',nick:'Tortipouss',place:'Route 123',status:'alive',talent:'À confirmer',nature:'À confirmer',level:null});
+    }
+    tracker.zoneChecks??={};
+    tracker.zoneChecks[normalizeSearch('Route 123')]=true;
 
     function validState(s){return !!s && Array.isArray(s.entries) && Array.isArray(s.party) && Array.isArray(s.misses) && s.party.length===6 && s.entries.every(x=>x&&typeof x.id==='string'&&typeof x.species==='string');}
     function h(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
