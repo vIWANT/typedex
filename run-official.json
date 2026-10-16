@@ -1,5 +1,5 @@
 {
-  "revision": 48,
+  "revision": 49,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -443,6 +443,17 @@
       "type": "death",
       "pokemonId": "cartevitale",
       "reason": "K.O. définitif, confirmé par le joueur"
+    },
+    {
+      "id": "badge-esprit-levy-tatia-algatia-2026-10-16",
+      "type": "badge",
+      "stepId": "badge-esprit"
+    },
+    {
+      "id": "death-uberboat-demanta-algatia-2026-10-16",
+      "type": "death",
+      "pokemonId": "uberboat",
+      "reason": "K.O. définitif confirmé après le combat de l’Arène d’Algatia"
     }
   ],
   "example_not_published": {
