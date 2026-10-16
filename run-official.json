@@ -1,5 +1,5 @@
 {
-  "revision": 59,
+  "revision": 60,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -641,6 +641,64 @@
       "type": "death",
       "pokemonId": "huissier3000",
       "reason": "Mis K.O. accidentellement en un coup par Richard (Entei), attaque alliée."
+    },
+    {
+      "id": "pokemon-gato-monaflemit-fiche-2026-10-16",
+      "type": "pokemon",
+      "pokemonId": "monaflemit-route-130",
+      "fields": {
+        "nick": "GATO",
+        "nature": "Foufou",
+        "talent": "Absentéisme",
+        "level": 25,
+        "gender": "♀",
+        "heldItem": "Aucun objet",
+        "knownMoves": [
+          "Paresse",
+          "Feinte",
+          "Amnésie",
+          "Implore"
+        ],
+        "statsSnapshot": {
+          "hp": 114,
+          "maxHp": 114,
+          "attack": 92,
+          "defense": 55,
+          "spAttack": 61,
+          "spDefense": 39,
+          "speed": 59
+        },
+        "teamCandidate": true
+      }
+    },
+    {
+      "id": "pokemon-ptit-sexe-venalgue-fiche-2026-10-16",
+      "type": "pokemon",
+      "pokemonId": "venalgue-route-134",
+      "fields": {
+        "nick": "PTIT SEXE",
+        "nature": "Naïf",
+        "talent": "Toxitouche",
+        "level": 5,
+        "gender": "♀",
+        "heldItem": "Aucun objet",
+        "knownMoves": [
+          "Charge",
+          "Brouillard",
+          "Pistolet à O",
+          "Feinte"
+        ],
+        "statsSnapshot": {
+          "hp": 20,
+          "maxHp": 20,
+          "attack": 12,
+          "defense": 12,
+          "spAttack": 11,
+          "spDefense": 9,
+          "speed": 8
+        },
+        "teamCandidate": true
+      }
     }
   ],
   "example_not_published": {
