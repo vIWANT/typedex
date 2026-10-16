@@ -1,5 +1,5 @@
 {
-  "revision": 47,
+  "revision": 48,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -401,6 +401,48 @@
         "nature": "À confirmer",
         "level": null
       }
+    },
+    {
+      "id": "capture-lina-lippouti-algatia-2026-10-16",
+      "type": "capture",
+      "pokemon": {
+        "id": "lina-lippouti",
+        "species": "Lippouti",
+        "nick": "LINA",
+        "place": "Algatia",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "capture-pop-smoke-heledelle-route-124-2026-10-16",
+      "type": "capture",
+      "pokemon": {
+        "id": "pop-smoke-heledelle",
+        "species": "Hélédelle",
+        "nick": "POP SMOKE",
+        "place": "Route 124",
+        "status": "alive",
+        "talent": "À confirmer",
+        "nature": "À confirmer",
+        "level": null
+      }
+    },
+    {
+      "id": "rename-carte-vitale-best-waifu-2026-10-16",
+      "type": "pokemon",
+      "pokemonId": "cartevitale",
+      "fields": {
+        "nick": "BEST WAIFU"
+      }
+    },
+    {
+      "id": "death-best-waifu-gardevoir-2026-10-16",
+      "type": "death",
+      "pokemonId": "cartevitale",
+      "reason": "K.O. définitif, confirmé par le joueur"
     }
   ],
   "example_not_published": {
