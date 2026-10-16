@@ -933,6 +933,25 @@
         caution:'Faiblesse Sol ×2 et immunité des types Sol aux attaques Électrik. Pharamp est lent : prudence devant Séisme et Telluriforce. Ne pas tenter un placement de Cotogarde devant un adversaire au moveset inconnu.'
       }
 
+
+      ,{
+        nick:'Porygon',species:'Porygon',emoji:'💾',type1:'Normal',type2:null,talent:'À confirmer',nature:'À confirmer',place:'Éternara',item:'Baie Sitrus → Restes',
+        intro:'Porygon capturé à Éternara, surnom provisoire. Attaquant spécial Normal avec une bonne couverture et Soin. Le talent Adaptabilité, Télécharge ou Calque est à confirmer avant de spécialiser son équipement. Il ne change pas de forme par niveaux : Porygon → Porygon2 par échange avec Améliorator, puis Porygon-Z par échange avec CD Douteux ; dans Rubis Oméga, ces deux objets peuvent notamment être achetés à la Maison de Combat de l’Atoll de Combat pour 32 PCo chacun, après la Ligue. En boîte, aucune modification de l’équipe active.',
+        early:{title:'Aventure • attaquant spécial polyvalent',moves:[
+          ['Rayon Signal','Insecte','Niv. 29 • couverture Psy et Ténèbres'],
+          ['Coup d’Jus','Électrik','Niv. 40 • 80 de puissance et risque de paralysie'],
+          ['Ball’Ombre','Spectre','CT30 • Mont Mémoria, couverture Spectre/Psy'],
+          ['Soin','Normal','Niv. 18 ou rappel à Autéquia • restaure jusqu’à 50 % des PV']
+        ],notes:'Les attaques au niveau inférieur à celui de la capture peuvent être récupérées chez le Maître des Capacités d’Autéquia avec une Écaille Cœur. Coup d’Jus touche aussi le partenaire en combat Duo : vigilance. Choc Psy (CT03 à Pacifiville) est une option si déjà obtenu.'},
+        final:{title:'Objectif Ligue • Porygon couverture/survie',moves:[
+          ['Tri-Attaque','Normal','Niv. 50 • STAB spécial de 80, peut brûler/geler/paralyser'],
+          ['Coup d’Jus','Électrik','Niv. 40 • dégâts et paralysie, éviter le combat Duo'],
+          ['Rayon Signal','Insecte','Niv. 29 • couverture Ténèbres/Psy'],
+          ['Soin','Normal','Niv. 18 / rappel • récupération de PV']
+        ],notes:'Alternative à Rayon Signal : Laser Glace (CT13 à Lavandia Sea) pour Dragons/Sol/Plante ; alternative à Coup d’Jus : Tonnerre CT24 (quête de Voltère). Si le talent est Adaptabilité, Tri-Attaque profite particulièrement du bonus STAB renforcé. Évolution via échange et objets nécessaires, non via montée de niveau.'},
+        caution:'Seule faiblesse Combat ×2, immunité Spectre. Défenses relativement modestes au premier stade ; vérifie le talent et la nature avant de l’envoyer au combat. Ne pas compter sur Porygon2 ou Porygon-Z pour la Ligue sans accès aux échanges et objets spéciaux.'
+      }
+
     ];
     function renderRoster(){
       const summary=byId('roster-summary');
@@ -1192,6 +1211,13 @@
     tracker.zoneChecks??={};
     tracker.zoneChecks[normalizeSearch('Route 127')]=true;
     tracker.zoneChecks[normalizeSearch('Route 128')]=true;
+
+    // Publication V54 : Porygon capturé à Éternara.
+    if(!tracker.entries.some(x=>x.id==='porygon-eternara'||(normalizeSearch(x.place)==='eternara'&&normalizeSearch(x.species)==='porygon'))){
+      tracker.entries.push({id:'porygon-eternara',species:'Porygon',nick:'Porygon',place:'Éternara',status:'alive',talent:'À confirmer',nature:'À confirmer',level:null});
+    }
+    tracker.zoneChecks??={};
+    tracker.zoneChecks[normalizeSearch('Éternara')]=true;
 
     function validState(s){return !!s && Array.isArray(s.entries) && Array.isArray(s.party) && Array.isArray(s.misses) && s.party.length===6 && s.entries.every(x=>x&&typeof x.id==='string'&&typeof x.species==='string');}
     function h(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
