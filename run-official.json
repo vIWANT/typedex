@@ -1,5 +1,5 @@
 {
-  "revision": 51,
+  "revision": 52,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -480,6 +480,13 @@
         "nature": "À confirmer",
         "level": null
       }
+    },
+    {
+      "id": "miss-noctunoir-route-125-2026-10-16",
+      "type": "miss",
+      "species": "Noctunoir",
+      "place": "Route 125",
+      "reason": "Mis K.O. avant capture"
     }
   ],
   "example_not_published": {
