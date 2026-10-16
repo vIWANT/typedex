@@ -914,6 +914,25 @@
         caution:'Faiblesses Eau, Sol, Vol et Psy ×2. Résistances Feu, Plante, Glace, Ténèbres et Acier ×0,5, et Insecte ×0,25. Surveille les attaques surprises Eau/Sol et ne reste pas en jeu après une baisse de défenses si une riposte est possible.'
       }
 
+
+      ,{
+        nick:'Wattouat',species:'Wattouat',emoji:'⚡🐑',type1:'Électrik',type2:null,talent:'À confirmer',nature:'À confirmer',place:'Route 128',item:'Baie Sitrus → Aimant ou Restes',
+        intro:'Capture confirmée sur la Route 128, surnom provisoire Wattouat. Évolue en Lainergie au niveau 15 puis en Pharamp au niveau 30. Le potentiel électrique spécial et la paralysie via Cage-Éclair sont précieux pour les futures rencontres légendaires. Nature, talent et niveau de capture à confirmer. En boîte sans remplacer la team ni UBER BOAT.',
+        early:{title:'Progression • capture et soutien de statut',moves:[
+          ['Cage-Éclair','Électrik','Niv. 4 ou rappel • paralyse les cibles compatibles, idéale pour capturer'],
+          ['Éclair','Électrik','Niv. 8 ou rappel • STAB spécial de dépannage'],
+          ['Onde Folie','Spectre','Niv. 25 Wattouat / niv. 29 Pharamp • perturbe l’adversaire, mais risque non nul'],
+          ['Rayon Gemme','Roche','Niv. 29 Wattouat / niv. 35 Pharamp • couverture spéciale 80 de puissance']
+        ],notes:'Évolutions au niveau 15 puis 30. Les attaques indiquées dépendent de la forme et du niveau actuel : si elles ne figurent pas dans ses capacités, vérifie le rappel à Autéquia ou son prochain niveau d’apprentissage. Pour la capture, Cage-Éclair est le plus important.'},
+        final:{title:'Objectif Ligue • Pharamp spécial de soutien',moves:[
+          ['Tonnerre','Électrik','CT24, quête de Voltère après Groudon • STAB spécial stable'],
+          ['Rayon Gemme','Roche','Niv. 35 Pharamp • couvre Feu, Vol et Insecte'],
+          ['Cage-Éclair','Électrik','Niv. 4 / rappel • contrôle de Vitesse, ne fonctionne pas sur Sol'],
+          ['Cotogarde','Plante','Niv. 46 Pharamp • +3 Défense pour tenir les attaques physiques']
+        ],notes:'Coup d’Jus (niv. 40 chez Pharamp) remplace temporairement Tonnerre. Attention : Coup d’Jus touche les Pokémon alliés en combat Duo. La CT24 est récupérable chez Voltère après la quête de New Lavandia. L’apprentissage évolue avec l’espèce.'},
+        caution:'Faiblesse Sol ×2 et immunité des types Sol aux attaques Électrik. Pharamp est lent : prudence devant Séisme et Telluriforce. Ne pas tenter un placement de Cotogarde devant un adversaire au moveset inconnu.'
+      }
+
     ];
     function renderRoster(){
       const summary=byId('roster-summary');
@@ -1161,6 +1180,18 @@
     }
     tracker.zoneChecks??={};
     tracker.zoneChecks[normalizeSearch('Route 125')]=true;
+
+    // TYPEDEX V53 : Créfollet fui Route 127, Wattouat capturé Route 128.
+    tracker.misses??=[];
+    if(!tracker.misses.some(x=>normalizeSearch(x.place)==='route 127')){
+      tracker.misses.push({species:'Créfollet',place:'Route 127',reason:'Combat fui après tentative de capture'});
+    }
+    if(!tracker.entries.some(x=>x.id==='wattouat-route-128'||(normalizeSearch(x.place)==='route 128'&&normalizeSearch(x.species)==='wattouat'))){
+      tracker.entries.push({id:'wattouat-route-128',species:'Wattouat',nick:'Wattouat',place:'Route 128',status:'alive',talent:'À confirmer',nature:'À confirmer',level:null});
+    }
+    tracker.zoneChecks??={};
+    tracker.zoneChecks[normalizeSearch('Route 127')]=true;
+    tracker.zoneChecks[normalizeSearch('Route 128')]=true;
 
     function validState(s){return !!s && Array.isArray(s.entries) && Array.isArray(s.party) && Array.isArray(s.misses) && s.party.length===6 && s.entries.every(x=>x&&typeof x.id==='string'&&typeof x.species==='string');}
     function h(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
