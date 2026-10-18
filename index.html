@@ -1326,9 +1326,12 @@ footer{font-size:.7rem;opacity:.65}
       }
       tracker.zoneChecks[normalizeSearch(mon.place)]=true;
     }
+    // V68 : le surnom BEST WAIFU appartenait à la progression perdue.
+    // Le décès reste réel (arène d'Algatia rejouée), mais aucun vieux
+    // surnom ne doit écraser CARTE VITALE ou un surnom choisi après coup.
     const deceasedGardevoir=tracker.entries.find(x=>x.id==='cartevitale' || (normalizeSearch(x.species)==='gardevoir'&&normalizeSearch(x.place)==='route 122'));
     if (deceasedGardevoir) {
-      deceasedGardevoir.nick='BEST WAIFU';
+      if(!tracker.recoveredSaveV61)deceasedGardevoir.nick='BEST WAIFU';
       deceasedGardevoir.status='dead';
       tracker.party=tracker.party.map(id=>id===deceasedGardevoir.id?null:id);
     }
@@ -1531,6 +1534,15 @@ footer{font-size:.7rem;opacity:.65}
       const huissier=tracker.entries.find(x=>x.id==='huissier3000');
       if(huissier)huissier.status='alive';
       tracker.huissierRepairedV67=true;
+    }
+
+    // V68 : réparer une seule fois le vieux surnom BEST WAIFU, enregistré
+    // sur la sauvegarde perdue après les captures annulées d'Algatia.
+    // Ne jamais écraser un autre surnom renseigné manuellement ensuite.
+    if(tracker.recoveredSaveV61 && !tracker.gardevoirNickRepairedV68){
+      const gardevoir=tracker.entries.find(x=>x.id==='cartevitale');
+      if(gardevoir && gardevoir.nick==='BEST WAIFU')gardevoir.nick='CARTE VITALE';
+      tracker.gardevoirNickRepairedV68=true;
     }
 
     // V62 : libération confirmée d'Hypotrempe, sans effet sur les morts ni sur les zones.
