@@ -366,6 +366,15 @@ footer{font-size:.7rem;opacity:.65}
 @media(max-width:660px){.container{width:calc(100% - 12px);padding:8px 0}.td-ds-shell{padding:6px;border-width:3px;border-radius:13px}.td-ds-pocket-bar{display:flex;overflow-x:auto;gap:5px}.td-ds-pocket{min-width:84px;min-height:65px}.td-ds-body{padding:5px}.td-ds-display{padding:7px}.td-ds-party-list{grid-template-columns:repeat(2,minmax(0,1fr))}.td-ds-party-mon{padding:3px}.td-ds-summary>span:not(.td-ds-summary-label){font-size:.66rem;padding:4px 6px}.td-ds-screen .panel{padding:12px}.td-ds-screen .roster-top{flex-direction:column}.td-ds-screen .dex-row{flex-wrap:wrap}.td-ds-screen .dex-field{min-width:0;width:100%}.td-ds-build-row summary{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.td-ds-pocket{transition:none}}
 </style>
+<style>
+/* TYPEDEX V65 - Ajout libre de Pokémon à l'équipe, sans fausse capture */
+.td-ds-free-add{margin-top:14px;border-top:1px solid #577b88;padding-top:11px}
+.td-ds-free-add label{display:block;color:#ffdc92;font-size:.77rem;font-weight:900;margin-bottom:7px}
+.td-ds-free-row{display:flex;gap:7px;align-items:stretch;flex-wrap:wrap}
+.td-ds-free-row input{min-width:140px;flex:1;background:#071f2d;border:1px solid #89abba;border-radius:8px;color:#fff;padding:9px}
+.td-ds-free-row button{background:#ffc45b!important;border:2px solid #fff0af!important;color:#30251a!important;border-radius:8px;font-size:.78rem;font-weight:900;padding:8px 11px}
+.td-ds-free-note{font-size:.71rem;line-height:1.5;color:#b9d4d2;margin:7px 0 0}
+</style>
 </head>
 <body>
 <main class="container">
@@ -1118,8 +1127,8 @@ footer{font-size:.7rem;opacity:.65}
     function renderRoster(){
       const summary=byId('roster-summary');
       if(summary){
-        const living=tracker.entries.filter(x=>x.status==='alive').length;
-        const deaths=tracker.entries.filter(x=>x.status==='dead').length;
+        const living=tracker.entries.filter(x=>x.status==='alive'&&!x.isTeamPreview).length;
+        const deaths=tracker.entries.filter(x=>x.status==='dead'&&!x.isTeamPreview).length;
         const supported=roster.filter(x=>tracker.entries.some(p=>p.nick===x.nick&&p.status==='alive')).length;
         summary.textContent=living+' vivants · '+deaths+' morts · '+tracker.misses.length+' ratées · '+supported+' sets';
       }
@@ -1660,16 +1669,19 @@ footer{font-size:.7rem;opacity:.65}
       });
       while(tracker.party.length<6)tracker.party.push(null);
       if(tracker.hmPartyId==='uberboat')tracker.party[5]='uberboat';
-      const alive=live(), boxed=alive.filter(x=>!inTeam(x));
+      // Une simulation d'équipe ne crée jamais de capture dans les boîtes.
+      tracker.entries=tracker.entries.filter(p=>!p.isTeamPreview||tracker.party.includes(p.id));
+      const alive=live(), boxed=alive.filter(x=>!inTeam(x)&&!x.isTeamPreview);
       const hmHelpers=Array.isArray(tracker.hmHelpers)?tracker.hmHelpers:[];
       byId('hm-helper-box').innerHTML=hmHelpers.length?
         '<div class="box-mon" style="margin-top:14px;border:1px solid #6a5e9f;background:#242334"><div class="box-title"><span>🌊 Exception CS • hors Nuzlocke</span><span>Interdit de combat</span></div>'+
         hmHelpers.map(x=>'<div class="box-desc" style="padding:8px 0"><strong>'+h(x.nick||x.species)+' ('+h(x.species)+')</strong> · '+h(x.place)+' · <strong>CS '+h(x.move||'Surf')+'</strong><div class="team-minor">⚠️ Usage hors combat uniquement. Ne rejoint jamais les 6 Pokémon combattants ; ne compte ni comme vivant, ni comme capture valide et ne consomme pas une deuxième zone.</div></div>').join('')+
         '</div>':'';
       byId('hm-helper-box').innerHTML+='<div class="team-minor" style="margin-top:8px;color:#9eacc1">Hypotrempe (Route 118) : relâché, non disponible pour les CS. Ne compte pas comme mort Nuzlocke.</div>';
-      const fighterCount=tracker.party.filter(id=>tracker.entries.some(x=>x.id===id&&x.status==='alive')).length;
+      const fighterCount=tracker.party.filter(id=>tracker.entries.some(x=>x.id===id&&x.status==='alive'&&!x.isTeamPreview)).length;
+      const trialCount=tracker.party.filter(id=>tracker.entries.some(x=>x.id===id&&x.isTeamPreview)).length;
       const csCount=tracker.party.filter(id=>id==='uberboat'&&tracker.hmPartyId==='uberboat').length;
-      byId('party-counter').textContent=`${tracker.party.filter(Boolean).length} / 6 places · ${fighterCount} combattant(s) + ${csCount} CS hors combat`;
+      byId('party-counter').textContent=`${tracker.party.filter(Boolean).length} / 6 places · ${fighterCount} combattant(s) + ${trialCount} essai(s) hors boîte + ${csCount} CS hors combat`;
       byId('box-counter').textContent=`${boxed.length} en boîte`;
       byId('builder-slots').innerHTML=tracker.party.map((id,i)=>{
         const x=tracker.entries.find(x=>x.id===id);
@@ -1682,7 +1694,7 @@ footer{font-size:.7rem;opacity:.65}
           <div class="team-minor">Place physique réservée. Les Pokémon vivants non sélectionnés restent dans la Boîte.</div>
           </div>`;
         }
-        return `<div class="team-slot ${x?'filled':''}"><label for="party-slot-${i}">EMPLACEMENT ${i+1}</label><select id="party-slot-${i}" data-slot="${i}">${optionsFor(i)}</select>${x?`<div class="team-name">${h(x.nick)}</div><div class="team-minor">${h(x.species)}${x.level?' · niv. '+x.level:''}</div><div class="team-death-action"><label class="td-death-label"><input type="checkbox" data-dead="${h(x.id)}" aria-label="Déclarer ${h(x.nick)} mort"/> 💀 Mort</label></div><div>${miniTypes(x.species)}</div><div class="team-minor">${miniStats(x.species)}</div>${loadoutEditor(x)}${personalStatsEditor(x)}<div class="mini-actions"><button type="button" data-edit="${h(x.id)}">✏️ Modifier</button></div>`:'<div class="team-minor">Choisis un Pokémon vivant dans la liste.</div>'}</div>`;
+        return `<div class="team-slot ${x?'filled':''}"><label for="party-slot-${i}">EMPLACEMENT ${i+1}</label><select id="party-slot-${i}" data-slot="${i}">${optionsFor(i)}</select>${x?`<div class="team-name">${h(x.nick)}</div><div class="team-minor">${h(x.species)}${x.level?' · niv. '+x.level:''}</div>${x.isTeamPreview?'<div class="team-minor" style="color:#f9df91">🧪 Essai libre · hors capture Nuzlocke</div>':`<div class="team-death-action"><label class="td-death-label"><input type="checkbox" data-dead="${h(x.id)}" aria-label="Déclarer ${h(x.nick)} mort"/> 💀 Mort</label></div>`}<div>${miniTypes(x.species)}</div><div class="team-minor">${miniStats(x.species)}</div>${loadoutEditor(x)}${personalStatsEditor(x)}<div class="mini-actions"><button type="button" data-edit="${h(x.id)}">✏️ Modifier</button></div>`:'<div class="team-minor">Choisis un Pokémon vivant dans la liste.</div>'}</div>`;
       }).join('');
       byId('box-cards').innerHTML=boxed.length?boxed.map(x=>`<div class="box-mon"><div class="box-title"><span>📦 ${h(x.nick)}</span><span>${x.level?'Niv. '+x.level:''}</span></div><div class="box-desc">${h(x.species)} · ${h(x.place)} · ${h(x.talent)}</div><div>${miniTypes(x.species)}</div><div class="stat-caption">${miniStats(x.species)}</div>${loadoutEditor(x)}${personalStatsEditor(x)}<div class="mini-actions"><button data-place="${h(x.id)}">➕ Équipe</button><button data-edit="${h(x.id)}">✏ Modifier</button><label class="td-death-label"><input type="checkbox" data-dead="${h(x.id)}" aria-label="Déclarer ${h(x.nick)} mort"/> 💀 Mort</label></div></div>`).join(''):'<p class="dex-info">Ta Boîte est vide : tous tes Pokémon vivants sont actuellement dans l’équipe.</p>';
       const team=tracker.party.map(id=>tracker.entries.find(x=>x.id===id)).filter(x=>x&&x.status==='alive');
@@ -1691,7 +1703,7 @@ footer{font-size:.7rem;opacity:.65}
       const dead=tracker.entries.filter(x=>x.status==='dead');
       byId('history-box').innerHTML=[...dead.map(x=>`<div class="journal-line"><span>${h(x.place)}</span><strong>${h(x.nick)} (${h(x.species)})</strong><span class="status dead">💀 Mort${x.id===tracker.hmPartyId?' · 🌊 CS hors combat':''}</span></div>`),...tracker.misses.map(x=>`<div class="journal-line"><span>${h(x.place)}</span><strong>${h(x.species)}</strong><span class="status missed">✕ ${h(x.reason)}</span></div>`)].join('');
       const stats=byId('journal-title').closest('.journal').querySelectorAll('.stats b');if(stats.length===3){stats[0].textContent=alive.length;stats[1].textContent=dead.length;stats[2].textContent=tracker.misses.length;}
-      byId('journal-title').closest('.journal').querySelector('.journal-grid').innerHTML=tracker.entries.map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.nick)} (${h(x.species)})${x.level?' · niv. '+x.level:''}</strong><span class="status ${x.status==='alive'?'alive':'dead'}">${x.status==='alive'?'♥ Vivant':(x.id===tracker.hmPartyId?'✝ Mort · 🌊 Surf / Plongée hors combat':'✝ Mort')}</span></div>`).join('')+tracker.misses.map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.species)}</strong><span class="status missed">✕ Raté</span></div>`).join('')
+      byId('journal-title').closest('.journal').querySelector('.journal-grid').innerHTML=tracker.entries.filter(x=>!x.isTeamPreview).map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.nick)} (${h(x.species)})${x.level?' · niv. '+x.level:''}</strong><span class="status ${x.status==='alive'?'alive':'dead'}">${x.status==='alive'?'♥ Vivant':(x.id===tracker.hmPartyId?'✝ Mort · 🌊 Surf / Plongée hors combat':'✝ Mort')}</span></div>`).join('')+tracker.misses.map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.species)}</strong><span class="status missed">✕ Raté</span></div>`).join('')
       +hmHelpers.map(x=>`<div role="listitem" class="journal-line"><span>${h(x.place)}</span><strong>${h(x.nick||x.species)} (${h(x.species)})</strong><span class="status">🌊 CS ${h(x.move||'Surf')} · hors combat</span></div>`).join('');
       const setStatus=byId('roster-title').closest('section').querySelector('.roster-top .meta');if(setStatus)setStatus.textContent=`${alive.length} vivants · ${dead.length} mort(s) · ${tracker.misses.length} ratée(s)`;
       // Raccourcis à jour : uniquement les Pokémon vivants
@@ -1744,7 +1756,7 @@ footer{font-size:.7rem;opacity:.65}
     const immune=names.filter(n=>cal[n]===0);
     const abilityBlock = d ? d.abilities.map((id,i)=>id?'<div class="profile-ability '+(i===2?'hidden':'')+'"><span>'+(i===2?'Talent caché':'Talent '+(i+1))+'</span><strong>'+h(abilityNames[id]||('Talent #'+id))+'</strong></div>':'').join('') : '<p class="dex-info">Données indisponibles</p>';
     const rateLabel=!d?'—':d.rate<=5?'Extrêmement difficile':d.rate<=30?'Très difficile':d.rate<=75?'Difficile':d.rate<=150?'Moyen':'Plutôt facile';
-    const ours=tracker.entries.filter(x=>x.species===p.name&&x.status==='alive');
+    const ours=tracker.entries.filter(x=>x.species===p.name&&x.status==='alive'&&!x.isTeamPreview);
     const oursHTML=ours.length?'<p class="dex-info">Ton Pokémon : '+ours.map(x=>'<strong>'+h(x.nick)+'</strong> · Talent confirmé : '+h(x.talent||'À confirmer')).join(' ; ')+'</p>':'';
     document.getElementById('profile-output').innerHTML='<div class="dex-result-title">'+h(p.name)+(p.id?' <span style="font-size:.78rem;color:#b9b9cb">#'+String(p.id).padStart(3,'0')+'</span>':'')+'</div><div class="dex-title-pills">'+p.types.map(badge).join('')+'</div>'+oursHTML+'<div class="profile-data"><div class="profile-card"><h3>🎯 Taux de capture de base</h3><div class="profile-big">'+(d?d.rate:'—')+' <span style="font-size:.86rem;font-weight:600;color:#aab0bd">/ 255</span></div><div class="dex-info">'+rateLabel+'</div></div><div class="profile-card"><h3>🧬 Talents possibles</h3>'+abilityBlock+'</div></div>'+statsCard(p)+'<div class="profile-data"><div class="profile-card"><h3>⚠️ Faiblesses</h3><p class="dex-info">'+(danger.join(' · ')||'Aucune')+'</p><h3>🛡️ Résistances</h3><p class="dex-info">'+(res.join(' · ')||'Aucune')+'</p></div><div class="profile-card"><h3>🚫 Immunités</h3><p class="dex-info">'+(immune.join(' · ')||'Aucune')+'</p><p class="dex-info" style="margin-top:12px">Les talents peuvent modifier ce profil défensif.</p></div></div>'+(p.id?'':'<p class="dex-info">Forme spéciale : talents et taux de capture indiqués d’après l’espèce de base lorsque disponibles.</p>');
   }
@@ -2189,12 +2201,12 @@ function renderParty(){
  const p=tracker.entries.find(x=>x.id===party[i]);
  if(!p)return '<div class="td-ds-party-mon"><span style="opacity:.6;font-size:1.3rem">◌</span><div><div class="td-ds-party-name">Place '+(i+1)+'</div><div class="td-ds-party-species">Libre</div></div></div>';
  const dead=p.status==='dead';
- return '<div class="td-ds-party-mon '+(dead?'dead':'')+'">'+img(p.species)+'<div style="min-width:0;flex:1"><div class="td-ds-party-name">'+escapeHtml(p.nick||p.species)+'</div><div class="td-ds-party-species">'+escapeHtml(p.species)+(p.level?' · N.'+escapeHtml(p.level):'')+(dead?' · 💀 CS':'')+'</div><div class="td-ds-hpbar" aria-hidden="true"></div></div></div>';
+ return '<div class="td-ds-party-mon '+(dead?'dead':'')+'">'+img(p.species)+'<div style="min-width:0;flex:1"><div class="td-ds-party-name">'+escapeHtml(p.nick||p.species)+'</div><div class="td-ds-party-species">'+escapeHtml(p.species)+(p.level?' · N.'+escapeHtml(p.level):'')+(dead?' · 💀 CS':(p.isTeamPreview?' · 🧪 Essai':''))+'</div><div class="td-ds-hpbar" aria-hidden="true"></div></div></div>';
  }).join('');
 }
 function renderCemetery(){
  const grid=document.querySelector('#td-ds-cemetery-grid');if(!grid)return;
- const dead=tracker.entries.filter(p=>p.status==='dead');
+ const dead=tracker.entries.filter(p=>p.status==='dead'&&!p.isTeamPreview);
  document.querySelector('#td-ds-death-count').textContent=dead.length+' morts';
  grid.innerHTML=dead.map(p=>'<button class="td-ds-cemetery-card" type="button" data-td-grave="'+escapeHtml(p.id)+'">'+img(p.species)+'<div><strong>'+escapeHtml(p.nick||p.species)+'</strong><span>'+escapeHtml(p.species)+'</span><span>'+escapeHtml(p.place||'Lieu non précisé')+'</span></div></button>').join('');
  if(!dead.length)grid.innerHTML='<p class="td-ds-cemetery-empty">Aucun décès enregistré.</p>';
@@ -2236,6 +2248,56 @@ renderTracker=function(){originalRenderTracker();renderParty();renderCemetery();
 renderParty();renderCemetery();
 let saved='fiche';try{saved=sessionStorage.getItem('typedex-ds-pocket')||'fiche';}catch(e){}
 open(saved);
+})();
+</script>
+
+<script>
+/* TYPEDEX V65 - Tous les Pokémon sélectionnables comme simulations d'équipe */
+(()=>{
+'use strict';
+const slots=document.getElementById('builder-slots');
+if(!slots||typeof tracker==='undefined'||typeof renderTracker!=='function')return;
+const clean=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9♀♂]+/g,'');
+function decorate(){
+ const cards=slots.querySelectorAll('.team-slot');
+ cards.forEach((card,slot)=>{
+  if(card.querySelector('[data-td-free-form]'))return;
+  const f=document.createElement('form');
+  f.className='td-ds-free-add';f.dataset.tdFreeForm=String(slot);
+  f.innerHTML='<label for="td-ds-free-input-'+slot+'">🔎 Ajouter n’importe quel Pokémon (1G–6G)</label><div class="td-ds-free-row"><input id="td-ds-free-input-'+slot+'" data-td-free-name="'+slot+'" type="search" list="species-options" autocomplete="off" placeholder="Ex. Lucario, Rayquaza…"/><button type="submit">Choisir</button></div><p class="td-ds-free-note">Si absent de tes captures, il rejoint uniquement cette équipe en mode essai. Aucune nouvelle capture ou zone consommée.</p>';
+  card.appendChild(f);
+ });
+}
+const previousRender=renderTracker;
+renderTracker=function(){previousRender();decorate();};
+slots.addEventListener('submit',event=>{
+ const form=event.target.closest('[data-td-free-form]');
+ if(!form)return;
+ event.preventDefault();
+ const slot=Number(form.dataset.tdFreeForm);
+ if(!Number.isInteger(slot)||slot<0||slot>5)return;
+ const entered=form.querySelector('input[data-td-free-name]')?.value.trim()||'';
+ const species=typeof findSpecies==='function'?findSpecies(entered):null;
+ const known=species||(typeof tracker!=='undefined'&&tracker.entries.find(p=>clean(p.nick)===clean(entered)&&p.status==='alive'&&!p.isTeamPreview));
+ const match=species||(known&&typeof findSpecies==='function'?findSpecies(known.species):null);
+ if(!match)return alert('Pokémon introuvable. Saisis le nom français d’une espèce du Pokédex.');
+ const real=tracker.entries.find(p=>p.status==='alive'&&!p.isTeamPreview&&clean(p.species)===clean(match.name)&&!tracker.party.includes(p.id));
+ let chosen;
+ if(real)chosen=real;
+ else{
+  chosen={id:'preview-v65-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),
+   species:match.name,nick:match.name,place:'Simulation · hors capture',talent:'À confirmer',
+   nature:'À confirmer',level:null,status:'alive',isTeamPreview:true};
+  tracker.entries.push(chosen);
+ }
+ if(slot===5&&tracker.hmPartyId==='uberboat'){
+  tracker.hmPartyId=null;tracker.hmPartyMoves=[];
+ }
+ tracker.party[slot]=chosen.id;
+ // Les essais sont sauvegardés localement pour rester sélectionnés après actualisation.
+ saveTracker();
+});
+decorate();
 })();
 </script>
 </body>
