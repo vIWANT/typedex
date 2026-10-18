@@ -1,5 +1,5 @@
 {
-  "revision": 61,
+  "revision": 62,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -902,6 +902,14 @@
       "rememberedBadge": "badge-esprit",
       "deadHmUtility": "uberboat",
       "comments": "Sauvegarde recouvrée: 7 badges, 4 combattants actifs, Démanta mort conservé en CS selon l'ancienne exception, Hypotrempe vu dans MORT non compté comme capture légale."
+    },
+    {
+      "id": "hm-release-hypotrempe-2026-10-18",
+      "type": "hm-release",
+      "pokemonId": "hm-hypotrempe-118",
+      "species": "Hypotrempe",
+      "place": "Route 118",
+      "reason": "Relâché par le joueur, confirmé le 18 octobre 2026. Ancien utilitaire Surf hors Nuzlocke, ni vivant disponible ni mort comptabilisé."
     }
   ],
   "example_not_published": {
