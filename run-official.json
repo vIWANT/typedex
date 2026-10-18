@@ -1,5 +1,5 @@
 {
-  "revision": 64,
+  "revision": 65,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -920,8 +920,8 @@
     "reason": "Mis K.O. avant capture"
   },
   "maintenance": {
-    "version": 64,
-    "summary": "Refonte TYPEDEX style sac à dos Nintendo DS. Sept catégories, fiche et builds distincts, équipe, zones, parcours, réserve et cimetière séparé.",
+    "version": 65,
+    "summary": "Equipe libre : recherche de toutes les espèces du Pokédex dans chaque emplacement (mode essai hors capture Nuzlocke), sans modifier le journal des captures ni les zones.",
     "dataUnchanged": true
   }
 }
