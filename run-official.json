@@ -1,5 +1,5 @@
 {
-  "revision": 60,
+  "revision": 61,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -699,6 +699,156 @@
         },
         "teamCandidate": true
       }
+    },
+    {
+      "id": "rollback-v61-capture-01-lina-lippouti",
+      "type": "undo-capture",
+      "pokemonId": "lina-lippouti",
+      "place": "Algatia",
+      "reason": "Retour à une sauvegarde antérieure ; absent du PC actuel (2026-10-18)."
+    },
+    {
+      "id": "rollback-v61-capture-02-pop-smoke-heledelle",
+      "type": "undo-capture",
+      "pokemonId": "pop-smoke-heledelle",
+      "place": "Route 124",
+      "reason": "Retour à une sauvegarde antérieure ; absent du PC actuel (2026-10-18)."
+    },
+    {
+      "id": "rollback-v61-capture-03-wu-kong-chimpenfeu",
+      "type": "undo-capture",
+      "pokemonId": "wu-kong-chimpenfeu",
+      "place": "Grotte Tréfonds",
+      "reason": "Retour à une sauvegarde antérieure ; absent du PC actuel (2026-10-18)."
+    },
+    {
+      "id": "rollback-v61-capture-04-wattouat-route-128",
+      "type": "undo-capture",
+      "pokemonId": "wattouat-route-128",
+      "place": "Route 128",
+      "reason": "Retour à une sauvegarde antérieure ; absent du PC actuel (2026-10-18)."
+    },
+    {
+      "id": "rollback-v61-capture-05-porygon-eternara",
+      "type": "undo-capture",
+      "pokemonId": "porygon-eternara",
+      "place": "Éternara",
+      "reason": "Retour à une sauvegarde antérieure ; absent du PC actuel (2026-10-18)."
+    },
+    {
+      "id": "rollback-v61-capture-06-tortipouss-route-123",
+      "type": "undo-capture",
+      "pokemonId": "tortipouss-route-123",
+      "place": "Route 123",
+      "reason": "Retour à une sauvegarde antérieure ; absent du PC actuel (2026-10-18)."
+    },
+    {
+      "id": "rollback-v61-capture-07-monaflemit-route-130",
+      "type": "undo-capture",
+      "pokemonId": "monaflemit-route-130",
+      "place": "Route 130",
+      "reason": "Retour à une sauvegarde antérieure ; absent du PC actuel (2026-10-18)."
+    },
+    {
+      "id": "rollback-v61-capture-08-sorbouboul-route-131",
+      "type": "undo-capture",
+      "pokemonId": "sorbouboul-route-131",
+      "place": "Route 131",
+      "reason": "Retour à une sauvegarde antérieure ; absent du PC actuel (2026-10-18)."
+    },
+    {
+      "id": "rollback-v61-capture-09-corayon-route-132",
+      "type": "undo-capture",
+      "pokemonId": "corayon-route-132",
+      "place": "Route 132",
+      "reason": "Retour à une sauvegarde antérieure ; absent du PC actuel (2026-10-18)."
+    },
+    {
+      "id": "rollback-v61-capture-10-furaiglon-pacifiville",
+      "type": "undo-capture",
+      "pokemonId": "furaiglon-pacifiville",
+      "place": "Pacifiville",
+      "reason": "Retour à une sauvegarde antérieure ; absent du PC actuel (2026-10-18)."
+    },
+    {
+      "id": "rollback-v61-capture-11-venalgue-route-134",
+      "type": "undo-capture",
+      "pokemonId": "venalgue-route-134",
+      "place": "Route 134",
+      "reason": "Retour à une sauvegarde antérieure ; absent du PC actuel (2026-10-18)."
+    },
+    {
+      "id": "rollback-v61-capture-12-archeomire-route-105",
+      "type": "undo-capture",
+      "pokemonId": "archeomire-route-105",
+      "place": "Route 105",
+      "reason": "Retour à une sauvegarde antérieure ; absent du PC actuel (2026-10-18)."
+    },
+    {
+      "id": "rollback-v61-capture-13-rattatac-route-117",
+      "type": "undo-capture",
+      "pokemonId": "rattatac-route-117",
+      "place": "Route 117",
+      "reason": "Retour à une sauvegarde antérieure ; absent du PC actuel (2026-10-18)."
+    },
+    {
+      "id": "rollback-v61-rencontre-route-125-2026-10-18",
+      "type": "undo-miss",
+      "place": "Route 125",
+      "species": "Noctunoir",
+      "reason": "Rencontre non effectuée dans la sauvegarde restaurée."
+    },
+    {
+      "id": "rollback-v61-rencontre-route-127-2026-10-18",
+      "type": "undo-miss",
+      "place": "Route 127",
+      "species": "Créfollet",
+      "reason": "Rencontre non effectuée dans la sauvegarde restaurée."
+    },
+    {
+      "id": "checkpoint-v61-lucario-vivant-2026-10-18",
+      "type": "pokemon",
+      "pokemonId": "huissier3000",
+      "fields": {
+        "status": "alive"
+      }
+    },
+    {
+      "id": "checkpoint-v61-gardevoir-nom-2026-10-18",
+      "type": "pokemon",
+      "pokemonId": "cartevitale",
+      "fields": {
+        "nick": "CARTE VITALE"
+      }
+    },
+    {
+      "id": "checkpoint-v61-badge-esprit-reconquis-2026-10-18",
+      "type": "badge",
+      "stepId": "badge-esprit"
+    },
+    {
+      "id": "checkpoint-v61-death-kfc-confirmed-2026-10-18",
+      "type": "death",
+      "pokemonId": "kfc",
+      "reason": "Présent dans la boîte MORT de la sauvegarde retrouvée : KFCORPORATE (Braségali). Date du K.O. initial à préciser."
+    },
+    {
+      "id": "checkpoint-v61-death-urssaf-confirmed-2026-10-18",
+      "type": "death",
+      "pokemonId": "urssaf",
+      "reason": "Présent dans la boîte MORT de la sauvegarde retrouvée : URSSAF (Feuforêve). Date du K.O. initial à préciser."
+    },
+    {
+      "id": "checkpoint-v61-death-vpngratuit-confirmed-2026-10-18",
+      "type": "death",
+      "pokemonId": "vpngratuit",
+      "reason": "Présent dans la boîte MORT de la sauvegarde retrouvée : VPN GRATUIT (Kecleon). Date du K.O. initial à préciser."
+    },
+    {
+      "id": "checkpoint-v61-death-btpexpress-confirmed-2026-10-18",
+      "type": "death",
+      "pokemonId": "btpexpress",
+      "reason": "Présent dans la boîte MORT de la sauvegarde retrouvée : BTP EXPRESS (Donphan). Date du K.O. initial à préciser."
     }
   ],
   "example_not_published": {
