@@ -849,6 +849,59 @@
       "type": "death",
       "pokemonId": "btpexpress",
       "reason": "Présent dans la boîte MORT de la sauvegarde retrouvée : BTP EXPRESS (Donphan). Date du K.O. initial à préciser."
+    },
+    {
+      "id": "checkpoint-v61-sauvegarde-restauree-2026-10-18",
+      "type": "restore-save",
+      "lostCaptures": [
+        "lina-lippouti",
+        "pop-smoke-heledelle",
+        "wu-kong-chimpenfeu",
+        "wattouat-route-128",
+        "porygon-eternara",
+        "tortipouss-route-123",
+        "monaflemit-route-130",
+        "sorbouboul-route-131",
+        "corayon-route-132",
+        "furaiglon-pacifiville",
+        "venalgue-route-134",
+        "archeomire-route-105",
+        "rattatac-route-117"
+      ],
+      "lostMissZones": [
+        "Route 125",
+        "Route 127"
+      ],
+      "alive": [
+        "richard",
+        "huissier3000",
+        "airfrance",
+        "friezer"
+      ],
+      "dead": [
+        "sani",
+        "flanby",
+        "jambon5g",
+        "ryanair",
+        "colissimo",
+        "kfc",
+        "urssaf",
+        "vpngratuit",
+        "btpexpress",
+        "cartevitale",
+        "uberboat"
+      ],
+      "party": [
+        "richard",
+        "huissier3000",
+        "airfrance",
+        null,
+        "friezer",
+        "uberboat"
+      ],
+      "rememberedBadge": "badge-esprit",
+      "deadHmUtility": "uberboat",
+      "comments": "Sauvegarde recouvrée: 7 badges, 4 combattants actifs, Démanta mort conservé en CS selon l'ancienne exception, Hypotrempe vu dans MORT non compté comme capture légale."
     }
   ],
   "example_not_published": {
