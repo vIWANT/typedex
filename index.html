@@ -1448,8 +1448,10 @@ footer{font-size:.7rem;opacity:.65}
     }
     tracker.zoneChecks??={};
     tracker.zoneChecks[normalizeSearch('Route 117')]=true;
+    // V67 : ce décès appartenait à la sauvegarde perdue (V59).
+    // Ne pas le réappliquer après la restauration V61, même au rechargement.
     const huissierV59=tracker.entries.find(x=>x.id==='huissier3000');
-    if(huissierV59){
+    if(huissierV59 && !tracker.recoveredSaveV61){
       huissierV59.status='dead';
       tracker.party=tracker.party.map(x=>x==='huissier3000'?null:x);
     }
@@ -1520,6 +1522,15 @@ footer{font-size:.7rem;opacity:.65}
         tracker.zoneChecks[key]=tracker.entries.some(mon=>normalizeSearch(mon.place)===key)
           ||tracker.misses.some(m=>normalizeSearch(m.place)===key);
       }
+    }
+
+    // V67 : une seule réparation des navigateurs qui avaient conservé
+    // le faux décès de HUISSIER 3000. Laisser intacts les décès futurs
+    // déclarés après cette correction, grâce au marqueur de migration.
+    if(tracker.recoveredSaveV61 && !tracker.huissierRepairedV67){
+      const huissier=tracker.entries.find(x=>x.id==='huissier3000');
+      if(huissier)huissier.status='alive';
+      tracker.huissierRepairedV67=true;
     }
 
     // V62 : libération confirmée d'Hypotrempe, sans effet sur les morts ni sur les zones.
