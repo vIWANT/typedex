@@ -1036,7 +1036,7 @@
         summary.textContent=living+' vivants · '+deaths+' morts · '+tracker.misses.length+' ratées · '+supported+' sets';
       }
       const html=roster.map((mon,index)=>{
-        if (typeof tracker !== 'undefined' && tracker.entries.some(x=>x.nick===mon.nick && x.status==='dead')) return '';
+        if (typeof tracker !== 'undefined' && !tracker.entries.some(x=>x.nick===mon.nick && x.status==='alive')) return '';
         const mode=window.__modes?.[index]||'early';
         const selected=mon[mode];
         return `<article class="mon" style="--tc:${colors[mon.type1]}">
@@ -1356,6 +1356,47 @@
     }
     // Aucune modification de tracker.party : on attend le choix de l’équipe définitive.
 
+
+    // V61 : RECONCILIATION depuis les boîtes et l'équipe de la sauvegarde retrouvée (18 octobre 2026).
+    // Ne pas rejouer les captures ratées de l'ancienne sauvegarde.
+    const RESTORED_SAVE_V61={"id":"checkpoint-v61-sauvegarde-restauree-2026-10-18","type":"restore-save","lostCaptures":["lina-lippouti","pop-smoke-heledelle","wu-kong-chimpenfeu","wattouat-route-128","porygon-eternara","tortipouss-route-123","monaflemit-route-130","sorbouboul-route-131","corayon-route-132","furaiglon-pacifiville","venalgue-route-134","archeomire-route-105","rattatac-route-117"],"lostMissZones":["Route 125","Route 127"],"alive":["richard","huissier3000","airfrance","friezer"],"dead":["sani","flanby","jambon5g","ryanair","colissimo","kfc","urssaf","vpngratuit","btpexpress","cartevitale","uberboat"],"party":["richard","huissier3000","airfrance",null,"friezer","uberboat"],"rememberedBadge":"badge-esprit","deadHmUtility":"uberboat","comments":"Sauvegarde recouvrée: 7 badges, 4 combattants actifs, Démanta mort conservé en CS selon l'ancienne exception, Hypotrempe vu dans MORT non compté comme capture légale."};
+    function applyRestoredSaveV61(snapshot,restoreTeam){
+      const norm=x=>String(x||'').toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+      const lost=new Set(snapshot.lostCaptures||[]);
+      const lostZones=new Set((snapshot.lostMissZones||[]).map(norm));
+      tracker.entries=tracker.entries.filter(mon=>!lost.has(mon.id));
+      tracker.misses=(tracker.misses||[]).filter(m=>!lostZones.has(norm(m.place)));
+      const dying=new Set(snapshot.dead||[]);
+      const alive=new Set(snapshot.alive||[]);
+      for(const mon of tracker.entries){
+        if(dying.has(mon.id))mon.status='dead';
+        if(alive.has(mon.id))mon.status='alive';
+        if(mon.id==='cartevitale')mon.nick='CARTE VITALE';
+      }
+      tracker.zoneChecks??={};
+      const reopened=new Set([
+        'Algatia','Route 124','Grotte Tréfonds','Route 125','Route 127',
+        'Route 128','Éternara','Route 123','Route 130','Route 131',
+        'Route 132','Pacifiville','Route 134','Route 105','Route 117'
+      ].map(norm));
+      for(const zone of reopened){
+        tracker.zoneChecks[zone]=tracker.entries.some(mon=>norm(mon.place)===zone)
+          ||tracker.misses.some(m=>norm(m.place)===zone);
+      }
+      tracker.storyChecks??={};
+      tracker.storyChecks['badge-esprit']=true;
+      // Hypotrempe est dans la boîte MORT : ne pas le suggérer comme aide CS vivante.
+      tracker.hmHelpers=(tracker.hmHelpers||[]).filter(x=>x.id!=='hm-hypotrempe-118');
+      tracker.hmPartyId='uberboat';
+      tracker.hmPartyMoves=['Surf','Plongée'];
+      if(restoreTeam){
+        tracker.party=(snapshot.party||[]).slice(0,6);
+        while(tracker.party.length<6)tracker.party.push(null);
+      }
+      tracker.recoveredSaveV61=true;
+    }
+    if(!tracker.recoveredSaveV61)applyRestoredSaveV61(RESTORED_SAVE_V61,true);
+
     function validState(s){return !!s && Array.isArray(s.entries) && Array.isArray(s.party) && Array.isArray(s.misses) && s.party.length===6 && s.entries.every(x=>x&&typeof x.id==='string'&&typeof x.species==='string');}
     function h(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
     function findSpecies(name){return allSpecies.find(p=>normalizeSearch(p.name)===normalizeSearch(name));}
@@ -1528,7 +1569,7 @@
           return `<div class="team-slot filled" style="border:2px solid #8276c9;background:#28243a">
           <label>EMPLACEMENT ${i+1} • UTILITAIRE CS</label>
           <div class="team-name">🌊💀 ${h(x.nick)} (${h(x.species)})</div>
-          <div class="team-minor"><strong>Surf (CS03) · Plongée (CS07)</strong> · pour les déplacements</div>
+          <div class="team-minor"><strong>Surf (CS03) · Plongée (CS07 après obtention)</strong> · pour les déplacements</div>
           <div class="team-minor" style="color:#ffb5b5">💀 Mort définitive : interdit de combat, absent des calculs de l’équipe combattante.</div>
           <div class="team-minor">Place physique réservée. Les Pokémon vivants non sélectionnés restent dans la Boîte.</div>
           </div>`;
@@ -1818,6 +1859,13 @@ renderGuide();
         for(let i=0;i<5;i++)if(tracker.party[i]===mon.id)tracker.party[i]=null;
         tracker.party[5]=mon.id;
       }
+
+    }else if(ev.type==='restore-save'){
+      applyRestoredSaveV61(ev,true);
+    }else if(ev.type==='undo-miss'&&ev.place){
+      tracker.misses=(tracker.misses||[]).filter(m=>id(m.place)!==id(ev.place));
+      tracker.zoneChecks??={};
+      tracker.zoneChecks[id(ev.place)]=tracker.entries.some(p=>id(p.place)===id(ev.place));
     }else if(ev.type==='miss'&&ev.place){
       tracker.misses??=[];
       if(!tracker.misses.some(x=>id(x.place)===id(ev.place)))tracker.misses.push({species:ev.species||'?',place:ev.place,reason:ev.reason||'Capture ratée'});
