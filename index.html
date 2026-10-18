@@ -383,6 +383,22 @@ footer{font-size:.7rem;opacity:.65}
 .td-ds-team-feedback:empty{display:none}
 .td-ds-free-add{display:none!important}
 </style>
+
+<style>
+/* TYPEDEX V69 - boîte verte, mêmes cartes et mêmes dimensions que le cimetière */
+.td-ds-living-card{background:#203e32;border-color:#6aab7e;color:#ecfff0}
+.td-ds-living-card:hover,.td-ds-living-card:focus-visible{background:#2b523d;border-color:#b0efb7}
+.td-ds-living-card strong{color:#f0fff4}
+.td-ds-living-card span{color:#c1deca}
+.td-ds-living-card img{filter:none!important}
+.td-ds-living-info{background:#234533;border:1px solid #8cce9d;color:#effff2}
+.td-ds-living-info strong{color:#f1fff3}
+.td-ds-box-manage{background:#11382c;border:1px solid #487c64;border-radius:11px;margin-top:12px;padding:12px}
+.td-ds-box-manage>summary{color:#c6ffce;font-weight:850;cursor:pointer}
+.td-ds-box-manage[open]>summary{margin-bottom:13px}
+.td-ds-box-manage .box-cards{margin:9px 0}
+.td-ds-box-manage .box-mon{border-color:#487d66;background:#1b3b30}
+</style>
 </head>
 <body>
 <main class="container">
@@ -2188,6 +2204,26 @@ move('#quoi-faire',screens.get('guide'));
 move('#pokemon-box',screens.get('boite'));
 move('.journal',engine);
 const boxTitle=screens.get('boite').querySelector('#box-title');if(boxTitle)boxTitle.textContent='06 / Boîte Pokémon 📦';
+
+const livePanel=screens.get('boite').querySelector('#pokemon-box');
+const liveCards=livePanel?.querySelector('#box-cards');
+if(liveCards){
+  const grid=document.createElement('div');
+  grid.className='td-ds-cemetery-grid'; grid.id='td-ds-living-grid';
+  const info=document.createElement('div');
+  info.id='td-ds-living-detail';info.setAttribute('aria-live','polite');
+  const management=document.createElement('details');management.className='td-ds-box-manage';
+  management.innerHTML='<summary>⚙️ Gestion des Pokémon · modifier, ajouter à l’équipe ou enregistrer une capture</summary>';
+  liveCards.before(grid);
+  grid.after(info);
+  info.after(management);
+  management.appendChild(liveCards);
+  const hm=livePanel.querySelector('#hm-helper-box');
+  if(hm)management.appendChild(hm);
+  const captureForm=livePanel.querySelector('#new-pokemon-form');
+  if(captureForm?.closest('details'))management.appendChild(captureForm.closest('details'));
+}
+
 const areas=[
  ['#profile-title','01 / Fiche Pokémon 🧬'],
  ['#builder-title','03 / Équipe 👥'],
@@ -2240,6 +2276,27 @@ function renderParty(){
  return '<div class="td-ds-party-mon '+(dead?'dead':'')+'">'+img(p.species)+'<div style="min-width:0;flex:1"><div class="td-ds-party-name">'+escapeHtml(p.nick||p.species)+'</div><div class="td-ds-party-species">'+escapeHtml(p.species)+(p.level?' · N.'+escapeHtml(p.level):'')+(dead?' · 💀 CS':(p.isTeamPreview?' · 🧪 Essai':''))+'</div><div class="td-ds-hpbar" aria-hidden="true"></div></div></div>';
  }).join('');
 }
+
+function renderLivingBox(){
+ const grid=document.querySelector('#td-ds-living-grid');
+ if(!grid)return;
+ const living=tracker.entries.filter(p=>p.status==='alive'&&!p.isTeamPreview&&!tracker.party.includes(p.id));
+ const selected=grid.dataset.selectedId;
+ grid.innerHTML=living.map(p=>'<button class="td-ds-cemetery-card td-ds-living-card" type="button" data-td-living="'+escapeHtml(p.id)+'" aria-pressed="'+(selected===p.id)+'">'+img(p.species)+'<div><strong>'+escapeHtml(p.nick||p.species)+'</strong><span>'+escapeHtml(p.species)+'</span><span>'+escapeHtml(p.place||'Lieu non précisé')+'</span></div></button>').join('');
+ if(!living.length)grid.innerHTML='<p class="td-ds-cemetery-empty">Tous les Pokémon vivants capturés sont dans l’équipe. Aucun Pokémon en réserve.</p>';
+ const detail=document.querySelector('#td-ds-living-detail');
+ if(detail&&selected&&!living.some(p=>p.id===selected))detail.innerHTML='';
+}
+if(livePanel)livePanel.addEventListener('click',e=>{
+ const card=e.target.closest('[data-td-living]');if(!card)return;
+ const p=tracker.entries.find(x=>x.id===card.dataset.tdLiving&&x.status==='alive'&&!x.isTeamPreview);
+ if(!p)return;
+ const grid=document.querySelector('#td-ds-living-grid');
+ if(grid)grid.dataset.selectedId=p.id;
+ renderLivingBox();
+ document.querySelector('#td-ds-living-detail').innerHTML='<div class="td-ds-cemetery-info td-ds-living-info"><strong>💚 '+escapeHtml(p.nick||p.species)+'</strong><p>'+escapeHtml(p.species)+' · Capture : '+escapeHtml(p.place||'à confirmer')+(p.level?' · Niveau '+escapeHtml(p.level):'')+'.</p><p>Talent : '+escapeHtml(p.talent||'À confirmer')+' · Nature : '+escapeHtml(p.nature||'À confirmer')+'.</p><p>Statut : vivant, disponible pour l’équipe. Les actions de gestion sont dans le panneau juste en dessous.</p></div>';
+});
+
 function renderCemetery(){
  const grid=document.querySelector('#td-ds-cemetery-grid');if(!grid)return;
  const dead=tracker.entries.filter(p=>p.status==='dead'&&!p.isTeamPreview);
@@ -2263,6 +2320,7 @@ function open(id){
  selected.querySelectorAll('.td-foldable.td-closed').forEach(s=>{s.classList.remove('td-closed');const toggle=s.querySelector(':scope > .td-fold-heading > .td-collapse-toggle');if(toggle){toggle.textContent='− Réduire';toggle.setAttribute('aria-expanded','true');}});
  try{sessionStorage.setItem('typedex-ds-pocket',id);}catch(e){}
  if(id==='cimetiere')renderCemetery();
+ if(id==='boite')renderLivingBox();
  if(id==='equipe'||id==='boite')renderParty();
 }
 shell.addEventListener('click',e=>{const btn=e.target.closest('[data-td-pocket]');if(btn)open(btn.dataset.tdPocket);});
@@ -2280,8 +2338,8 @@ document.addEventListener('click',e=>{
  if(mapping[destination]){e.preventDefault();open(mapping[destination]);}
 });
 const originalRenderTracker=renderTracker;
-renderTracker=function(){originalRenderTracker();renderParty();renderCemetery();};
-renderParty();renderCemetery();
+renderTracker=function(){originalRenderTracker();renderParty();renderCemetery();renderLivingBox();};
+renderParty();renderCemetery();renderLivingBox();
 let saved='fiche';try{saved=sessionStorage.getItem('typedex-ds-pocket')||'fiche';}catch(e){}
 open(saved);
 })();
