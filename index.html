@@ -278,15 +278,103 @@
 .td-death-label input{accent-color:#f77d8b;width:16px;height:16px;margin:0;cursor:pointer}
 .td-death-label:focus-within{outline:2px solid #fcb5c0;outline-offset:2px}
 </style>
+
+<style>
+/* TYPEDEX DS BAG V64 - refonte non-destructive de la navigation */
+:root{--bg:#0a1923;--surface:#112737;--surface2:#193748;--line:#507b85;--txt:#f1f8f0;--sub:#aec7c6;--mint:#a9f4b3;--red:#ffadad;--glow:#fed079}
+body{background:radial-gradient(circle at 75% 0%,#396d5b 0%,transparent 32%),repeating-linear-gradient(0deg,#0c2630 0 4px,#0e2a34 4px 7px);color:#f2faef}
+.container{width:min(1460px,calc(100% - 32px));padding:22px 0 32px}
+body .container>header{position:relative;margin-bottom:13px;padding:13px 19px 11px;border-radius:17px;border:4px solid #801e2c;background:linear-gradient(115deg,#d8414e,#a72739 65%,#7c1b31);box-shadow:inset 0 3px #ff8e8a,0 5px 0 #061720,0 12px 32px #0007}
+body .container>header h1{font-family:ui-monospace,"Courier New",monospace;font-size:clamp(2rem,4vw,3.3rem);letter-spacing:.025em;margin:4px 0;color:#fff8e8;text-shadow:3px 3px #64212a}
+body .container>header h1 span{color:#ffdb70}
+body .container>header .eyebrow{font-size:.67rem;color:#fff6cd;letter-spacing:.2em}
+body .container>header .eyebrow:before{background:#58eaff;box-shadow:0 0 0 4px #155588,0 0 0 6px #defaff}
+body .container>header p{font-size:.79rem;color:#fff1de;max-width:100%;margin:0 0 3px}
+.td-ds-summary{display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:#091d2a;border:2px solid #537984;border-radius:12px;padding:9px;margin-bottom:12px;box-shadow:inset 0 2px #05141e}
+.td-ds-summary-label{color:#9fe3e8;font:800 .65rem ui-monospace,monospace;letter-spacing:.12em;margin-right:6px}
+.td-ds-summary>span:not(.td-ds-summary-label){border:1px solid #6b7780;background:#233d49;color:#ebf7ee;padding:6px 10px;border-radius:8px;font-size:.75rem;font-weight:850;white-space:nowrap}
+body .td-story-banner{margin-bottom:9px;border-radius:12px;background:#1c3947;border:1px solid #8da49b}
+body .td-online-bar{margin-bottom:12px!important;background:#143c34!important;border-color:#3b7865!important;border-radius:10px!important}
+.td-all-controls{display:none!important}
+.td-ds-shell{position:relative;background:linear-gradient(140deg,#c94448,#a32839 65%,#752436);border:5px solid #5f162a;border-radius:25px;padding:13px;box-shadow:inset 0 4px #ff9a8b,inset 0 -5px #6e1c2c,0 14px 0 #071622,0 21px 45px #0009}
+.td-ds-shell::before{content:"";position:absolute;top:11px;right:16px;width:11px;height:11px;border-radius:50%;background:#8fffac;box-shadow:0 0 0 4px #255449,0 0 17px #7dfc95}
+.td-ds-shell-top{display:flex;align-items:center;justify-content:space-between;padding:1px 21px 11px;color:#fff3cf;font-family:ui-monospace,monospace;font-size:.7rem;font-weight:900;letter-spacing:.12em}
+.td-ds-pocket-bar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;background:#12242f;padding:9px;border:3px solid #243b48;border-radius:16px 16px 6px 6px}
+.td-ds-pocket{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:2px solid #4b697b;background:linear-gradient(#263e50,#162b3a);color:#d7f0f1;border-radius:13px;min-height:70px;padding:8px 3px;font-size:.72rem;font-weight:850;line-height:1.2;text-align:center;box-shadow:inset 0 2px #6b8b933d,0 3px #081720;transition:background .15s,transform .15s}
+.td-ds-pocket:hover{border-color:#eab770;transform:translateY(-2px)}
+.td-ds-pocket[aria-selected="true"]{color:#281318;background:linear-gradient(#ffe7a2,#ffb84c);border-color:#fff4c7;box-shadow:inset 0 2px #fff4cc,0 3px #803a35}
+.td-ds-pocket .td-ds-icon{font-size:1.55rem;filter:drop-shadow(1px 2px 0 #0004)}
+.td-ds-body{display:grid;grid-template-columns:minmax(190px,240px) minmax(0,1fr);gap:11px;background:#0e2934;padding:11px;border:3px solid #375b66;border-top:0;border-radius:0 0 15px 15px}
+.td-ds-party{background:repeating-linear-gradient(0deg,#104153 0 3px,#13465b 3px 6px);border:3px solid #5b94a1;border-radius:12px;padding:12px;min-width:0;align-self:start}
+.td-ds-party h2{font:900 .88rem ui-monospace,monospace;color:#e8ffdf;margin:0 0 9px;letter-spacing:.06em}
+.td-ds-party-list{display:grid;gap:5px}
+.td-ds-party-mon{display:flex;align-items:center;gap:8px;background:#092b3b9a;border:1px solid #3c7786;border-radius:9px;padding:5px 6px;min-height:56px;min-width:0}
+.td-ds-party-mon img,.td-ds-cemetery-card img{width:45px;height:45px;image-rendering:pixelated;object-fit:contain;flex:none}
+.td-ds-party-name{font-weight:850;color:#f1fbf1;font-size:.75rem;overflow-wrap:anywhere}
+.td-ds-party-species{font-size:.64rem;color:#a9d9e3}
+.td-ds-hpbar{height:5px;border-radius:4px;background:linear-gradient(90deg,#60e877,#caec58);box-shadow:0 1px #0d3721;margin-top:5px;width:100%;max-width:110px}
+.td-ds-party-mon.dead .td-ds-hpbar{background:#aa5662}
+.td-ds-party-mon.dead img,.td-ds-cemetery-card img{filter:grayscale(.85)}
+.td-ds-display{min-width:0;border:3px solid #78a1ac;border-radius:13px;background:linear-gradient(110deg,#0b2232,#163947 100%);padding:13px;min-height:500px;box-shadow:inset 0 0 0 3px #061c2a}
+.td-ds-screenhead{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;background:linear-gradient(100deg,#ffcf62,#f9a62e);border:2px solid #fff0b3;border-radius:10px;color:#3c2520;padding:9px 12px;box-shadow:0 3px #7a4432;margin-bottom:13px}
+.td-ds-screenhead strong{font:900 clamp(.9rem,1.6vw,1.2rem) ui-monospace,monospace;text-transform:uppercase}
+.td-ds-screenhead small{color:#69462c;font-size:.72rem}
+.td-ds-screen[hidden],.td-ds-screen[hidden] *{display:none!important}
+.td-ds-screen>.panel,.td-ds-screen>.td-types-fold,.td-ds-screen>.td-tool-drawer>.td-types-fold{margin:0 0 14px}
+.td-ds-screen .panel{background:#152d3b;border:1px solid #66909a;box-shadow:inset 0 2px #ffffff12;border-radius:12px}
+.td-ds-screen .panel h2{color:#fff4d5}
+.td-ds-screen .meta.accent{background:#345d60;color:#eafee7}
+.td-ds-screen input,.td-ds-screen select{background:#071b29;color:#eff9f4;border-color:#5d8c94}
+.td-ds-screen .action,.td-ds-screen .mini-actions button,.td-ds-screen .control{background:#31546a;border-color:#658a98;color:#f4f9ff}
+.td-ds-screen .action:hover,.td-ds-screen .mini-actions button:hover{background:#486f86}
+.td-ds-screen .td-tool-drawer{border:1px solid #527482;border-radius:12px;margin-top:11px;padding:12px;background:#102d3c}
+.td-ds-screen .td-tool-drawer>summary{font-weight:900;cursor:pointer;color:#ffe1a5}
+.td-ds-screen .td-tool-drawer[open]>summary{margin-bottom:12px}
+.td-ds-screen .td-tool-drawer .app{grid-template-columns:repeat(2,minmax(0,1fr))}
+#dex-quick,#profile-quick,#presets,.presets,#td-ds-engine{display:none!important}
+#td-ds-screen-builds .roster-wrap{display:none!important}
+.td-ds-build-search{padding:15px;border:1px solid #5b8595;border-radius:12px;background:#153444}
+.td-ds-build-search label{display:block;color:#ffdf9b;font-weight:900;margin-bottom:7px}
+.td-ds-build-search input{width:100%;padding:13px;border-radius:10px;border:2px solid #82b0b1;background:#0c2535;color:#fff}
+.td-ds-build-screen{margin-top:12px}
+.td-ds-build-choices{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+.td-ds-build-choice{padding:7px 11px;border:1px solid #658b9b;border-radius:9px;background:#244458;color:#fff}
+.td-ds-build-panel{border:2px solid #5c8190;border-radius:12px;background:#102b39;padding:15px}
+.td-ds-build-monhead{display:flex;align-items:center;gap:12px}
+.td-ds-build-monhead img{width:82px;height:82px;image-rendering:pixelated;object-fit:contain}
+.td-ds-build-monhead h3{margin:0;color:#fff1c4;font-size:1.4rem}
+.td-ds-build-monhead p{margin:3px 0;color:#a7cad1;font-size:.8rem}
+.td-ds-build-tabs{display:flex;gap:8px;margin:12px 0}
+.td-ds-build-tabs button{flex:1;padding:11px 7px;border:2px solid #688797;border-radius:9px;background:#24394f;color:#ebf5f6;font-weight:850}
+.td-ds-build-tabs button[aria-pressed="true"]{border-color:#fff2bc;background:linear-gradient(#ffd66c,#e9a73d);color:#342a23}
+.td-ds-build-row{border:1px solid #456b79;border-radius:9px;background:#173849;margin:6px 0;overflow:hidden}
+.td-ds-build-row summary{padding:10px;display:flex;justify-content:space-between;gap:8px;cursor:pointer;color:#fff4e6;font-weight:850}
+.td-ds-build-row summary small{color:#b7e1e0;font-size:.7rem}
+.td-ds-build-row p{padding:0 12px 12px;margin:0;color:#d0e4e3;font-size:.82rem}
+.td-ds-build-note{font-size:.82rem;line-height:1.6;color:#d2e1dd}
+.td-ds-build-note b{color:#ffe4a4}
+.td-ds-cemetery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.td-ds-cemetery-card{display:flex;align-items:center;gap:11px;text-align:left;border:2px solid #745a68;border-radius:12px;background:#342532;color:#f6e5ed;padding:11px;min-width:0}
+.td-ds-cemetery-card:hover{background:#493243;border-color:#f1b8bd}
+.td-ds-cemetery-card strong{display:block;font-size:.9rem}
+.td-ds-cemetery-card span{display:block;font-size:.73rem;color:#c5aeb7}
+.td-ds-cemetery-info{background:#3c2837;border-radius:11px;padding:12px;margin-top:12px;border:1px solid #8c697b;color:#f8e9ef}
+.td-ds-cemetery-empty{font-size:.86rem;color:#c9aebd}
+.td-ds-screen .td-foldable.td-closed{max-height:none}
+footer{font-size:.7rem;opacity:.65}
+@media(max-width:950px){.td-ds-body{grid-template-columns:1fr}.td-ds-party-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.td-ds-party-mon{min-height:44px}.td-ds-party-mon img{width:34px;height:34px}.td-ds-party{padding:9px}.td-ds-screen .td-tool-drawer .app{grid-template-columns:1fr}}
+@media(max-width:660px){.container{width:calc(100% - 12px);padding:8px 0}.td-ds-shell{padding:6px;border-width:3px;border-radius:13px}.td-ds-pocket-bar{display:flex;overflow-x:auto;gap:5px}.td-ds-pocket{min-width:84px;min-height:65px}.td-ds-body{padding:5px}.td-ds-display{padding:7px}.td-ds-party-list{grid-template-columns:repeat(2,minmax(0,1fr))}.td-ds-party-mon{padding:3px}.td-ds-summary>span:not(.td-ds-summary-label){font-size:.66rem;padding:4px 6px}.td-ds-screen .panel{padding:12px}.td-ds-screen .roster-top{flex-direction:column}.td-ds-screen .dex-row{flex-wrap:wrap}.td-ds-screen .dex-field{min-width:0;width:100%}.td-ds-build-row summary{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.td-ds-pocket{transition:none}}
+</style>
 </head>
 <body>
 <main class="container">
 <header>
 <div class="eyebrow">Pokémon • Rubis Oméga • Run #2</div>
 <h1>TYPE<span>DEX</span> <span style="font-size:.35em;letter-spacing:0;color:#a6a8b6;vertical-align:middle">LIVE</span></h1>
-<p>Recherche un Pokémon par son nom français, consulte les faiblesses, résistances et immunités, et retrouve les sets de ton équipe. Choisis un premier type, puis un deuxième si besoin : le calcul se fait automatiquement. Pensé pour ton Randomlocke sur <strong>Rubis Oméga</strong>.</p>
+<p>Ton Pokédex de terrain, version Nintendo DS. Navigue dans les poches de ton sac pour consulter tes fiches, tes builds et ta Nuzlocke <strong>Rubis Oméga</strong>.</p>
 </header>
-<nav aria-label="Navigation TYPEDEX" class="mini-actions" style="margin-bottom:20px"><a class="control" href="#pokemon-dex">🔎 Recherche</a><a class="control" href="#pokemon-profile">🧬 Fiche</a><a class="control" href="#roster-title">📋 Sets</a><a class="control" href="#team-builder">⚔️ Team</a><a class="control" href="#pokemon-box">📦 Boîte</a><a class="control" href="#zone-checklist">🗺️ Zones</a><a class="control" href="#journal-title">📖 Journal</a><a class="control" href="#quoi-faire">🧭 Quoi faire ?</a></nav><div class="td-story-banner" id="td-story-banner"><span>🧭 PROCHAINE ÉTAPE</span> <strong id="story-mini-next">Explorer le Mont Mémoria</strong><a href="#quoi-faire">Voir mon itinéraire ↗</a></div><div class="td-online-bar" role="status" aria-live="polite">
+<div class="td-ds-summary" aria-label="Sommaire du TYPEDEX, repère visuel non interactif"><span class="td-ds-summary-label">SOMMAIRE</span><span>🧬 Fiche</span><span>⚔️ Builds</span><span>👥 Équipe</span><span>🗺️ Zones</span><span>🧭 Quoi faire ?</span><span>📦 Boîte Pokémon</span><span>💀 Cimetière</span></div><div class="td-story-banner" id="td-story-banner"><span>🧭 PROCHAINE ÉTAPE</span> <strong id="story-mini-next">Explorer le Mont Mémoria</strong><a href="#quoi-faire">Voir mon itinéraire ↗</a></div><div class="td-online-bar" role="status" aria-live="polite">
   <span id="td-online-status">📡 Données de la run enregistrées dans ce navigateur</span>
   <button type="button" id="td-online-sync">🔄 Actualiser les événements</button>
 </div>
@@ -1998,6 +2086,156 @@ renderGuide();
   badgeVisual();
   btn?.addEventListener('click',syncOfficial);
   syncOfficial();
+})();
+</script>
+
+<script>
+/* TYPEDEX DS BAG V64 : vues indépendantes, zéro rechargement pour la navigation */
+(()=>{
+'use strict';
+const defs=[
+ {id:'fiche',label:'Fiche Pokémon',short:'Fiche',icon:'🧬',description:'Encyclopédie · 721 espèces'},
+ {id:'builds',label:'Builds Pokémon',short:'Builds',icon:'⚔️',description:'Aventure & Objectif Ligue'},
+ {id:'equipe',label:'Équipe',short:'Équipe',icon:'👥',description:'Six emplacements'},
+ {id:'zones',label:'Zones de capture',short:'Zones',icon:'🗺️',description:'Rencontres et itinéraire'},
+ {id:'guide',label:'Quoi faire ?',short:'Quoi faire ?',icon:'🧭',description:'Objectifs et badges'},
+ {id:'boite',label:'Boîte Pokémon',short:'Boîte',icon:'📦',description:'Pokémon vivants'},
+ {id:'cimetiere',label:'Boîte Cimetière',short:'Cimetière',icon:'💀',description:'Hommage aux tombés'}
+];
+const escapeHtml=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'');
+const idFor=x=>{const p=typeof allSpecies!=='undefined'?allSpecies.find(p=>norm(p.name)===norm(x)):null;return p&&p.id>0?p.id:null;};
+const sprite=x=>{const id=idFor(x);return id?'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'+id+'.png':null;};
+const img=x=>{const url=sprite(x);return url?'<img alt="" loading="lazy" src="'+url+'" onerror="this.style.display=\'none\'"/>':'<span style="font-size:1.8rem">◉</span>';};
+const host=document.querySelector('main.container');
+const badges=document.querySelector('.badges-panel');
+if(!host||!badges)return;
+const shell=document.createElement('section');
+shell.className='td-ds-shell';
+shell.id='td-ds-shell';
+shell.setAttribute('aria-label','Interface TYPEDEX de style Nintendo DS');
+shell.innerHTML='<div class="td-ds-shell-top"><span>TYPEDEX · HOENN SYSTEM</span><span>RUBIS OMÉGA / RUN 02</span></div><div class="td-ds-pocket-bar" role="tablist" aria-label="Poches du sac Pokédex">'+defs.map((d,i)=>'<button class="td-ds-pocket" type="button" role="tab" id="td-ds-tab-'+d.id+'" aria-controls="td-ds-screen-'+d.id+'" aria-selected="false" data-td-pocket="'+d.id+'"><span class="td-ds-icon">'+d.icon+'</span><span>'+d.short+'</span></button>').join('')+'</div><div class="td-ds-body"><aside class="td-ds-party" aria-label="Équipe actuelle"><h2>◉ ÉQUIPE ACTUELLE</h2><div class="td-ds-party-list" id="td-ds-party-list"></div></aside><div class="td-ds-display"><div class="td-ds-screenhead"><strong id="td-ds-current-title">FICHE POKÉMON</strong><small id="td-ds-current-desc"></small></div><div id="td-ds-screens"></div></div></div>';
+host.insertBefore(shell,badges);
+const screenParent=shell.querySelector('#td-ds-screens');
+const screens=new Map();
+defs.forEach(d=>{
+ const s=document.createElement('div');
+ s.className='td-ds-screen';s.id='td-ds-screen-'+d.id;
+ s.setAttribute('role','tabpanel');s.setAttribute('aria-labelledby','td-ds-tab-'+d.id);s.hidden=true;
+ screenParent.appendChild(s);screens.set(d.id,s);
+});
+const engine=document.createElement('div');engine.id='td-ds-engine';engine.setAttribute('aria-hidden','true');host.appendChild(engine);
+const move=(selector,where)=>{const el=document.querySelector(selector);if(el)where.appendChild(el);};
+move('#pokemon-profile',screens.get('fiche'));
+const typeDrawer=document.createElement('details');typeDrawer.className='td-tool-drawer';
+typeDrawer.innerHTML='<summary>🛡️ Calculateur des types · ouvrir l’outil</summary>';
+screens.get('fiche').appendChild(typeDrawer);
+move('#type-calculator',typeDrawer);
+move('#pokemon-dex',engine);
+move('.roster-wrap',engine);
+move('#team-builder',screens.get('equipe'));
+move('#zone-checklist',screens.get('zones'));
+move('.badges-panel',screens.get('guide'));
+move('#quoi-faire',screens.get('guide'));
+move('#pokemon-box',screens.get('boite'));
+move('.journal',engine);
+const boxTitle=screens.get('boite').querySelector('#box-title');if(boxTitle)boxTitle.textContent='06 / Boîte Pokémon 📦';
+const areas=[
+ ['#profile-title','01 / Fiche Pokémon 🧬'],
+ ['#builder-title','03 / Équipe 👥'],
+ ['#zone-title','04 / Zones de capture 🗺️'],
+ ['#story-title','05 / Quoi faire ? 🧭']
+];areas.forEach(([s,label])=>{const n=document.querySelector(s);if(n)n.textContent=label;});
+const pQuick=document.querySelector('#profile-quick');if(pQuick)pQuick.setAttribute('aria-hidden','true');
+const grave=screens.get('cimetiere');
+grave.innerHTML='<div class="panel"><div class="roster-top"><div><h2>07 / Boîte Cimetière 💀</h2><p>Pokémon définitivement tombés pendant la Nuzlocke. Ils ne sont plus disponibles au combat.</p></div><span class="meta accent" id="td-ds-death-count"></span></div><div class="td-ds-cemetery-grid" id="td-ds-cemetery-grid"></div><div id="td-ds-cemetery-detail" aria-live="polite"></div></div>';
+const history=document.querySelector('#history-box');
+if(history){const title=history.previousElementSibling;if(title&&title.tagName==='H3')title.remove();engine.appendChild(history);}
+const buildScreen=screens.get('builds');
+buildScreen.innerHTML='<div class="td-ds-build-search"><label for="td-ds-build-input">⚔️ Rechercher un Pokémon pour son set</label><input type="search" id="td-ds-build-input" list="td-ds-build-species" autocomplete="off" placeholder="Ex. Lucario, Entei, Mewtwo, Richard..."/><datalist id="td-ds-build-species"></datalist><div id="td-ds-build-choices" class="td-ds-build-choices"></div><p class="td-ds-build-note">Deux objectifs : aventure actuelle et Ligue. Les fiches préétablies fournissent les attaques et leurs indications d’obtention ; aucune capacité non vérifiée ne sera inventée.</p></div><div class="td-ds-build-screen" id="td-ds-build-output" aria-live="polite"><p class="td-ds-build-note">Tape le nom d’un Pokémon pour consulter ses builds.</p></div>';
+const buildInput=document.querySelector('#td-ds-build-input');
+const speciesOptions=document.querySelector('#td-ds-build-species');
+if(speciesOptions&&typeof pokemons!=='undefined'){speciesOptions.innerHTML=pokemons.map(p=>'<option value="'+escapeHtml(p.name)+'"></option>').join('');}
+let buildMode='early';let selectedBuild=null;
+function renderBuild(){
+ const output=document.querySelector('#td-ds-build-output');if(!output)return;
+ const val=buildInput.value.trim();
+ const query=norm(val);
+ const choices=document.querySelector('#td-ds-build-choices');
+ if(!query){choices.innerHTML='';output.innerHTML='<p class="td-ds-build-note">Recherche un Pokémon ou un surnom. Les fiches détaillées disponibles apparaîtront ici.</p>';return;}
+ const supported=typeof roster!=='undefined'?roster:[];
+ const matches=supported.filter(p=>norm(p.nick).includes(query)||norm(p.species).includes(query)).slice(0,6);
+ choices.innerHTML=matches.length>1?matches.map(p=>'<button class="td-ds-build-choice" type="button" data-td-build="'+escapeHtml(p.nick)+'">'+escapeHtml(p.nick)+' · '+escapeHtml(p.species)+'</button>').join(''):'';
+ const pick=selectedBuild&&matches.some(p=>p.nick===selectedBuild)?matches.find(p=>p.nick===selectedBuild):matches[0];
+ if(!pick){
+   const sp=typeof allSpecies!=='undefined'?allSpecies.find(p=>norm(p.name)===query):null;
+   output.innerHTML='<div class="td-ds-build-panel"><h3>'+escapeHtml(sp?.name||val)+'</h3><p class="td-ds-build-note">Aucun set détaillé et vérifié n’est encore enregistré pour ce Pokémon dans le TYPEDEX. Nous pourrons ajouter ses attaques avec leurs méthodes d’obtention exactes, sans proposer de CT impossibles.</p><button class="td-ds-build-choice" type="button" data-td-see-profile="'+escapeHtml(sp?.name||val)+'">🧬 Consulter sa fiche Pokémon</button></div>';
+   return;
+ }
+ const set=pick[buildMode]||pick.early;
+ const ability=tracker.entries.find(e=>norm(e.nick)===norm(pick.nick)||norm(e.species)===norm(pick.species))?.talent||pick.talent||'À confirmer';
+ output.innerHTML='<div class="td-ds-build-panel"><div class="td-ds-build-monhead">'+img(pick.species)+'<div><h3>'+escapeHtml(pick.nick)+'</h3><p>'+escapeHtml(pick.species)+' · '+escapeHtml(pick.place||'Lieu à préciser')+'</p></div></div><div class="td-ds-build-tabs"><button type="button" data-td-mode="early" aria-pressed="'+(buildMode==='early')+'">🎒 Aventure</button><button type="button" data-td-mode="final" aria-pressed="'+(buildMode==='final')+'">🏆 Objectif Ligue</button></div><h3>'+escapeHtml(set.title||'Set conseillé')+'</h3><p class="td-ds-build-note"><b>Talent :</b> '+escapeHtml(ability)+' · <b>Nature :</b> '+escapeHtml(pick.nature||'À confirmer')+'</p><p class="td-ds-build-note"><b>Objet conseillé :</b> '+escapeHtml(pick.item||'À confirmer')+'</p><p class="td-ds-build-note">'+escapeHtml(pick.intro||'')+'</p><h4>Capacités conseillées et obtention</h4>'+(set.moves||[]).map((m,i)=>'<details class="td-ds-build-row"><summary><span>'+escapeHtml((i+1)+'. '+m[0])+'</span><small>'+escapeHtml(m[1]||'')+' ⌄</small></summary><p><b>Comment obtenir cette attaque :</b> '+escapeHtml(m[2]||'Méthode à confirmer pour Rubis Oméga')+'. Vérifie la disponibilité selon ta progression avant de remplacer une capacité.</p></details>').join('')+'<p class="td-ds-build-note">'+escapeHtml(set.notes||'')+'</p><p class="td-ds-build-note">⚠️ Les emplacements détaillés des objets et CT ne sont pas tous documentés dans les anciennes fiches. Les guides seront enrichis individuellement après vérification.</p></div>';
+}
+buildInput.addEventListener('input',()=>{selectedBuild=null;buildMode='early';renderBuild();});
+buildScreen.addEventListener('click',e=>{
+ const choice=e.target.closest('[data-td-build]');if(choice){selectedBuild=choice.dataset.tdBuild;buildInput.value=selectedBuild;buildMode='early';renderBuild();return;}
+ const mode=e.target.closest('[data-td-mode]');if(mode){buildMode=mode.dataset.tdMode;renderBuild();return;}
+ const profile=e.target.closest('[data-td-see-profile]');if(profile){const field=document.querySelector('#profile-search');if(field)field.value=profile.dataset.tdSeeProfile;document.querySelector('#profile-go')?.click();open('fiche');}
+});
+function renderParty(){
+ const list=document.querySelector('#td-ds-party-list');if(!list)return;
+ const party=Array.isArray(tracker.party)?tracker.party:[];
+ list.innerHTML=Array.from({length:6},(_,i)=>{
+ const p=tracker.entries.find(x=>x.id===party[i]);
+ if(!p)return '<div class="td-ds-party-mon"><span style="opacity:.6;font-size:1.3rem">◌</span><div><div class="td-ds-party-name">Place '+(i+1)+'</div><div class="td-ds-party-species">Libre</div></div></div>';
+ const dead=p.status==='dead';
+ return '<div class="td-ds-party-mon '+(dead?'dead':'')+'">'+img(p.species)+'<div style="min-width:0;flex:1"><div class="td-ds-party-name">'+escapeHtml(p.nick||p.species)+'</div><div class="td-ds-party-species">'+escapeHtml(p.species)+(p.level?' · N.'+escapeHtml(p.level):'')+(dead?' · 💀 CS':'')+'</div><div class="td-ds-hpbar" aria-hidden="true"></div></div></div>';
+ }).join('');
+}
+function renderCemetery(){
+ const grid=document.querySelector('#td-ds-cemetery-grid');if(!grid)return;
+ const dead=tracker.entries.filter(p=>p.status==='dead');
+ document.querySelector('#td-ds-death-count').textContent=dead.length+' morts';
+ grid.innerHTML=dead.map(p=>'<button class="td-ds-cemetery-card" type="button" data-td-grave="'+escapeHtml(p.id)+'">'+img(p.species)+'<div><strong>'+escapeHtml(p.nick||p.species)+'</strong><span>'+escapeHtml(p.species)+'</span><span>'+escapeHtml(p.place||'Lieu non précisé')+'</span></div></button>').join('');
+ if(!dead.length)grid.innerHTML='<p class="td-ds-cemetery-empty">Aucun décès enregistré.</p>';
+}
+grave.addEventListener('click',e=>{
+ const card=e.target.closest('[data-td-grave]');if(!card)return;
+ const p=tracker.entries.find(x=>x.id===card.dataset.tdGrave);if(!p)return;
+ document.querySelector('#td-ds-cemetery-detail').innerHTML='<div class="td-ds-cemetery-info"><strong>💀 '+escapeHtml(p.nick||p.species)+'</strong><p>'+escapeHtml(p.species)+' · Capture : '+escapeHtml(p.place||'à confirmer')+'.</p><p>Statut : mort définitive. '+(p.id===tracker.hmPartyId?'Exception CS hors combat.':'Interdit de combat.')+' La cause précise du K.O. est indiquée uniquement si elle est confirmée.</p></div>';
+});
+function open(id){
+ if(!screens.has(id))id='fiche';
+ const d=defs.find(x=>x.id===id);
+ screens.forEach((s,k)=>{s.hidden=k!==id;});
+ shell.querySelectorAll('[data-td-pocket]').forEach(b=>{const active=b.dataset.tdPocket===id;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});
+ document.querySelector('#td-ds-current-title').textContent=d.icon+' '+d.label;
+ document.querySelector('#td-ds-current-desc').textContent=d.description;
+ const selected=screens.get(id);
+ selected.querySelectorAll('.td-foldable.td-closed').forEach(s=>{s.classList.remove('td-closed');const toggle=s.querySelector(':scope > .td-fold-heading > .td-collapse-toggle');if(toggle){toggle.textContent='− Réduire';toggle.setAttribute('aria-expanded','true');}});
+ try{sessionStorage.setItem('typedex-ds-pocket',id);}catch(e){}
+ if(id==='cimetiere')renderCemetery();
+ if(id==='equipe'||id==='boite')renderParty();
+}
+shell.addEventListener('click',e=>{const btn=e.target.closest('[data-td-pocket]');if(btn)open(btn.dataset.tdPocket);});
+shell.addEventListener('keydown',e=>{
+ const tab=e.target.closest('[data-td-pocket]');if(!tab||!['ArrowRight','ArrowLeft','Home','End'].includes(e.key))return;
+ e.preventDefault();const all=[...shell.querySelectorAll('[data-td-pocket]')];
+ const i=all.indexOf(tab);const n=e.key==='Home'?0:e.key==='End'?all.length-1:(i+(e.key==='ArrowRight'?1:-1)+all.length)%all.length;
+ all[n].focus();open(all[n].dataset.tdPocket);
+});
+// Le lien "Quoi faire ?" / "Mes zones" ouvre la bonne poche plutôt que de défiler dans une page masquée.
+document.addEventListener('click',e=>{
+ const a=e.target.closest('a[href^="#"]');if(!a)return;
+ const destination=a.getAttribute('href').slice(1);
+ const mapping={'pokemon-profile':'fiche','pokemon-dex':'fiche','roster-title':'builds','team-builder':'equipe','pokemon-box':'boite','zone-checklist':'zones','quoi-faire':'guide','journal-title':'guide'};
+ if(mapping[destination]){e.preventDefault();open(mapping[destination]);}
+});
+const originalRenderTracker=renderTracker;
+renderTracker=function(){originalRenderTracker();renderParty();renderCemetery();};
+renderParty();renderCemetery();
+let saved='fiche';try{saved=sessionStorage.getItem('typedex-ds-pocket')||'fiche';}catch(e){}
+open(saved);
 })();
 </script>
 </body>
