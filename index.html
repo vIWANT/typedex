@@ -375,6 +375,14 @@ footer{font-size:.7rem;opacity:.65}
 .td-ds-free-row button{background:#ffc45b!important;border:2px solid #fff0af!important;color:#30251a!important;border-radius:8px;font-size:.78rem;font-weight:900;padding:8px 11px}
 .td-ds-free-note{font-size:.71rem;line-height:1.5;color:#b9d4d2;margin:7px 0 0}
 </style>
+<style>
+/* TYPEDEX V66 : saisie directe des noms dans la team */
+#builder-slots input[data-team-name]{display:block;width:100%;min-height:45px;background:#092638;border:2px solid #82b2b7;border-radius:9px;padding:11px;color:#fff8df;font:800 .9rem system-ui,sans-serif}
+#builder-slots input[data-team-name]:focus{outline:2px solid #ffd66e;outline-offset:2px}
+.td-ds-team-feedback{font-size:.73rem;color:#ffd59b;margin-top:4px}
+.td-ds-team-feedback:empty{display:none}
+.td-ds-free-add{display:none!important}
+</style>
 </head>
 <body>
 <main class="container">
@@ -1343,8 +1351,11 @@ footer{font-size:.7rem;opacity:.65}
       tracker.entries.push(uberBoatCS);
     }
     uberBoatCS.status='dead';
-    tracker.hmPartyId=uberBoatCS.id;
-    tracker.hmPartyMoves=['Surf','Plongée'];
+    // Seulement lors de la migration initiale : ne pas écraser l'équipe libre
+    // à chaque rechargement du site.
+    if(!tracker.recoveredSaveV61){
+      tracker.hmPartyId=uberBoatCS.id;
+      tracker.hmPartyMoves=['Surf','Plongée'];
     if(!Array.isArray(tracker.party))tracker.party=[];
     tracker.party=tracker.party.slice(0,6);
     while(tracker.party.length<6)tracker.party.push(null);
@@ -1352,6 +1363,7 @@ footer{font-size:.7rem;opacity:.65}
     // précédent, s'il existe, n'est pas supprimé et reste disponible en Boîte.
     for(let i=0;i<5;i++)if(tracker.party[i]===uberBoatCS.id)tracker.party[i]=null;
     tracker.party[5]=uberBoatCS.id;
+    }
     tracker.zoneChecks??={};
     tracker.zoneChecks[normalizeSearch(uberBoatCS.place)]=true;
 
@@ -1656,7 +1668,7 @@ footer{font-size:.7rem;opacity:.65}
     levelPanelEvents(byId('box-cards'));
     levelPanelEvents(byId('roster-cards'));
 
-    function optionsFor(slot){const active=tracker.party[slot];return `<option value="">Emplacement libre / Boîte</option>`+live().filter(x=>!tracker.party.includes(x.id)||x.id===active).map(x=>`<option value="${h(x.id)}" ${x.id===active?'selected':''}>${h(x.nick)} (${h(x.species)})</option>`).join('');}
+    function optionsFor(slot){const p=tracker.entries.find(x=>x.id===tracker.party[slot]);return p?h(p.nick||p.species):'';}
     function renderTracker(){
       // Contrôle des doublons : seuls les vivants combattent.
       // UBER BOAT, mort, est l'unique exception CS au sixième emplacement.
@@ -1688,13 +1700,14 @@ footer{font-size:.7rem;opacity:.65}
         if(x&&x.id==='uberboat'&&tracker.hmPartyId==='uberboat'&&x.status==='dead'){
           return `<div class="team-slot filled" style="border:2px solid #8276c9;background:#28243a">
           <label>EMPLACEMENT ${i+1} • UTILITAIRE CS</label>
+          <input id="party-slot-${i}" type="search" data-team-name="${i}" value="${h(x.nick)}" placeholder="Tape un autre Pokémon…" autocomplete="off" spellcheck="false" aria-label="Nom du Pokémon pour l'emplacement ${i+1}"/><div class="td-ds-team-feedback" data-team-feedback="${i}" aria-live="polite"></div>
           <div class="team-name">🌊💀 ${h(x.nick)} (${h(x.species)})</div>
           <div class="team-minor"><strong>Surf (CS03) · Plongée (CS07 après obtention)</strong> · pour les déplacements</div>
           <div class="team-minor" style="color:#ffb5b5">💀 Mort définitive : interdit de combat, absent des calculs de l’équipe combattante.</div>
           <div class="team-minor">Place physique réservée. Les Pokémon vivants non sélectionnés restent dans la Boîte.</div>
           </div>`;
         }
-        return `<div class="team-slot ${x?'filled':''}"><label for="party-slot-${i}">EMPLACEMENT ${i+1}</label><select id="party-slot-${i}" data-slot="${i}">${optionsFor(i)}</select>${x?`<div class="team-name">${h(x.nick)}</div><div class="team-minor">${h(x.species)}${x.level?' · niv. '+x.level:''}</div>${x.isTeamPreview?'<div class="team-minor" style="color:#f9df91">🧪 Essai libre · hors capture Nuzlocke</div>':`<div class="team-death-action"><label class="td-death-label"><input type="checkbox" data-dead="${h(x.id)}" aria-label="Déclarer ${h(x.nick)} mort"/> 💀 Mort</label></div>`}<div>${miniTypes(x.species)}</div><div class="team-minor">${miniStats(x.species)}</div>${loadoutEditor(x)}${personalStatsEditor(x)}<div class="mini-actions"><button type="button" data-edit="${h(x.id)}">✏️ Modifier</button></div>`:'<div class="team-minor">Choisis un Pokémon vivant dans la liste.</div>'}</div>`;
+        return `<div class="team-slot ${x?'filled':''}"><label for="party-slot-${i}">EMPLACEMENT ${i+1}</label><input id="party-slot-${i}" type="search" data-team-name="${i}" value="${optionsFor(i)}" placeholder="Tape un Pokémon : Lucario, Rayquaza…" autocomplete="off" spellcheck="false" aria-label="Nom du Pokémon pour l'emplacement ${i+1}"/><div class="td-ds-team-feedback" data-team-feedback="${i}" aria-live="polite"></div>${x?`<div class="team-name">${h(x.nick)}</div><div class="team-minor">${h(x.species)}${x.level?' · niv. '+x.level:''}</div>${x.isTeamPreview?'<div class="team-minor" style="color:#f9df91">🧪 Essai libre · hors capture Nuzlocke</div>':`<div class="team-death-action"><label class="td-death-label"><input type="checkbox" data-dead="${h(x.id)}" aria-label="Déclarer ${h(x.nick)} mort"/> 💀 Mort</label></div>`}<div>${miniTypes(x.species)}</div><div class="team-minor">${miniStats(x.species)}</div>${loadoutEditor(x)}${personalStatsEditor(x)}<div class="mini-actions"><button type="button" data-edit="${h(x.id)}">✏️ Modifier</button></div>`:'<div class="team-minor">Choisis un Pokémon vivant dans la liste.</div>'}</div>`;
       }).join('');
       byId('box-cards').innerHTML=boxed.length?boxed.map(x=>`<div class="box-mon"><div class="box-title"><span>📦 ${h(x.nick)}</span><span>${x.level?'Niv. '+x.level:''}</span></div><div class="box-desc">${h(x.species)} · ${h(x.place)} · ${h(x.talent)}</div><div>${miniTypes(x.species)}</div><div class="stat-caption">${miniStats(x.species)}</div>${loadoutEditor(x)}${personalStatsEditor(x)}<div class="mini-actions"><button data-place="${h(x.id)}">➕ Équipe</button><button data-edit="${h(x.id)}">✏ Modifier</button><label class="td-death-label"><input type="checkbox" data-dead="${h(x.id)}" aria-label="Déclarer ${h(x.nick)} mort"/> 💀 Mort</label></div></div>`).join(''):'<p class="dex-info">Ta Boîte est vide : tous tes Pokémon vivants sont actuellement dans l’équipe.</p>';
       const team=tracker.party.map(id=>tracker.entries.find(x=>x.id===id)).filter(x=>x&&x.status==='alive');
@@ -1715,7 +1728,7 @@ footer{font-size:.7rem;opacity:.65}
       if(typeof renderRoster==='function')renderRoster();
     }
     byId('presets').addEventListener('click',e=>{const b=e.target.closest('[data-quickpreset]');if(b){const p=window.__activePresets[Number(b.dataset.quickpreset)];if(p)setPreset(p[1],p[2]);}});
-    byId('builder-slots').addEventListener('change',e=>{const el=e.target.closest('[data-slot]');if(el){const ix=Number(el.dataset.slot);tracker.party[ix]=el.value||null;saveTracker();}});
+    // La saisie libre des emplacements est gérée par l'interface V66.
     function editOne(id){const x=tracker.entries.find(x=>x.id===id);if(!x)return;const nick=prompt('Surnom de '+x.species,x.nick);if(nick===null)return;if(!nick.trim())return alert('Surnom obligatoire.');x.nick=nick.trim().slice(0,28);const talent=prompt('Talent de '+x.nick,x.talent||'');if(talent!==null)x.talent=talent.trim().slice(0,50)||'À confirmer';const item=prompt('Objet actuellement tenu par '+x.nick+' (vide si inconnu)',x.heldItem||'');if(item!==null)x.heldItem=item.trim().slice(0,65);const nature=prompt('Nature de '+x.nick,x.nature||'');if(nature!==null)x.nature=nature.trim().slice(0,40);const niv=prompt('Niveau de '+x.nick+' (laisser vide si inconnu)',x.level||'');if(niv!==null)x.level=/^\d+$/.test(niv)&&+niv>=1&&+niv<=100?+niv:null;saveTracker();}
     function managerClick(e){const edit=e.target.closest('[data-edit]');if(edit){editOne(edit.dataset.edit);return;}const place=e.target.closest('[data-place]');if(place){const x=tracker.entries.find(x=>x.id===place.dataset.place);const index=tracker.party.findIndex(x=>!x);if(!x||index<0)return alert('Ton équipe est déjà pleine : libère d’abord un emplacement.');tracker.party[index]=x.id;saveTracker();return;}const dead=e.target.closest('[data-dead]');if(dead){const x=tracker.entries.find(x=>x.id===dead.dataset.dead);if(!x)return;if(!confirm(`Marquer ${x.nick} comme mort définitivement ?`)){if(dead.matches('input[type="checkbox"]'))dead.checked=false;return;}x.status='dead';tracker.party=tracker.party.map(id=>id===x.id?null:id);saveTracker();}}
     byId('builder-slots').addEventListener('click',managerClick);byId('box-cards').addEventListener('click',managerClick);
@@ -2252,52 +2265,77 @@ open(saved);
 </script>
 
 <script>
-/* TYPEDEX V65 - Tous les Pokémon sélectionnables comme simulations d'équipe */
+/* TYPEDEX V66 - Équipe : tape le nom, le Pokémon est placé automatiquement. */
 (()=>{
 'use strict';
 const slots=document.getElementById('builder-slots');
 if(!slots||typeof tracker==='undefined'||typeof renderTracker!=='function')return;
 const clean=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9♀♂]+/g,'');
-function decorate(){
- const cards=slots.querySelectorAll('.team-slot');
- cards.forEach((card,slot)=>{
-  if(card.querySelector('[data-td-free-form]'))return;
-  const f=document.createElement('form');
-  f.className='td-ds-free-add';f.dataset.tdFreeForm=String(slot);
-  f.innerHTML='<label for="td-ds-free-input-'+slot+'">🔎 Ajouter n’importe quel Pokémon (1G–6G)</label><div class="td-ds-free-row"><input id="td-ds-free-input-'+slot+'" data-td-free-name="'+slot+'" type="search" list="species-options" autocomplete="off" placeholder="Ex. Lucario, Rayquaza…"/><button type="submit">Choisir</button></div><p class="td-ds-free-note">Si absent de tes captures, il rejoint uniquement cette équipe en mode essai. Aucune nouvelle capture ou zone consommée.</p>';
-  card.appendChild(f);
- });
+let pending=null;
+function status(input,message,ok){
+ const node=slots.querySelector('[data-team-feedback="'+input.dataset.teamName+'"]');
+ if(node){node.textContent=message||'';node.dataset.valid=ok?'true':'false';}
 }
-const previousRender=renderTracker;
-renderTracker=function(){previousRender();decorate();};
-slots.addEventListener('submit',event=>{
- const form=event.target.closest('[data-td-free-form]');
- if(!form)return;
- event.preventDefault();
- const slot=Number(form.dataset.tdFreeForm);
+function choose(input,showUnknown){
+ if(!input.isConnected)return;
+ const slot=Number(input.dataset.teamName);
  if(!Number.isInteger(slot)||slot<0||slot>5)return;
- const entered=form.querySelector('input[data-td-free-name]')?.value.trim()||'';
- const species=typeof findSpecies==='function'?findSpecies(entered):null;
- const known=species||(typeof tracker!=='undefined'&&tracker.entries.find(p=>clean(p.nick)===clean(entered)&&p.status==='alive'&&!p.isTeamPreview));
- const match=species||(known&&typeof findSpecies==='function'?findSpecies(known.species):null);
- if(!match)return alert('Pokémon introuvable. Saisis le nom français d’une espèce du Pokédex.');
- const real=tracker.entries.find(p=>p.status==='alive'&&!p.isTeamPreview&&clean(p.species)===clean(match.name)&&!tracker.party.includes(p.id));
- let chosen;
- if(real)chosen=real;
- else{
-  chosen={id:'preview-v65-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),
-   species:match.name,nick:match.name,place:'Simulation · hors capture',talent:'À confirmer',
-   nature:'À confirmer',level:null,status:'alive',isTeamPreview:true};
-  tracker.entries.push(chosen);
+ const typed=input.value.trim();
+ if(!typed){
+   if(slot===5&&tracker.hmPartyId==='uberboat'){tracker.hmPartyId=null;tracker.hmPartyMoves=[];}
+   tracker.party[slot]=null;
+   saveTracker();
+   return;
+ }
+ // Surnom réel prioritaire, puis espèce Pokédex (y compris non capturée).
+ const ours=tracker.entries.find(p=>!p.isTeamPreview&&p.status==='alive'&&clean(p.nick)===clean(typed));
+ const species=ours?(typeof findSpecies==='function'?findSpecies(ours.species):null):
+  (typeof findSpecies==='function'?findSpecies(typed):null);
+ if(!species){
+   if(showUnknown)status(input,'Nom non reconnu. Vérifie le nom français du Pokémon.',false);
+   return;
+ }
+ let chosen=ours&&!tracker.party.some((id,i)=>i!==slot&&id===ours.id)?ours:null;
+ if(!chosen){
+   const candidates=tracker.entries.filter(p=>!p.isTeamPreview&&p.status==='alive'&&clean(p.species)===clean(species.name)&&!tracker.party.some((id,i)=>i!==slot&&id===p.id));
+   chosen=candidates[0]||null;
+ }
+ if(!chosen){
+   const current=tracker.entries.find(p=>p.id===tracker.party[slot]);
+   if(current?.isTeamPreview&&clean(current.species)===clean(species.name)){
+     chosen=current;
+   }else{
+     chosen={id:'preview-v66-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),
+       species:species.name,nick:species.name,place:'Simulation · hors capture',
+       talent:'À confirmer',nature:'À confirmer',level:null,status:'alive',isTeamPreview:true};
+     tracker.entries.push(chosen);
+   }
  }
  if(slot===5&&tracker.hmPartyId==='uberboat'){
-  tracker.hmPartyId=null;tracker.hmPartyMoves=[];
+   tracker.hmPartyId=null;tracker.hmPartyMoves=[];
  }
+ const same=tracker.party[slot]===chosen.id;
+ if(same)return;
  tracker.party[slot]=chosen.id;
- // Les essais sont sauvegardés localement pour rester sélectionnés après actualisation.
  saveTracker();
+}
+slots.addEventListener('input',event=>{
+ const input=event.target.closest('input[data-team-name]');
+ if(!input)return;
+ clearTimeout(pending);
+ status(input,'',true);
+ pending=setTimeout(()=>choose(input,false),650);
 });
-decorate();
+slots.addEventListener('change',event=>{
+ const input=event.target.closest('input[data-team-name]');
+ if(!input)return;
+ clearTimeout(pending);choose(input,true);
+});
+slots.addEventListener('keydown',event=>{
+ const input=event.target.closest('input[data-team-name]');
+ if(!input||event.key!=='Enter')return;
+ event.preventDefault();clearTimeout(pending);choose(input,true);
+});
 })();
 </script>
 </body>
