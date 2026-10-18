@@ -1,5 +1,5 @@
 {
-  "revision": 66,
+  "revision": 67,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -920,8 +920,8 @@
     "reason": "Mis K.O. avant capture"
   },
   "maintenance": {
-    "version": 66,
-    "summary": "Équipe : écrire directement le nom français d'un Pokémon ou son surnom dans chaque emplacement ; affectation automatique sans bouton ni liste, y compris hors boîte, en mode essai non comptabilisé.",
+    "version": 67,
+    "summary": "Correction V59 : HUISSIER 3000 (Lucario) vivant après restauration V61, réparer une fois l'ancien état local mort. Aucun événement Nuzlocke ajouté.",
     "dataUnchanged": true
   }
 }
