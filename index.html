@@ -1385,7 +1385,7 @@
       }
       tracker.storyChecks??={};
       tracker.storyChecks['badge-esprit']=true;
-      // Hypotrempe est dans la boîte MORT : ne pas le suggérer comme aide CS vivante.
+      // Hypotrempe a été relâché : ni aide CS, ni capture valide, ni mort Nuzlocke.
       tracker.hmHelpers=(tracker.hmHelpers||[]).filter(x=>x.id!=='hm-hypotrempe-118');
       tracker.hmPartyId='uberboat';
       tracker.hmPartyMoves=['Surf','Plongée'];
@@ -1396,6 +1396,9 @@
       tracker.recoveredSaveV61=true;
     }
     if(!tracker.recoveredSaveV61)applyRestoredSaveV61(RESTORED_SAVE_V61,true);
+
+    // V62 : libération confirmée d'Hypotrempe, sans effet sur les morts ni sur les zones.
+    tracker.hmHelpers=(tracker.hmHelpers||[]).filter(x=>x.id!=='hm-hypotrempe-118');
 
     function validState(s){return !!s && Array.isArray(s.entries) && Array.isArray(s.party) && Array.isArray(s.misses) && s.party.length===6 && s.entries.every(x=>x&&typeof x.id==='string'&&typeof x.species==='string');}
     function h(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -1559,6 +1562,7 @@
         '<div class="box-mon" style="margin-top:14px;border:1px solid #6a5e9f;background:#242334"><div class="box-title"><span>🌊 Exception CS • hors Nuzlocke</span><span>Interdit de combat</span></div>'+
         hmHelpers.map(x=>'<div class="box-desc" style="padding:8px 0"><strong>'+h(x.nick||x.species)+' ('+h(x.species)+')</strong> · '+h(x.place)+' · <strong>CS '+h(x.move||'Surf')+'</strong><div class="team-minor">⚠️ Usage hors combat uniquement. Ne rejoint jamais les 6 Pokémon combattants ; ne compte ni comme vivant, ni comme capture valide et ne consomme pas une deuxième zone.</div></div>').join('')+
         '</div>':'';
+      byId('hm-helper-box').innerHTML+='<div class="team-minor" style="margin-top:8px;color:#9eacc1">Hypotrempe (Route 118) : relâché, non disponible pour les CS. Ne compte pas comme mort Nuzlocke.</div>';
       const fighterCount=tracker.party.filter(id=>tracker.entries.some(x=>x.id===id&&x.status==='alive')).length;
       const csCount=tracker.party.filter(id=>id==='uberboat'&&tracker.hmPartyId==='uberboat').length;
       byId('party-counter').textContent=`${tracker.party.filter(Boolean).length} / 6 places · ${fighterCount} combattant(s) + ${csCount} CS hors combat`;
@@ -1848,6 +1852,9 @@ renderGuide();
       const p=ev.pokemon;
       if(!tracker.hmHelpers.some(x=>x.id===p.id))
         tracker.hmHelpers.push({id:p.id,species:p.species||'?',nick:p.nick||p.species||'?',place:p.place||'?',move:p.move||'Surf'});
+    }else if(ev.type==='hm-release'&&ev.pokemonId){
+      // Événement mémorisé : empêcher l'aide Surf relâchée de revenir au prochain rechargement.
+      tracker.hmHelpers=(tracker.hmHelpers||[]).filter(x=>x.id!==ev.pokemonId);
     }else if(ev.type==='hm-party'&&ev.pokemonId==='uberboat'){
       const mon=tracker.entries.find(x=>x.id===ev.pokemonId);
       if(mon){
@@ -1914,6 +1921,13 @@ renderGuide();
           const missing=!Array.isArray(tracker.hmHelpers)||!tracker.hmHelpers.some(x=>x.id===ev.pokemon?.id);
           mergeEvent(ev);seen.add(ev.id);
           if(missing)applied++;
+          continue;
+        }
+        // Toujours réappliquer les relâchers : les anciennes exceptions CS sont rejouées au chargement.
+        if(ev.type==='hm-release'){
+          const wasPresent=(tracker.hmHelpers||[]).some(x=>x.id===ev.pokemonId);
+          mergeEvent(ev);seen.add(ev.id);
+          if(wasPresent)applied++;
           continue;
         }
         // Rejouer les annulations même si une ancienne version les a marquées
