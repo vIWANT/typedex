@@ -1395,7 +1395,23 @@
       }
       tracker.recoveredSaveV61=true;
     }
-    if(!tracker.recoveredSaveV61)applyRestoredSaveV61(RESTORED_SAVE_V61,true);
+    if(!tracker.recoveredSaveV61){
+      applyRestoredSaveV61(RESTORED_SAVE_V61,true);
+    }else{
+      // Les anciens blocs V48–V60 reconstruisent encore des captures et rencontres
+      // de la sauvegarde perdue à chaque visite. Nettoyer sans modifier l'équipe,
+      // les morts, les surnoms, ni les captures actuelles.
+      const obsoletesV61=new Set(RESTORED_SAVE_V61.lostCaptures||[]);
+      tracker.entries=tracker.entries.filter(mon=>!obsoletesV61.has(mon.id));
+      const oldMissZones=new Set((RESTORED_SAVE_V61.lostMissZones||[]).map(normalizeSearch));
+      tracker.misses=(tracker.misses||[]).filter(m=>!oldMissZones.has(normalizeSearch(m.place)));
+      tracker.zoneChecks??={};
+      for(const zone of ['Algatia','Route 124','Grotte Tréfonds','Route 125','Route 127','Route 128','Éternara','Route 123','Route 130','Route 131','Route 132','Pacifiville','Route 134','Route 105','Route 117']){
+        const key=normalizeSearch(zone);
+        tracker.zoneChecks[key]=tracker.entries.some(mon=>normalizeSearch(mon.place)===key)
+          ||tracker.misses.some(m=>normalizeSearch(m.place)===key);
+      }
+    }
 
     // V62 : libération confirmée d'Hypotrempe, sans effet sur les morts ni sur les zones.
     tracker.hmHelpers=(tracker.hmHelpers||[]).filter(x=>x.id!=='hm-hypotrempe-118');
@@ -1911,6 +1927,9 @@ renderGuide();
       if(!res.ok)throw Error('HTTP '+res.status);
       const doc=await res.json();
       if(!Array.isArray(doc.events))throw Error('Format de données incorrect');
+      // Les anciennes exceptions CS relâchées ne doivent jamais être réimportées :
+      // sinon chaque visite recrée Hypotrempe, le retire, puis boucle sur reload().
+      const releasedHmIds=new Set(doc.events.filter(ev=>ev.type==='hm-release'&&ev.pokemonId).map(ev=>ev.pokemonId));
       const seen=new Set(Array.isArray(tracker.appliedOnlineEvents)?tracker.appliedOnlineEvents:[]);
       let applied=0;
       for(const ev of doc.events){
@@ -1918,9 +1937,11 @@ renderGuide();
         // Rejouer les exceptions CS si une ancienne version du site a déjà vu
         // l'événement sans connaître ce type : pas de perte lors de la mise à jour.
         if(ev.type==='hm-only'){
+          const released=releasedHmIds.has(ev.pokemon?.id);
           const missing=!Array.isArray(tracker.hmHelpers)||!tracker.hmHelpers.some(x=>x.id===ev.pokemon?.id);
-          mergeEvent(ev);seen.add(ev.id);
-          if(missing)applied++;
+          if(!released)mergeEvent(ev);
+          seen.add(ev.id);
+          if(missing&&!released)applied++;
           continue;
         }
         // Toujours réappliquer les relâchers : les anciennes exceptions CS sont rejouées au chargement.
@@ -1947,8 +1968,25 @@ renderGuide();
       try{localStorage.setItem(key,JSON.stringify(tracker))}catch(e){}
       badgeVisual();
       if(applied){
-        syncMark('✅ '+applied+' événement(s) récupéré(s), actualisation...');
-        location.reload();
+        // Ne recharger qu'une fois par révision. Protège les anciennes données
+        // localStorage contre une boucle infinie, même en cas de migration partielle.
+        const reloadedKey='typedex-last-refresh-revision';
+        const revision=String(doc.revision||'inconnue');
+        let alreadyRefreshed=false;
+        try{
+          alreadyRefreshed=sessionStorage.getItem(reloadedKey)===revision;
+          if(!alreadyRefreshed)sessionStorage.setItem(reloadedKey,revision);
+        }catch(e){alreadyRefreshed=true;}
+        if(!alreadyRefreshed){
+          syncMark('✅ '+applied+' événement(s) récupéré(s), actualisation unique...');
+          location.reload();
+          return;
+        }
+        // Les données sont enregistrées, ne jamais forcer une seconde recharge.
+        renderTracker();
+        renderRoster();
+        badgeVisual();
+        syncMark('✅ À jour · Publication n°'+revision+' · Synchronisation terminée');
         return;
       }
       syncMark('✅ À jour · Publication n°'+(doc.revision||'?')+' · Réglages sauvegardés dans Firefox');
