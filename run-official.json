@@ -1,5 +1,5 @@
 {
-  "revision": 77,
+  "revision": 78,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -1175,13 +1175,13 @@
       }
     },
     {
-      "id": "capture-pal-goat-palkia-route-112-2026-10-19",
+      "id": "capture-pal-goat-palkia-chenal-126-2026-10-19",
       "type": "capture",
       "pokemon": {
         "id": "palgoat-palkia-route-112",
         "species": "Palkia",
         "nick": "PALGOAT",
-        "place": "Route 112",
+        "place": "Chénal 126",
         "caughtOn": "2026-10-19",
         "level": null,
         "nature": "À confirmer",
@@ -1199,8 +1199,8 @@
     "reason": "Mis K.O. avant capture"
   },
   "maintenance": {
-    "version": 77,
-    "summary": "PALGOAT (Palkia) capturé Route 112 ; candidat Ligue en remplacement de PAT, qui reste vivant.",
+    "version": 78,
+    "summary": "Correction du lieu de capture de PALGOAT (Palkia) : Chénal 126 et non Route 112.",
     "dataUnchanged": false
   }
 }
