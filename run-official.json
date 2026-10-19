@@ -1,5 +1,5 @@
 {
-  "revision": 69,
+  "revision": 70,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -910,6 +910,82 @@
       "species": "Hypotrempe",
       "place": "Route 118",
       "reason": "Relâché par le joueur, confirmé le 18 octobre 2026. Ancien utilitaire Surf hors Nuzlocke, ni vivant disponible ni mort comptabilisé."
+    },
+    {
+      "id": "capture-sch-noctunoir-chenal-125-2026-10-19",
+      "type": "capture",
+      "pokemon": {
+        "id": "sch-noctunoir-chenal-125",
+        "species": "Noctunoir",
+        "nick": "SCH",
+        "place": "Chénal 125",
+        "nature": "Calme",
+        "gender": "♀",
+        "level": 25,
+        "encounterLevel": 25,
+        "caughtOn": "2026-10-19",
+        "encounterNote": "Fuit rapidement",
+        "heldItem": "Aucun objet",
+        "talent": "À confirmer",
+        "status": "alive"
+      }
+    },
+    {
+      "id": "capture-goulag-caninos-grotte-trefonds-2026-10-19",
+      "type": "capture",
+      "pokemon": {
+        "id": "goulag-caninos-grotte-trefonds",
+        "species": "Caninos",
+        "nick": "GOULAG",
+        "place": "Grotte Tréfonds",
+        "nature": "Brave",
+        "gender": "♂",
+        "level": 33,
+        "encounterLevel": 33,
+        "caughtOn": "2026-10-19",
+        "encounterNote": "Coquin",
+        "heldItem": "Aucun objet",
+        "talent": "À confirmer",
+        "status": "alive"
+      }
+    },
+    {
+      "id": "capture-niska-amonistar-chenal-124-2026-10-18",
+      "type": "capture",
+      "pokemon": {
+        "id": "niska-amonistar-chenal-124",
+        "species": "Amonistar",
+        "nick": "NISKA",
+        "place": "Chénal 124",
+        "nature": "Assuré",
+        "gender": "♂",
+        "level": 25,
+        "encounterLevel": 25,
+        "caughtOn": "2026-10-18",
+        "encounterNote": "Aime courir",
+        "heldItem": "Aucun objet",
+        "talent": "À confirmer",
+        "status": "alive"
+      }
+    },
+    {
+      "id": "capture-ziak-farfuret-algatia-2026-10-18",
+      "type": "capture",
+      "pokemon": {
+        "id": "ziak-farfuret-algatia",
+        "species": "Farfuret",
+        "nick": "ZIAK",
+        "place": "Algatia",
+        "nature": "Timide",
+        "gender": "♀",
+        "level": 25,
+        "encounterLevel": 25,
+        "caughtOn": "2026-10-18",
+        "encounterNote": "Adore manger",
+        "heldItem": "Aucun objet",
+        "talent": "À confirmer",
+        "status": "alive"
+      }
     }
   ],
   "example_not_published": {
@@ -920,8 +996,8 @@
     "reason": "Mis K.O. avant capture"
   },
   "maintenance": {
-    "version": 69,
-    "summary": "Boîte Pokémon des vivants : mêmes cartes, sprites, surnoms, espèces, lieux de capture et détails au clic que le Cimetière, avec palette verte. Actions de gestion conservées dans un volet repliable.",
-    "dataUnchanged": true
+    "version": 70,
+    "summary": "Quatre nouvelles captures après sauvegarde restaurée : SCH Noctunoir, GOULAG Caninos, NISKA Amonistar et ZIAK Farfuret. Chénaux 124 et 125 correspondent aux anciennes zones Route 124/125. Aucun décès ni changement d'équipe.",
+    "dataUnchanged": false
   }
 }
