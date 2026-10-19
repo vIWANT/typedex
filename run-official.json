@@ -1,5 +1,5 @@
 {
-  "revision": 78,
+  "revision": 79,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -1183,11 +1183,14 @@
         "nick": "PALGOAT",
         "place": "Chénal 126",
         "caughtOn": "2026-10-19",
-        "level": null,
-        "nature": "À confirmer",
+        "level": 30,
+        "nature": "Calme",
         "talent": "À confirmer",
-        "heldItem": "À confirmer",
-        "status": "alive"
+        "heldItem": "Aucun objet",
+        "status": "alive",
+        "encounterLevel": 30,
+        "encounterNote": "Aime courir",
+        "gender": "Sans sexe"
       }
     }
   ],
@@ -1199,8 +1202,8 @@
     "reason": "Mis K.O. avant capture"
   },
   "maintenance": {
-    "version": 78,
-    "summary": "Correction du lieu de capture de PALGOAT (Palkia) : Chénal 126 et non Route 112.",
+    "version": 79,
+    "summary": "Fiche PALGOAT (Palkia) complétée : niv. 30, nature Calme, Chénal 126, aime courir, sans sexe ni objet.",
     "dataUnchanged": false
   }
 }
