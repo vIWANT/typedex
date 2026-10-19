@@ -1,5 +1,5 @@
 {
-  "revision": 70,
+  "revision": 71,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -986,6 +986,63 @@
         "talent": "À confirmer",
         "status": "alive"
       }
+    },
+    {
+      "id": "capture-ptite-kehba-tortipouss-chenal-129-2026-10-19",
+      "type": "capture",
+      "pokemon": {
+        "id": "ptite-kehba-tortipouss-chenal-129",
+        "species": "Tortipouss",
+        "nick": "PTITE KEHBA",
+        "place": "Chénal 129",
+        "nature": "Jovial",
+        "gender": "♂",
+        "level": 25,
+        "encounterLevel": 25,
+        "caughtOn": "2026-10-19",
+        "encounterNote": "Corps robuste",
+        "heldItem": "Aucun objet",
+        "talent": "À confirmer",
+        "status": "alive"
+      }
+    },
+    {
+      "id": "capture-bezelouf-wattouat-chenal-128-2026-10-19",
+      "type": "capture",
+      "pokemon": {
+        "id": "bezelouf-wattouat-chenal-128",
+        "species": "Wattouat",
+        "nick": "BEZELOUF",
+        "place": "Chénal 128",
+        "nature": "Lâche",
+        "gender": "♂",
+        "level": 25,
+        "encounterLevel": 25,
+        "caughtOn": "2026-10-19",
+        "encounterNote": "Assez entêté",
+        "heldItem": "Aucun objet",
+        "talent": "À confirmer",
+        "status": "alive"
+      }
+    },
+    {
+      "id": "capture-nique-toi-crefollet-chenal-127-2026-10-19",
+      "type": "capture",
+      "pokemon": {
+        "id": "nique-toi-crefollet-chenal-127",
+        "species": "Créfollet",
+        "nick": "NIQUE TOI",
+        "place": "Chénal 127",
+        "nature": "Prudent",
+        "gender": "Sans sexe",
+        "level": 30,
+        "encounterLevel": 30,
+        "caughtOn": "2026-10-19",
+        "encounterNote": "Très volontaire",
+        "heldItem": "Aucun objet",
+        "talent": "À confirmer",
+        "status": "alive"
+      }
     }
   ],
   "example_not_published": {
@@ -996,8 +1053,8 @@
     "reason": "Mis K.O. avant capture"
   },
   "maintenance": {
-    "version": 70,
-    "summary": "Quatre nouvelles captures après sauvegarde restaurée : SCH Noctunoir, GOULAG Caninos, NISKA Amonistar et ZIAK Farfuret. Chénaux 124 et 125 correspondent aux anciennes zones Route 124/125. Aucun décès ni changement d'équipe.",
+    "version": 71,
+    "summary": "Ajout des trois captures du 19 octobre : PTITE KEHBA (Tortipouss, Chénal 129), BEZELOUF (Wattouat, Chénal 128), NIQUE TOI (Créfollet, Chénal 127). 21 vivants et 11 morts. Aucun décès ou badge modifié.",
     "dataUnchanged": false
   }
 }
