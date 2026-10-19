@@ -2279,6 +2279,7 @@ function renderParty(){
  }).join('');
 }
 
+// TYPEDEX V71 : afficher les caractéristiques de rencontre du Pokémon.
 function renderLivingBox(){
  const grid=document.querySelector('#td-ds-living-grid');
  if(!grid)return;
@@ -2296,7 +2297,7 @@ if(livePanel)livePanel.addEventListener('click',e=>{
  const grid=document.querySelector('#td-ds-living-grid');
  if(grid)grid.dataset.selectedId=p.id;
  renderLivingBox();
- document.querySelector('#td-ds-living-detail').innerHTML='<div class="td-ds-cemetery-info td-ds-living-info"><strong>💚 '+escapeHtml(p.nick||p.species)+'</strong><p>'+escapeHtml(p.species)+' · Capture : '+escapeHtml(p.place||'à confirmer')+(p.level?' · Niveau '+escapeHtml(p.level):'')+'.</p><p>Talent : '+escapeHtml(p.talent||'À confirmer')+' · Nature : '+escapeHtml(p.nature||'À confirmer')+(p.gender?' · Sexe : '+escapeHtml(p.gender):'')+'.</p>'+(p.caughtOn?'<p>📅 Rencontré le '+escapeHtml(p.caughtOn)+(p.encounterLevel?' au niveau '+escapeHtml(p.encounterLevel):'')+' · Objet : '+escapeHtml(p.heldItem||'À confirmer')+'.</p>':'')+'<p>Statut : vivant, disponible pour l’équipe. Les actions de gestion sont dans le panneau juste en dessous.</p></div>';
+ document.querySelector('#td-ds-living-detail').innerHTML='<div class="td-ds-cemetery-info td-ds-living-info"><strong>💚 '+escapeHtml(p.nick||p.species)+'</strong><p>'+escapeHtml(p.species)+' · Capture : '+escapeHtml(p.place||'à confirmer')+(p.level?' · Niveau '+escapeHtml(p.level):'')+'.</p><p>Talent : '+escapeHtml(p.talent||'À confirmer')+' · Nature : '+escapeHtml(p.nature||'À confirmer')+(p.gender?' · Sexe : '+escapeHtml(p.gender):'')+'.</p>'+(p.caughtOn?'<p>📅 Rencontré le '+escapeHtml(p.caughtOn)+(p.encounterLevel?' au niveau '+escapeHtml(p.encounterLevel):'')+' · Objet : '+escapeHtml(p.heldItem||'À confirmer')+'.</p>':'')+(p.encounterNote?'<p>✨ Particularité : '+escapeHtml(p.encounterNote)+'.</p>':'')+'<p>Statut : vivant, disponible pour l’équipe. Les actions de gestion sont dans le panneau juste en dessous.</p></div>';
 });
 
 function renderCemetery(){
