@@ -1,5 +1,5 @@
 {
-  "revision": 73,
+  "revision": 74,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -1107,6 +1107,44 @@
         "talent": "À confirmer",
         "status": "alive"
       }
+    },
+    {
+      "id": "capture-aeromite-route-117-2026-10-19",
+      "type": "capture",
+      "pokemon": {
+        "id": "aeromite-route-117-2026-10-19",
+        "species": "Aéromite",
+        "nick": "Aéromite",
+        "place": "Route 117",
+        "nature": "Modeste",
+        "gender": "♀",
+        "level": 13,
+        "encounterNote": "Aime courir",
+        "encounterLevel": 13,
+        "caughtOn": "2026-10-19",
+        "heldItem": "Aucun objet",
+        "talent": "À confirmer",
+        "status": "alive"
+      }
+    },
+    {
+      "id": "capture-pat-otaria-chenal-134-2026-10-19",
+      "type": "capture",
+      "pokemon": {
+        "id": "pat-otaria-chenal-134-2026-10-19",
+        "species": "Otaria",
+        "nick": "PAT",
+        "place": "Chénal 134",
+        "nature": "Discret",
+        "gender": "♂",
+        "level": 10,
+        "encounterNote": "Éparpille des choses",
+        "encounterLevel": 10,
+        "caughtOn": "2026-10-19",
+        "heldItem": "Aucun objet",
+        "talent": "À confirmer",
+        "status": "alive"
+      }
     }
   ],
   "example_not_published": {
@@ -1117,8 +1155,8 @@
     "reason": "Mis K.O. avant capture"
   },
   "maintenance": {
-    "version": 73,
-    "summary": "Ajout des captures du 19 octobre : Poichigeon WHO IS THAT (Pacifiville), Lixy PTIT CHIEN (Chénal 131), Monaflèmit G LA FLEMME (Chénal 130).",
+    "version": 74,
+    "summary": "Nouvelles captures : Aéromite (Route 117) et PAT/Otaria (Chénal 134), 19 octobre 2026.",
     "dataUnchanged": false
   }
 }
