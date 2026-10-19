@@ -1,5 +1,5 @@
 {
-  "revision": 79,
+  "revision": 80,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -1192,6 +1192,12 @@
         "encounterNote": "Aime courir",
         "gender": "Sans sexe"
       }
+    },
+    {
+      "id": "death-huissier3000-lucario-2026-10-19",
+      "type": "death",
+      "pokemonId": "huissier3000",
+      "reason": "K.O. définitif confirmé par le joueur le 19 octobre 2026. Circonstances non précisées."
     }
   ],
   "example_not_published": {
@@ -1202,8 +1208,8 @@
     "reason": "Mis K.O. avant capture"
   },
   "maintenance": {
-    "version": 79,
-    "summary": "Fiche PALGOAT (Palkia) complétée : niv. 30, nature Calme, Chénal 126, aime courir, sans sexe ni objet.",
+    "version": 80,
+    "summary": "HUISSIER 3000 (Lucario) déclaré mort ; retrait des combattants et de l'équipe. Remplaçant Ligue non désigné.",
     "dataUnchanged": false
   }
 }
