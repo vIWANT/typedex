@@ -1,5 +1,5 @@
 {
-  "revision": 75,
+  "revision": 76,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -1159,6 +1159,20 @@
       "type": "miss",
       "species": "Non précisé",
       "reason": "Capture ratée, espèce non précisée par le joueur."
+    },
+    {
+      "id": "evolution-ziak-dimoret-2026-10-19",
+      "pokemonId": "ziak-farfuret-algatia",
+      "fields": {
+        "species": "Dimoret"
+      }
+    },
+    {
+      "id": "evolution-pat-lamantine-2026-10-19",
+      "pokemonId": "pat-otaria-chenal-134-2026-10-19",
+      "fields": {
+        "species": "Lamantine"
+      }
     }
   ],
   "example_not_published": {
@@ -1169,8 +1183,8 @@
     "reason": "Mis K.O. avant capture"
   },
   "maintenance": {
-    "version": 75,
-    "summary": "Captures ratées Route 105 et Clémenti-Ville ; Aéromite Route 117 reste capturé.",
+    "version": 76,
+    "summary": "Évolutions confirmées : ZIAK Farfuret devient Dimoret ; PAT Otaria devient Lamantine.",
     "dataUnchanged": false
   }
 }
