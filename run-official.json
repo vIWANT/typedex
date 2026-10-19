@@ -1,5 +1,5 @@
 {
-  "revision": 76,
+  "revision": 77,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -1173,6 +1173,22 @@
       "fields": {
         "species": "Lamantine"
       }
+    },
+    {
+      "id": "capture-pal-goat-palkia-route-112-2026-10-19",
+      "type": "capture",
+      "pokemon": {
+        "id": "palgoat-palkia-route-112",
+        "species": "Palkia",
+        "nick": "PALGOAT",
+        "place": "Route 112",
+        "caughtOn": "2026-10-19",
+        "level": null,
+        "nature": "À confirmer",
+        "talent": "À confirmer",
+        "heldItem": "À confirmer",
+        "status": "alive"
+      }
     }
   ],
   "example_not_published": {
@@ -1183,8 +1199,8 @@
     "reason": "Mis K.O. avant capture"
   },
   "maintenance": {
-    "version": 76,
-    "summary": "Évolutions confirmées : ZIAK Farfuret devient Dimoret ; PAT Otaria devient Lamantine.",
+    "version": 77,
+    "summary": "PALGOAT (Palkia) capturé Route 112 ; candidat Ligue en remplacement de PAT, qui reste vivant.",
     "dataUnchanged": false
   }
 }
