@@ -1,5 +1,5 @@
 {
-  "revision": 72,
+  "revision": 73,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -1050,6 +1050,63 @@
       "species": "Non précisé",
       "place": "Éternara",
       "reason": "Capture ratée, espèce du Pokémon non précisée par le joueur."
+    },
+    {
+      "id": "capture-who-is-that-poichigeon-pacifiville-2026-10-19",
+      "type": "capture",
+      "pokemon": {
+        "id": "who-is-that-poichigeon-pacifiville",
+        "species": "Poichigeon",
+        "nick": "WHO IS THAT",
+        "place": "Pacifiville",
+        "nature": "Bizarre",
+        "gender": "♂",
+        "level": 5,
+        "encounterLevel": 5,
+        "caughtOn": "2026-10-19",
+        "encounterNote": "A horreur de perdre",
+        "heldItem": "Aucun objet",
+        "talent": "À confirmer",
+        "status": "alive"
+      }
+    },
+    {
+      "id": "capture-ptit-chien-lixy-chenal-131-2026-10-19",
+      "type": "capture",
+      "pokemon": {
+        "id": "ptit-chien-lixy-chenal-131",
+        "species": "Lixy",
+        "nick": "PTIT CHIEN",
+        "place": "Chénal 131",
+        "nature": "Sérieux",
+        "gender": "♂",
+        "level": 30,
+        "encounterLevel": 30,
+        "caughtOn": "2026-10-19",
+        "encounterNote": "Éparpille des choses",
+        "heldItem": "Aucun objet",
+        "talent": "À confirmer",
+        "status": "alive"
+      }
+    },
+    {
+      "id": "capture-g-la-flemme-monaflemit-chenal-130-2026-10-19",
+      "type": "capture",
+      "pokemon": {
+        "id": "g-la-flemme-monaflemit-chenal-130",
+        "species": "Monaflèmit",
+        "nick": "G LA FLEMME",
+        "place": "Chénal 130",
+        "nature": "Doux",
+        "gender": "♂",
+        "level": 25,
+        "encounterLevel": 25,
+        "caughtOn": "2026-10-19",
+        "encounterNote": "Est fier de sa puissance",
+        "heldItem": "Aucun objet",
+        "talent": "À confirmer",
+        "status": "alive"
+      }
     }
   ],
   "example_not_published": {
@@ -1060,8 +1117,8 @@
     "reason": "Mis K.O. avant capture"
   },
   "maintenance": {
-    "version": 72,
-    "summary": "Éternara : rencontre du 19 octobre ratée, zone consommée, espèce non précisée. Captures de V71 et statuts vivants/morts inchangés.",
+    "version": 73,
+    "summary": "Ajout des captures du 19 octobre : Poichigeon WHO IS THAT (Pacifiville), Lixy PTIT CHIEN (Chénal 131), Monaflèmit G LA FLEMME (Chénal 130).",
     "dataUnchanged": false
   }
 }
