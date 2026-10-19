@@ -1,5 +1,5 @@
 {
-  "revision": 71,
+  "revision": 72,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -1043,6 +1043,13 @@
         "talent": "À confirmer",
         "status": "alive"
       }
+    },
+    {
+      "id": "miss-eternara-2026-10-19",
+      "type": "miss",
+      "species": "Non précisé",
+      "place": "Éternara",
+      "reason": "Capture ratée, espèce du Pokémon non précisée par le joueur."
     }
   ],
   "example_not_published": {
@@ -1053,8 +1060,8 @@
     "reason": "Mis K.O. avant capture"
   },
   "maintenance": {
-    "version": 71,
-    "summary": "Ajout des trois captures du 19 octobre : PTITE KEHBA (Tortipouss, Chénal 129), BEZELOUF (Wattouat, Chénal 128), NIQUE TOI (Créfollet, Chénal 127). 21 vivants et 11 morts. Aucun décès ou badge modifié.",
+    "version": 72,
+    "summary": "Éternara : rencontre du 19 octobre ratée, zone consommée, espèce non précisée. Captures de V71 et statuts vivants/morts inchangés.",
     "dataUnchanged": false
   }
 }
