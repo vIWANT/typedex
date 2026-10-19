@@ -1204,7 +1204,7 @@ footer{font-size:.7rem;opacity:.65}
     ].map(([name,...tys])=>({id:null,name,types:tys}));
     const allSpecies=[...pokemons,...alternate];
     const dexNick={richard:'Entei',flanby:'Cocotine',colissimo:'Pomdepik',kfcorporate:'Braségali',sanibroyeur:'Flotoutan',jambon5g:'Groret',urssaf:'Feuforêve',chronopost:'Yanmega'};
-    function normalizeSearch(s){return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9♀♂]+/g,'');}
+    function normalizeSearch(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9♀♂]+/g,'').replace(/^chenal(?=\d)/,'route');}
     // Include nicknames as search aliases without duplicating the species in results.
     const nickAliases=Object.entries(dexNick).map(([nick,name])=>({nick,name}));
     let selectedDex=null;
@@ -1820,6 +1820,7 @@ footer{font-size:.7rem;opacity:.65}
   document.getElementById('dex-matches').addEventListener('click',()=>{if(selectedDex){pq.value=selectedDex.name;profileSelect(selectedDex.name);}});
   // Liste de zones Hoenn : les catégories facultatives ne garantissent pas une rencontre sauvage.
   const predefined=[{"group": "01 · Début de Hoenn", "zones": [{"name": "Route 101", "optional": false}, {"name": "Route 102", "optional": false}, {"name": "Route 103", "optional": false}, {"name": "Route 104", "optional": false}, {"name": "Bois Clémenti", "optional": false}, {"name": "Route 116", "optional": false}, {"name": "Tunnel Mérazon", "optional": false}]}, {"group": "02 · Myokara / Lavandia", "zones": [{"name": "Myokara", "optional": true}, {"name": "Route 105", "optional": false}, {"name": "Route 106", "optional": false}, {"name": "Route 107", "optional": false}, {"name": "Route 108", "optional": false}, {"name": "Route 109", "optional": false}, {"name": "Grotte Granite", "optional": false}, {"name": "Route 110", "optional": false}, {"name": "Clémenti-Ville", "optional": true}, {"name": "Route 117", "optional": false}, {"name": "Route 118", "optional": false}]}, {"group": "03 · Volcan et désert", "zones": [{"name": "Route 111", "optional": false}, {"name": "Route 112", "optional": false}, {"name": "Chemin Ardent", "optional": false}, {"name": "Route 113", "optional": false}, {"name": "Route 114", "optional": false}, {"name": "Route 115", "optional": false}, {"name": "Site Météore", "optional": false}, {"name": "Sentier Sinuroc", "optional": false}, {"name": "Autéquia", "optional": true}]}, {"group": "04 · Forêts et Team Magma", "zones": [{"name": "Route 119", "optional": false}, {"name": "Route 120", "optional": false}, {"name": "Route 121", "optional": false}, {"name": "Route 122", "optional": false}, {"name": "Route 123", "optional": false}, {"name": "Parc Safari", "optional": false}, {"name": "Mont Mémoria", "optional": false}, {"name": "New Lavandia", "optional": true}, {"name": "Grotte Oubliée", "optional": true}, {"name": "Lavandia Sea", "optional": true}]}, {"group": "05 · Océan et dernier badge", "zones": [{"name": "Route 124", "optional": false}, {"name": "Route 125", "optional": false}, {"name": "Route 126", "optional": false}, {"name": "Route 127", "optional": false}, {"name": "Route 128", "optional": false}, {"name": "Route 129", "optional": false}, {"name": "Route 130", "optional": false}, {"name": "Route 131", "optional": false}, {"name": "Route 132", "optional": false}, {"name": "Route 133", "optional": false}, {"name": "Route 134", "optional": false}, {"name": "Nénucrique", "optional": true}, {"name": "Algatia", "optional": true}, {"name": "Atalanopolis", "optional": true}, {"name": "Pacifiville", "optional": true}, {"name": "Grotte Tréfonds", "optional": false}, {"name": "Caverne Fondmer", "optional": false}, {"name": "Grotte Origine", "optional": true}]}, {"group": "06 · Ligue / lieux spéciaux", "zones": [{"name": "Éternara", "optional": true}, {"name": "Route Victoire", "optional": false}, {"name": "Pilier Céleste", "optional": true}, {"name": "Île du Sud", "optional": true}, {"name": "Ruines Désert", "optional": true}, {"name": "Tombeau Antique", "optional": true}, {"name": "Grotte de l’Îlot", "optional": true}, {"name": "Forêt Impénétrable", "optional": true}, {"name": "Grotte Evanescente", "optional": true}, {"name": "Plaine sans Nom", "optional": true}, {"name": "Gouffre Informe", "optional": true}, {"name": "Grotte Zénith", "optional": true}]}, {"group": "07 · Mirages (selon nom du lieu)", "zones": [{"name": "Forêt Mirage", "optional": true}, {"name": "Île Mirage", "optional": true}, {"name": "Grotte Mirage", "optional": true}, {"name": "Mont Mirage", "optional": true}]}];
+  // V70 : les Chénaux 124–134 sont les mêmes zones que les « Route 124–134 » de l'ancien TYPEDEX.
   function zoneId(name){return normalizeSearch(name);}
   // Les zones réalisées font partie du même JSON que la Boîte / l'équipe.
   if(!tracker.zoneChecks || typeof tracker.zoneChecks!=='object')tracker.zoneChecks={};
@@ -2008,10 +2009,11 @@ renderGuide();
       if(!mon){mon={status:'alive',nature:'À confirmer',level:null,...p};tracker.entries.push(mon);}
       else{
         for(const k of ['species','place','status'])if(p[k]!==undefined)mon[k]=p[k];
+        for(const k of ['gender','heldItem','caughtOn','encounterLevel','encounterNote'])if(p[k]!==undefined&&mon[k]===undefined)mon[k]=p[k];
         for(const k of ['nick','talent','nature','level'])if(p[k]!==undefined&&(mon[k]===undefined||mon[k]===null||mon[k]===''||mon[k]==='À confirmer'))mon[k]=p[k];
       }
       if(mon.status!=='alive'){tracker.party=tracker.party.map(x=>x===mon.id?null:x);}
-      if(mon.place){tracker.zoneChecks??={};tracker.zoneChecks[id(mon.place)]=true;}
+      if(mon.place){tracker.zoneChecks??={};tracker.zoneChecks[id(mon.place)]=true;tracker.zoneChecks[normalizeSearch(mon.place)]=true;}
       // Pas de remplacement automatique d'une equipe deja complete.
     }else if(ev.type==='hm-only'&&ev.pokemon&&typeof ev.pokemon.id==='string'){
       // Exception CS : jamais dans tracker.entries ni dans tracker.party.
@@ -2294,7 +2296,7 @@ if(livePanel)livePanel.addEventListener('click',e=>{
  const grid=document.querySelector('#td-ds-living-grid');
  if(grid)grid.dataset.selectedId=p.id;
  renderLivingBox();
- document.querySelector('#td-ds-living-detail').innerHTML='<div class="td-ds-cemetery-info td-ds-living-info"><strong>💚 '+escapeHtml(p.nick||p.species)+'</strong><p>'+escapeHtml(p.species)+' · Capture : '+escapeHtml(p.place||'à confirmer')+(p.level?' · Niveau '+escapeHtml(p.level):'')+'.</p><p>Talent : '+escapeHtml(p.talent||'À confirmer')+' · Nature : '+escapeHtml(p.nature||'À confirmer')+'.</p><p>Statut : vivant, disponible pour l’équipe. Les actions de gestion sont dans le panneau juste en dessous.</p></div>';
+ document.querySelector('#td-ds-living-detail').innerHTML='<div class="td-ds-cemetery-info td-ds-living-info"><strong>💚 '+escapeHtml(p.nick||p.species)+'</strong><p>'+escapeHtml(p.species)+' · Capture : '+escapeHtml(p.place||'à confirmer')+(p.level?' · Niveau '+escapeHtml(p.level):'')+'.</p><p>Talent : '+escapeHtml(p.talent||'À confirmer')+' · Nature : '+escapeHtml(p.nature||'À confirmer')+(p.gender?' · Sexe : '+escapeHtml(p.gender):'')+'.</p>'+(p.caughtOn?'<p>📅 Rencontré le '+escapeHtml(p.caughtOn)+(p.encounterLevel?' au niveau '+escapeHtml(p.encounterLevel):'')+' · Objet : '+escapeHtml(p.heldItem||'À confirmer')+'.</p>':'')+'<p>Statut : vivant, disponible pour l’équipe. Les actions de gestion sont dans le panneau juste en dessous.</p></div>';
 });
 
 function renderCemetery(){
