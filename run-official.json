@@ -1,5 +1,5 @@
 {
-  "revision": 80,
+  "revision": 81,
   "description": "Journal officiel des événements ajoutés à TYPEDEX. Le site récupère les nouveaux événements lorsque la page s’ouvre. Ne pas supprimer les IDs déjà publiés.",
   "events": [
     {
@@ -1198,6 +1198,22 @@
       "type": "death",
       "pokemonId": "huissier3000",
       "reason": "K.O. définitif confirmé par le joueur le 19 octobre 2026. Circonstances non précisées."
+    },
+    {
+      "id": "rename-jack-wallside-2026-10-19",
+      "type": "pokemon",
+      "pokemonId": "impotfoncier",
+      "fields": {
+        "nick": "JACK WALLSIDE"
+      }
+    },
+    {
+      "id": "evolution-jack-wallside-nidoking-2026-10-19",
+      "type": "pokemon",
+      "pokemonId": "impotfoncier",
+      "fields": {
+        "species": "Nidoking"
+      }
     }
   ],
   "example_not_published": {
@@ -1208,8 +1224,8 @@
     "reason": "Mis K.O. avant capture"
   },
   "maintenance": {
-    "version": 80,
-    "summary": "HUISSIER 3000 (Lucario) déclaré mort ; retrait des combattants et de l'équipe. Remplaçant Ligue non désigné.",
+    "version": 81,
+    "summary": "JACK WALLSIDE confirme comme Nidoking, nouveau candidat pour la Ligue.",
     "dataUnchanged": false
   }
 }
